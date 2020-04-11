@@ -23,6 +23,36 @@ class DataAnalyzerTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
+    
+    
+    func testLoadCVS() {
+        
+        guard let path = Bundle(for: type(of: self)).url(forResource: "BitcoinTest", withExtension: "csv") else {
+            XCTAssert(false, "Couldn't load file")
+            return
+        }
+        
+        let exp = expectation(description: "\(#function)\(#line)")
+        
+        let csvOP = CSVOperation(url: path)
+        
+        csvOP.completionBlock =
+        {
+            exp.fulfill()
+            XCTAssert(!csvOP.data!.isEmpty, "Couldn't load file")
+                
+        }
+        
+
+        let importQueue = ImportOperationQueue()
+        
+        importQueue.queue.addOperation(csvOP)
+        
+//        OperationQueue
+        
+//        let url =
+//        let csvOp = CSVOperation(url: <#T##URL#>)
+    }
 
     func testPerformanceExample() {
         // This is an example of a performance test case.
