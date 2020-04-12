@@ -20,6 +20,7 @@ struct PointDoubleValue {
 
 
 
+
 struct BarDataPoint {
     
     var x: PointDoubleValue

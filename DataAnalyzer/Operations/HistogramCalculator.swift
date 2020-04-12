@@ -9,12 +9,20 @@
 import Foundation
 import SigmaSwiftStatistics
 
+
+struct HistorgramResult {
+    var histogramEntries: [BarChartDataEntry]
+    var frequencies: [ChartDataEntry]
+    var normal: [ChartDataEntry]
+    var width: Double
+}
+
 class HistogramCalculator: Operation {
     
     private(set) var identifier: String!
     
     private(set) var data: [Double]!
-    private(set) var result: BarDataSet?
+    private(set) var result: HistorgramResult?
     
     init(data: [Double], identifier: String) {
         
@@ -73,22 +81,6 @@ class HistogramCalculator: Operation {
             }
 
             
-            
-//            let sortedKeys = bins.keys.sorted()
-            
-            
-//            var total = 0
-//            for key in sortedKeys {
-//                let count = bins[key]!
-//
-//                total += count
-//                let xPoint = PointDoubleValue(value: Double(key), label: "bin")
-//                let yPoint = PointDoubleValue(value: Double(count), label: "Freq")
-//                let point = BarDataPoint(x: xPoint, y: yPoint)
-//                dataPoints.append(point)
-//
-//            }
-            
             var binEdges = [BinEdge]()
             for i in 0..<binSize {
                 
@@ -104,114 +96,95 @@ class HistogramCalculator: Operation {
                 }
                 binEdges.append(edge)
             }
-            
-//            let zeroEdge = BinEdge(leftValue: 0, rightValue: minValue, values: nil)
-//            let maxEdge = BinEdge(leftValue: maxValue, rightValue: maxValue + h, values: nil)
-//            binEdges.insert(zeroEdge, at: 0)
-//            binEdges.append(maxEdge)
-            
-            
-            var dataPoints = [BarDataPoint]()
-            for edge in binEdges {
-                
-                let xPoint = PointDoubleValue(value: Double((edge.leftValue + edge.rightValue)/2.0), label: "bin")
-                let yPoint = PointDoubleValue(value: Double(edge.values?.count ?? 0), label: "Freq")
-                let point = BarDataPoint(x: xPoint, y: yPoint)
-                dataPoints.append(point)
-            }
-            
-            
-            var freqPoints = [BarDataPoint]()
-            
-            let sortedFreqKeys = frequencies.keys.sorted()
-            
-            for key in sortedFreqKeys {
-                
-                let value = frequencies[key]!
-                let xPoint = PointDoubleValue(value: Double(key), label: "bin")
-                let yPoint = PointDoubleValue(value: Double(value), label: "Freq")
-                let point = BarDataPoint(x: xPoint, y: yPoint)
-                freqPoints.append(point)
 
-            }
+            
+            
+            
+            
+            
+            
+            let histogramEntries = calculateData(from: binEdges)
+            let frequency = calculateFrequency(from: frequencies)
+            let normal = calculateNormalFrequency(from: data)
+            let set = HistorgramResult(histogramEntries: histogramEntries, frequencies: frequency, normal: normal, width: Double(h))
+            
+            self.result = set
+            
+//            let dataSet = BarDataSet(points: dataPoints, maxXValue: maxValue, maxYValue: maxFreq, width: Double(h), frequencies: freqPoints, normalFrequencies: normalPoints)
+//
+//
+//            self.result = dataSet
+//
             
 
-            let distribution = probabilityDistrubition(data: data)
-            let (b,m) = lsr(distribution)
-            
-            
-            var asd = [Double]()
-            for p in distribution {
-                let x = p[0]
-                let y = (m * x) + b
-                asd.append(y)
-                
-            }
-            
-            let (normalFrequencies, _, _) = asd.frequencies()
-            
-            var normalPoints = [BarDataPoint]()
-            let sortedNormalFreqKeys = normalFrequencies.keys.sorted()
-            for key in sortedNormalFreqKeys {
-                
-                let value = normalFrequencies[key]!
-                let xPoint = PointDoubleValue(value: Double(key), label: "bin")
-                let yPoint = PointDoubleValue(value: Double(value), label: "Freq")
-                let point = BarDataPoint(x: xPoint, y: yPoint)
-                normalPoints.append(point)
-            }
-            
-            
-            
-            
-            let dataSet = BarDataSet(points: dataPoints, maxXValue: maxValue, maxYValue: maxFreq, width: Double(h), frequencies: freqPoints, normalFrequencies: normalPoints)
-            
-            self.result = dataSet
-           
-            
-            
-            
-//            let (_, maxFreq, _) = data.frequencies()
-//
-
-//
-//            let normalized = data.normalized()
-//
-//            let trimmed = normalized.trimed(fromDigit: 4)
-//            let hist = trimmed.histogram()
-//
-//            let min = data.minValue()
-//            let max = data.maxValue()
-//
-//
-
-//
-////            let lastElement = (Double(nearest) - min) / (max - min)
-////
-////            hist[Double(lastElement)] = 0
-//
-//
-//            let sortedKeys = hist.keys.sorted()
-//
-//            var dataPoints = [BarDataPoint]()
-//
-//            for key in sortedKeys {
-//                let freq = Double(hist[key]!)
-//                let nonNormalizedKey = Int(key * (max - min) + min)
-//                let xPoint = PointDoubleValue(value: key, label: String(nonNormalizedKey))
-//                let yPoint = PointDoubleValue(value: freq, label: String(freq))
-//                let point = BarDataPoint(x: xPoint, y: yPoint)
-//                dataPoints.append(point)
-//
-//            }
-//
-//
-
-//
-//            self.result = BarDataSet(points: dataPoints, xLabels: xlabels, yLabels: yLabels)
           
         }
     }
+    
+    func calculateNormalFrequency(from data: [Double]) -> [ChartDataEntry] {
+        
+        let distribution = probabilityDistrubition(data: data)
+        let (b,m) = lsr(distribution)
+        
+        
+        var dist = [Double]()
+        for p in distribution {
+            let x = p[0]
+            let y = (m * x) + b
+            dist.append(y)
+        }
+        let (normalFrequencies, _, _) = dist.frequencies()
+        
+//        var normalPoints = [BarDataPoint]()
+        var entries = [ChartDataEntry]()
+        let sortedNormalFreqKeys = normalFrequencies.keys.sorted()
+        for key in sortedNormalFreqKeys {
+            
+            let value = normalFrequencies[key]!
+            
+            let entry = ChartDataEntry(x: Double(key), y: Double(value))
+            entries.append(entry)
+//            let xPoint = PointDoubleValue(value: Double(key), label: "bin")
+//            let yPoint = PointDoubleValue(value: Double(value), label: "Freq")
+//            let point = BarDataPoint(x: xPoint, y: yPoint)
+//            normalPoints.append(point)
+        }
+        return entries
+        
+    }
+    
+    func calculateFrequency(from array: [Double: Double]) -> [ChartDataEntry] {
+        
+        let sortedFreqKeys = array.keys.sorted()
+        var entries = [ChartDataEntry]()
+        for key in sortedFreqKeys {
+            
+            let value = array[key]!
+            
+            let entry = ChartDataEntry(x: Double(key), y: Double(value))
+            
+            entries.append(entry)
+        }
+        
+        return entries
+    }
+    
+    func calculateData(from binEdges: [BinEdge]) -> [BarChartDataEntry] {
+        var histogramEntries = [BarChartDataEntry]()
+        for edge in binEdges {
+            
+            let entry = BarChartDataEntry(x: Double((edge.leftValue + edge.rightValue)/2.0),
+                                          y: Double(edge.values?.count ?? 0))
+            histogramEntries.append(entry)
+            
+            //                let xPoint = PointDoubleValue(value: Double((edge.leftValue + edge.rightValue)/2.0), label: "bin")
+            //                let yPoint = PointDoubleValue(value: Double(edge.values?.count ?? 0), label: "Freq")
+            //                let point = BarDataPoint(x: xPoint, y: yPoint)
+            //                dataPoints.append(point)
+        }
+        return histogramEntries
+    }
+    
 }
 
 

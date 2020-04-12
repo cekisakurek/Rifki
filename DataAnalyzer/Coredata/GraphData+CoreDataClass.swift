@@ -2,7 +2,7 @@
 //  GraphData+CoreDataClass.swift
 //  
 //
-//  Created by Cihan Emre Kisakurek on 08.04.20.
+//  Created by Cihan Emre Kisakurek on 11.04.20.
 //
 //
 

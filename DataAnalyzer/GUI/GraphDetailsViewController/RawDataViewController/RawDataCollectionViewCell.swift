@@ -1,14 +1,14 @@
 //
-//  GraphDetailsValueCell.swift
+//  RawDataCollectionViewCell.swift
 //  DataAnalyzer
 //
-//  Created by Cihan Emre Kisakurek on 31.03.20.
+//  Created by Cihan Emre Kisakurek on 11.04.20.
 //  Copyright © 2020 cekisakurek. All rights reserved.
 //
 
 import UIKit
 
-class GraphDetailsValueCell: UICollectionViewCell {
+class RawDataCollectionViewCell: UICollectionViewCell {
 
     private var label: UILabel!
     
@@ -17,7 +17,6 @@ class GraphDetailsValueCell: UICollectionViewCell {
         
         self.contentView.layer.borderColor = UIColor.black.cgColor
         self.contentView.layer.borderWidth = 1.0
-        
         
         label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -28,16 +27,14 @@ class GraphDetailsValueCell: UICollectionViewCell {
             if self.traitCollection.userInterfaceStyle == .dark {
                 label.textColor = UIColor.black
 //                self.backgroundColor = UIColor.white
-            } else {
-                label.textColor = UIColor.black
-//                self.backgroundColor = UIColor.black
             }
-        } else {
-            label.textColor = UIColor.white
-//            self.backgroundColor = UIColor.black
+            else {
+                label.textColor = UIColor.black
+            }
         }
-        
-        
+        else {
+            label.textColor = UIColor.white
+        }
         self.contentView.addSubview(label)
         
         NSLayoutConstraint.activate([

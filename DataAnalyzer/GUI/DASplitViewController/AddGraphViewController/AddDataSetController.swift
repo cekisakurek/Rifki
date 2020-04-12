@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import CoreServices
 
-class ImportDatasetSettingsViewController: UITableViewController, DelimiterSelectionDelegate, DatasetNamingProtocol {
+class ImportDatasetSettingsViewController: UITableViewController, DelimiterSelectionDelegate, ObjectNamingProtocol {
     
     
     weak var controller: AddDataSetController?
@@ -28,9 +28,9 @@ class ImportDatasetSettingsViewController: UITableViewController, DelimiterSelec
 
         
         self.tableView.estimatedRowHeight = 100.0;
-        self.tableView.register(DatasetNameTableViewCell.self, forCellReuseIdentifier: "NameCell")
+        self.tableView.register(NameInputTableViewCell.self, forCellReuseIdentifier: "NameCell")
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        self.tableView.register(DatasetStaticTextTableViewCell.self, forCellReuseIdentifier: "StaticValueCell")
+        self.tableView.register(StaticTextTableViewCell.self, forCellReuseIdentifier: "StaticValueCell")
         
         let closeItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(close))
         self.navigationItem.leftBarButtonItem = closeItem
@@ -75,12 +75,12 @@ class ImportDatasetSettingsViewController: UITableViewController, DelimiterSelec
         case 0:
             switch indexPath.row {
             case 0:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "NameCell", for: indexPath) as! DatasetNameTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "NameCell", for: indexPath) as! NameInputTableViewCell
                 cell.nameFieldChangeDelegate = self
                 return cell
                 
             case 1:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "StaticValueCell", for: indexPath) as! DatasetStaticTextTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "StaticValueCell", for: indexPath) as! StaticTextTableViewCell
                 cell.accessoryType = .disclosureIndicator
                 let nameString = NSLocalizedString("Delimiter", comment: "") + " :"
                 let valueString = " '\(currentDelimiter.name)' "
@@ -117,7 +117,7 @@ class ImportDatasetSettingsViewController: UITableViewController, DelimiterSelec
         tableView.reloadData()
     }
     
-    func datasetNameFieldChanged(toString: String?) {
+    func objectNameFieldChanged(toString: String?) {
         if let newName = toString {
             datasetName = newName
         }

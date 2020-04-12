@@ -15,15 +15,15 @@ class ChartsFormatterBlank: IAxisValueFormatter {
     
 }
 
-
 class RowAnalysisViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ChartViewDelegate {
     
     private var tableView: UITableView!
     private var columnDescriptionView : RowAnalysisDescriptionView!
     private var distributionPlotView: CombinedChartView!
-//    private var distributionPlotView: BarPlotView!
-//    private var probabilityPlotView: ScatterPlotView!
     private var probabilityPlotView: CombinedChartView!
+    
+    var distributionGraphTheme = DistributionGraphTheme()
+    var probabilityGraphTheme = ProbabilityGraphTheme()
     
     var calculationQueue = CalculationsOperationQueue()
     
@@ -33,52 +33,16 @@ class RowAnalysisViewController: UIViewController, UITableViewDelegate, UITableV
             if let tableView = self.tableView {
                 tableView.reloadData()
             }
-            
-            
         }
     }
-    
-    
-//    func roundTest() {
-//
-//        let number = 0.000007463
-////        let number = 787000.0
-//
-//        let exponent = log10(number)
-//
-//        let mantissa = number / pow(10, exponent)
-//
-//        let digits = number / pow(10, ceil(exponent + 1))
-//
-//        let rounded = digits.roundedUp(toPlaces: 2)
-//
-//
-//
-//        let result = rounded * pow(10,ceil(exponent+1))
-//
-////        10^exp
-//
-////        let exponent = trunc(log(number) / log(10.0))
-////
-////        let mantissa = number / pow(10, trunc(log(number) / log(10.0)))
-////
-////        let result = pow(10.0, exponent) //+ mantissa
-////        print(number)
-////        print(result)
-////        print("exp: " + String(exponent) + " mantissa: " + String(mantissa) + " number: " + String(result))
-//
-//
-//
-////        let r = mantissa.rounded(toPlaces: 2) * pow(10.0, exponent)
-//    }
     
     func setupProbabilityChart() {
         probabilityPlotView.delegate = self
         probabilityPlotView.legend.enabled = false
-        probabilityPlotView.backgroundColor = UIColor.white
+        probabilityPlotView.backgroundColor = probabilityGraphTheme.backgroundColor
         let xAxis = probabilityPlotView.xAxis
         xAxis.labelPosition = .bottom
-        xAxis.labelTextColor = UIColor.black
+        xAxis.labelTextColor = probabilityGraphTheme.xAxisTextColor
         
         probabilityPlotView.autoScaleMinMaxEnabled = false
         
@@ -86,118 +50,40 @@ class RowAnalysisViewController: UIViewController, UITableViewDelegate, UITableV
         probabilityPlotView.leftAxis.gridColor = .clear
         probabilityPlotView.rightAxis.gridColor = .clear
         
-        probabilityPlotView.leftAxis.labelTextColor = UIColor.black
-        probabilityPlotView.rightAxis.labelTextColor = UIColor.black
-        probabilityPlotView.xAxis.labelTextColor = UIColor.black
+        probabilityPlotView.leftAxis.labelTextColor = probabilityGraphTheme.yAxisTextColor
+        probabilityPlotView.rightAxis.labelTextColor = probabilityGraphTheme.yAxisTextColor
         probabilityPlotView.isUserInteractionEnabled = false
-        
-//        probabilityPlotView.layer.borderColor = UIColor.lightGray.cgColor
-//        probabilityPlotView.layer.borderWidth = 1.0
-        
-        probabilityPlotView.noDataTextColor = UIColor.black
+                
+        probabilityPlotView.noDataTextColor = probabilityGraphTheme.yAxisTextColor
         probabilityPlotView.noDataText = NSLocalizedString("No chart data available.", comment: "")
     }
     
     
     func setupChart(chartView: CombinedChartView) {
         
-        chartView.noDataTextColor = UIColor.black
+        chartView.noDataTextColor = distributionGraphTheme.yAxisTextColor
         chartView.noDataText = NSLocalizedString("No chart data available.", comment: "")
 //        let chartsFormatterBlank = ChartsFormatterBlank()
         chartView.isUserInteractionEnabled = false
         chartView.delegate = self
         chartView.legend.enabled = false
-        chartView.backgroundColor = UIColor.white
+        chartView.backgroundColor = distributionGraphTheme.backgroundColor
         let xAxis = chartView.xAxis
         xAxis.labelPosition = .bottom
         xAxis.labelTextColor = UIColor.black
-        chartView.leftAxis.labelTextColor = UIColor.black
-        chartView.rightAxis.labelTextColor = UIColor.black
+        
+        chartView.leftAxis.labelTextColor = distributionGraphTheme.yAxisTextColor
+        chartView.rightAxis.labelTextColor = distributionGraphTheme.yAxisTextColor
         
         chartView.rightAxis.axisMinimum = 0.0
         
-
         chartView.xAxis.gridColor = .clear
         chartView.leftAxis.gridColor = .clear
         chartView.rightAxis.gridColor = .clear
         
-        
-//        chartView.layer.borderColor = UIColor.lightGray.cgColor
-//        chartView.layer.borderWidth = 1.0
-        
-        
-        chartView.animate(xAxisDuration: 0.5)
-        chartView.animate(yAxisDuration: 0.5)
-//        chartView.rightAxis.enabled = false
-//        chartView.xAxis.valueFormatter = chartsFormatterBlank as! IAxisValueFormatter
-        
-//        chartView.autoScaleMinMaxEnabled = true
-//        chartView.gridBackgroundColor = UIColor.white
-//        chartView.drawValueAboveBarEnabled = false
-//        chartView.drawBarShadowEnabled = false
-//        chartView.drawValueAboveBarEnabled = false
-//
-//        chartView.maxVisibleCount = 60
-//
-//        let xAxis = chartView.xAxis
-//        let yAxis = chartView.xAxis
-//        xAxis.drawAxisLineEnabled = false
-//        xAxis.drawGridLinesEnabled = false
-//        xAxis.resetCustomAxisMax()
-//        xAxis.customAxisMin = 0;
-//        xAxis.customAxisMax = 1;
-//        xAxis.labelPosition = .bottom
-//        xAxis.labelFont = .systemFont(ofSize: 10)
-//        xAxis.granularity = 1
-//        xAxis.labelCount = 7
-////        xAxis.valueFormatter = DayAxisValueFormatter(chart: chartView)
-//
-//
-        
         chartView.notifyDataSetChanged()
         chartView.setNeedsDisplay()
-//
-//        let leftAxisFormatter = NumberFormatter()
-//        leftAxisFormatter.minimumFractionDigits = 0
-//        leftAxisFormatter.maximumFractionDigits = 1
-//        leftAxisFormatter.negativeSuffix = " $"
-//        leftAxisFormatter.positiveSuffix = " $"
-//
-//        let leftAxis = chartView.leftAxis
-//        leftAxis.labelFont = .systemFont(ofSize: 10)
-//        leftAxis.labelCount = 8
-//        leftAxis.valueFormatter = DefaultAxisValueFormatter(formatter: leftAxisFormatter)
-//        leftAxis.labelPosition = .outsideChart
-//        leftAxis.spaceTop = 0.15
-//        leftAxis.axisMinimum = 0 // FIXME: HUH?? this replaces startAtZero = YES
-//
-//        let rightAxis = chartView.rightAxis
-//        rightAxis.enabled = true
-//        rightAxis.labelFont = .systemFont(ofSize: 10)
-//        rightAxis.labelCount = 8
-//        rightAxis.valueFormatter = leftAxis.valueFormatter
-//        rightAxis.spaceTop = 0.15
-//        rightAxis.axisMinimum = 0
-//
-//        let l = chartView.legend
-//        l.horizontalAlignment = .left
-//        l.verticalAlignment = .bottom
-//        l.orientation = .horizontal
-//        l.drawInside = false
-//        l.form = .circle
-//        l.formSize = 9
-//        l.font = UIFont(name: "HelveticaNeue-Light", size: 11)!
-//        l.xEntrySpace = 4
-        //        chartView.legend = l
-//
-//        let marker = XYMarkerView(color: UIColor(white: 180/250, alpha: 1),
-//                                  font: .systemFont(ofSize: 12),
-//                                  textColor: .white,
-//                                  insets: UIEdgeInsets(top: 8, left: 8, bottom: 20, right: 8),
-//                                  xAxisValueFormatter: chartView.xAxis.valueFormatter!)
-//        marker.chartView = chartView
-//        marker.minimumSize = CGSize(width: 80, height: 40)
-//        chartView.marker = marker
+
     }
     
     var distributionPlotLeftAxisTitleLabel: UILabel!
@@ -206,13 +92,44 @@ class RowAnalysisViewController: UIViewController, UITableViewDelegate, UITableV
     var probabilityPlotLeftAxisTitleLabel: UILabel!
     var probabilityPlotXAxisTitleLabel: UILabel!
     
+    private var settings: Settings!
+    
+    func updateTheme() {
+        do {
+            let context = CoreDataController.shared.managedObjectContext
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Settings")
+            let settings = try context!.fetch(fetchRequest) as! [Settings]
+            if let settingsObject = settings.first {
+                distributionGraphTheme.xAxisTextColor = settingsObject.dgXAxisTextColor as! UIColor
+                distributionGraphTheme.yAxisTextColor = settingsObject.dgYAxisTextColor as! UIColor
+                distributionGraphTheme.backgroundColor = settingsObject.dgBackgroundColor as! UIColor
+                distributionGraphTheme.normalLineWidth = CGFloat(settingsObject.dgNormalLineWidth)
+                distributionGraphTheme.normalLineColor = settingsObject.dgNormalLineColor as! UIColor
+                distributionGraphTheme.frequencyLineWidth = CGFloat(settingsObject.dgFrequencyLineWidth)
+                distributionGraphTheme.frequencyLineColor = settingsObject.dgFrequencyLineColor as! UIColor
+                distributionGraphTheme.barColor = settingsObject.dgBarColor as! UIColor
+                
+                probabilityGraphTheme.yAxisTextColor = settingsObject.pgYAxisTextColor as! UIColor
+                probabilityGraphTheme.xAxisTextColor = settingsObject.pgXAxisTextColor as! UIColor
+                probabilityGraphTheme.normalLineWidth = CGFloat(settingsObject.pgNormalLineWidth)
+                probabilityGraphTheme.normalLineColor = settingsObject.pgNormalLineColor as! UIColor
+                probabilityGraphTheme.circleColor = settingsObject.pgCircleColor as! UIColor
+                probabilityGraphTheme.backgroundColor = settingsObject.pgBackgroundColor as! UIColor
+            }
+        }
+        catch {
+            ErrorAlertView.showError(with: String(describing: error), from: self)
+        }
+        
+    }
+        
     override func loadView() {
         super.loadView()
         
+        updateTheme()
         
         let axisLabelFonts = UIFont.systemFont(ofSize: 13.0)
         let plotTitleFont = UIFont.boldSystemFont(ofSize: 16.0)
-        
         
         tableView = UITableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -220,7 +137,6 @@ class RowAnalysisViewController: UIViewController, UITableViewDelegate, UITableV
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         self.view.addSubview(tableView)
-        
         
         let plotContainerView = UIView(frame: .zero)
         plotContainerView.translatesAutoresizingMaskIntoConstraints = false
@@ -236,7 +152,6 @@ class RowAnalysisViewController: UIViewController, UITableViewDelegate, UITableV
         columnDescriptionView.backgroundColor = UIColor.white
         columnDescriptionView.translatesAutoresizingMaskIntoConstraints = false
         plotContainerView.addSubview(columnDescriptionView)
-        
         
         let distributionPlotTitleLabel = UILabel(frame: .zero)
         distributionPlotTitleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -277,7 +192,6 @@ class RowAnalysisViewController: UIViewController, UITableViewDelegate, UITableV
         descriptionSeparatorView.backgroundColor = UIColor.lightGray
         plotContainerView.addSubview(descriptionSeparatorView)
         
-        
         let probabilityPlotTitleLabel = UILabel(frame: .zero)
         probabilityPlotTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         probabilityPlotTitleLabel.font = plotTitleFont
@@ -285,7 +199,6 @@ class RowAnalysisViewController: UIViewController, UITableViewDelegate, UITableV
         probabilityPlotTitleLabel.textAlignment = .center
         probabilityPlotTitleLabel.text = NSLocalizedString("Probability", comment: "")
         plotContainerView.addSubview(probabilityPlotTitleLabel)
-        
         
         probabilityPlotLeftAxisTitleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100.0, height: 20.0))
         probabilityPlotLeftAxisTitleLabel.font = axisLabelFonts
@@ -326,7 +239,6 @@ class RowAnalysisViewController: UIViewController, UITableViewDelegate, UITableV
             
             
             plotContainerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-//            plotContainerView.leadingAnchor.constraint(equalTo: tableView.trailingAnchor),
             plotContainerView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
             plotContainerView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
             
@@ -345,7 +257,6 @@ class RowAnalysisViewController: UIViewController, UITableViewDelegate, UITableV
             distributionPlotXAxisTitleLabel.topAnchor.constraint(equalTo: distributionPlotView.bottomAnchor, constant: xAxisLabelMargin),
             distributionPlotXAxisTitleLabel.leadingAnchor.constraint(equalTo: distributionPlotView.leadingAnchor),
             distributionPlotXAxisTitleLabel.trailingAnchor.constraint(equalTo: distributionPlotView.trailingAnchor),
-            
             
             graphSeparatorView.topAnchor.constraint(equalTo: distributionPlotXAxisTitleLabel.bottomAnchor, constant: interGraphDistance/2.0),
             graphSeparatorView.leadingAnchor.constraint(equalTo: plotContainerView.leadingAnchor),
@@ -368,28 +279,21 @@ class RowAnalysisViewController: UIViewController, UITableViewDelegate, UITableV
             probabilityPlotXAxisTitleLabel.leadingAnchor.constraint(equalTo: probabilityPlotView.leadingAnchor),
             probabilityPlotXAxisTitleLabel.trailingAnchor.constraint(equalTo: probabilityPlotView.trailingAnchor),
             
-            
             descriptionSeparatorView.topAnchor.constraint(equalTo: probabilityPlotXAxisTitleLabel.bottomAnchor, constant: interGraphDistance/2.0),
             descriptionSeparatorView.leadingAnchor.constraint(equalTo: plotContainerView.leadingAnchor),
             descriptionSeparatorView.bottomAnchor.constraint(equalTo: columnDescriptionView.topAnchor, constant: -interGraphDistance/2.0),
             descriptionSeparatorView.trailingAnchor.constraint(equalTo: plotContainerView.trailingAnchor),
             descriptionSeparatorView.heightAnchor.constraint(equalToConstant: 1.0),
             
-//            columnDescriptionView.topAnchor.constraint(equalTo: probabilityPlotXAxisTitleLabel.bottomAnchor, constant: interGraphDistance),
             columnDescriptionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
             columnDescriptionView.centerXAnchor.constraint(equalTo: plotContainerView.centerXAnchor),
             columnDescriptionView.widthAnchor.constraint(equalToConstant: 300.0),
-            
-            
-    
         ])
-        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
-        
         distributionPlotLeftAxisTitleLabel.frame = CGRect(x: distributionPlotView.frame.origin.x - 20.0,
                                                           y: distributionPlotView.frame.origin.y + 100.0,
                                                           width: distributionPlotLeftAxisTitleLabel.frame.size.width, height: distributionPlotLeftAxisTitleLabel.frame.height)
@@ -407,9 +311,7 @@ class RowAnalysisViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let data = dataset {
-            
             return data.headers!.count
-
         }
         return 0
     }
@@ -434,62 +336,44 @@ class RowAnalysisViewController: UIViewController, UITableViewDelegate, UITableV
         
         columnDescriptionView.setData(data, type: type)
         
-        self.calculationQueue.calculate(data as! [Double], indexPath: indexPath) {
+        self.calculationQueue.calculateDistribution(data as! [Double], indexPath: indexPath) {
+            [weak self]
             (results, indexPath, error) in
+            
+            guard let self = self else {
+                return
+            }
+            
 
             if let dataSet = results {
+
+                let histogramDataSet = BarChartDataSet(entries: dataSet.histogramEntries)
                 
-                let dataPoints = dataSet.points
+                histogramDataSet.drawValuesEnabled = false
+                histogramDataSet.axisDependency = .right
+                histogramDataSet.colors = [self.distributionGraphTheme.barColor]
                 
-                var entries = [BarChartDataEntry]()
+                let histogramData = BarChartData(dataSets: [histogramDataSet])
+                histogramData.barWidth = dataSet.width
                 
+                let frequenciesDataSet = LineChartDataSet(entries: dataSet.frequencies, label: NSLocalizedString("Frequency", comment: ""))
+                frequenciesDataSet.colors = [self.distributionGraphTheme.frequencyLineColor]
+                frequenciesDataSet.mode = .cubicBezier
+                frequenciesDataSet.drawCirclesEnabled = false
+                frequenciesDataSet.lineWidth = self.distributionGraphTheme.frequencyLineWidth
+                frequenciesDataSet.axisDependency = .left
                 
-                for point in dataPoints {
-                    let entry = BarChartDataEntry(x: point.x.value, y: point.y.value)
-                    
-                    entries.append(entry)
-                }
-                let chartDataSet = BarChartDataSet(entries: entries)
-                
-                chartDataSet.drawValuesEnabled = false
-                chartDataSet.axisDependency = .right
-                
-                let data = BarChartData(dataSets: [chartDataSet])
-                
-                
-                data.barWidth = dataSet.width
-                
-                var freqEntries = [ChartDataEntry]()
-                for freq in dataSet.frequencies {
-                    let entry = ChartDataEntry(x: freq.x.value, y: freq.y.value)
-                    freqEntries.append(entry)
-                }
-                
-                var nfreqEntries = [ChartDataEntry]()
-                for freq in dataSet.normalFrequencies {
-                    let entry = ChartDataEntry(x: freq.x.value, y: freq.y.value)
-                    nfreqEntries.append(entry)
-                }
-                
-                let normalDataSet = LineChartDataSet(entries: freqEntries, label: NSLocalizedString("Frequency", comment: ""))
-                normalDataSet.colors = [UIColor.red]
-                normalDataSet.mode = .linear
+                let normalDataSet = LineChartDataSet(entries: dataSet.normal)
+                normalDataSet.colors = [self.distributionGraphTheme.normalLineColor]
+                normalDataSet.mode = .cubicBezier
                 normalDataSet.drawCirclesEnabled = false
-                normalDataSet.lineWidth = 2.0
+                normalDataSet.lineWidth = self.distributionGraphTheme.normalLineWidth
                 normalDataSet.axisDependency = .left
-                
-                let nnormalDataSet = LineChartDataSet(entries: nfreqEntries)
-                nnormalDataSet.colors = [UIColor.brown]
-                nnormalDataSet.mode = .linear
-                nnormalDataSet.drawCirclesEnabled = false
-                nnormalDataSet.lineWidth = 2.0
-                nnormalDataSet.axisDependency = .left
                 
                 
                 let combined = CombinedChartData()
-                combined.lineData = LineChartData(dataSets: [normalDataSet, nnormalDataSet])
-                combined.barData = data
-//                combined.scatterData = ScatterChartData(dataSets: [chartDataSet])
+                combined.lineData = LineChartData(dataSets: [frequenciesDataSet, normalDataSet])
+                combined.barData = histogramData
                 
                 self.distributionPlotView.data = combined
                 self.distributionPlotView.animate(xAxisDuration: 0.25, yAxisDuration: 0.25)
@@ -498,7 +382,6 @@ class RowAnalysisViewController: UIViewController, UITableViewDelegate, UITableV
                 self.distributionPlotView.data = nil
                 self.distributionPlotView.animate(xAxisDuration: 0.25, yAxisDuration: 0.25)
             }
-
         }
         
         self.calculationQueue.calculateProbabilityDistribution(data as! [Double], indexPath: indexPath) {
