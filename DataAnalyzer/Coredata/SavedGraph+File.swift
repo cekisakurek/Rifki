@@ -8,14 +8,19 @@
 
 import CoreData
 import CSV
+import UIKit
 
-extension GraphData {
+enum DatasetError: String, Error {
+  case fileNotFound = "FileNotFound"
+}
+
+extension Dataset {
     
     func loadRaw() -> [[String]]? {
         
         if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
 
-            let uuid = self.localURL!
+            let uuid = self.uuid!
             let fileURL = dir.appendingPathComponent(uuid)
 
             let savedArray = NSArray(contentsOf: fileURL)
@@ -32,7 +37,7 @@ extension GraphData {
         
         if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
             
-            let uuid = self.localURL!
+            let uuid = self.uuid!
             let fileURL = dir.appendingPathComponent(uuid)
             
             return fileURL
@@ -40,17 +45,16 @@ extension GraphData {
         return nil
     }
     
-    func deleteFile() {
-        
+    func deleteFile() throws {
+    
         if let fileURL = self.fileURL() {
-            do {
-                try FileManager.default.removeItem(at: fileURL)
-                self.managedObjectContext?.delete(self)
-                try self.managedObjectContext?.save()
-            }
-            catch {
-                 print("Could not clear temp folder: \(error)")
-            }
+            
+            try FileManager.default.removeItem(at: fileURL)
+            self.managedObjectContext?.delete(self)
+            try self.managedObjectContext?.save()
+        }
+        else {
+            throw DatasetError.fileNotFound
         }
     }
     
@@ -78,6 +82,8 @@ class GraphRawData {
     var rows: [[Any]]!
     
     var hasHeader: Bool = true
+    
+    var uuid: String!
     
     
 //    var processedRows: [[Any]]!

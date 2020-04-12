@@ -1,13 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19E266" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="GraphData" representedClassName="GraphData" syncable="YES" codeGenerationType="class">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Dataset" representedClassName="Dataset" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="delimiter" optional="YES" attributeType="String"/>
-        <attribute name="localURL" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="remoteURL" optional="YES" attributeType="String"/>
+        <attribute name="uuid" optional="YES" attributeType="String"/>
+        <relationship name="graphs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Graph" inverseName="workset" inverseEntity="Graph"/>
+    </entity>
+    <entity name="Graph" representedClassName="Graph" syncable="YES" codeGenerationType="class">
+        <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="data" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GraphData" inverseName="graph" inverseEntity="GraphData"/>
+        <relationship name="workset" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dataset" inverseName="graphs" inverseEntity="Dataset"/>
+    </entity>
+    <entity name="GraphData" representedClassName="GraphData" syncable="YES" codeGenerationType="class">
+        <attribute name="xAxis" optional="YES" attributeType="String"/>
+        <attribute name="yAxis" optional="YES" attributeType="String"/>
+        <relationship name="graph" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Graph" inverseName="data" inverseEntity="Graph"/>
+    </entity>
+    <entity name="Settings" representedClassName="Settings" syncable="YES" codeGenerationType="class">
+        <attribute name="dgBackgroundColor" optional="YES" attributeType="Transformable"/>
+        <attribute name="dgBarColor" optional="YES" attributeType="Transformable"/>
+        <attribute name="dgFrequencyLineColor" optional="YES" attributeType="Transformable"/>
+        <attribute name="dgFrequencyLineWidth" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="dgNormalLineColor" optional="YES" attributeType="Transformable"/>
+        <attribute name="dgNormalLineWidth" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="dgXAxisTextColor" optional="YES" attributeType="Transformable"/>
+        <attribute name="dgYAxisTextColor" optional="YES" attributeType="Transformable"/>
+        <attribute name="pgBackgroundColor" optional="YES" attributeType="Transformable"/>
+        <attribute name="pgCircleColor" optional="YES" attributeType="Transformable"/>
+        <attribute name="pgNormalLineColor" optional="YES" attributeType="Transformable"/>
+        <attribute name="pgNormalLineWidth" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="pgXAxisTextColor" optional="YES" attributeType="Transformable"/>
+        <attribute name="pgYAxisTextColor" optional="YES" attributeType="Transformable"/>
     </entity>
     <elements>
-        <element name="GraphData" positionX="-393.4453125" positionY="-38.7734375" width="128" height="118"/>
+        <element name="Dataset" positionX="-500.10546875" positionY="-101.15234375" width="128" height="133"/>
+        <element name="Graph" positionX="-501.00390625" positionY="145.68359375" width="128" height="118"/>
+        <element name="GraphData" positionX="-133.99609375" positionY="164.3359375" width="128" height="88"/>
+        <element name="Settings" positionX="-315" positionY="72" width="128" height="253"/>
     </elements>
 </model>

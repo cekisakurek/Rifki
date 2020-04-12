@@ -41,11 +41,11 @@ class CSVImportOperation: Operation {
                 
                 try data.write(to: fileURL)
                 
-                let graph = NSEntityDescription.insertNewObject(forEntityName: "GraphData", into: CoreDataController.shared.managedObjectContext) as! GraphData
+                let graph = NSEntityDescription.insertNewObject(forEntityName: "Dataset", into: CoreDataController.shared.managedObjectContext) as! Dataset
                 
                 graph.date = Date()
                 graph.remoteURL = self.url.absoluteString
-                graph.localURL = uuid
+                graph.uuid = uuid
                 graph.delimiter = delimiter
                 graph.name = self.datasetName
                 try CoreDataController.shared.managedObjectContext.save()
@@ -74,9 +74,11 @@ class CSVParseOperation: Operation {
     private(set) var result: GraphRawData?
     private(set) var delimiter: String
     private(set) var error: CSVParseOperationError?
+    private(set) var uuid: String
     
     init(uuid: String, delimiter: String) {
         
+        self.uuid = uuid
         if let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
         
             let fileURL = directory.appendingPathComponent(uuid)
@@ -121,7 +123,7 @@ class CSVParseOperation: Operation {
 //            }
             
             let set = GraphRawData(reader: csv)
-            
+            set.uuid = self.uuid
             self.result = set
             
 //            let dataString = String(data: data, encoding: .utf8)!

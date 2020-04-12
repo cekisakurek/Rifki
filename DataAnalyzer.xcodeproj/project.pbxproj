@@ -11,6 +11,7 @@
 		1403ED882434B7AD004633DF /* train.csv in Resources */ = {isa = PBXBuildFile; fileRef = 1403ED862434B78B004633DF /* train.csv */; };
 		140C6BE424395CE5004F9DA3 /* HeatMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C6BE324395CE5004F9DA3 /* HeatMapViewController.swift */; };
 		141BB65E2440E2B900471A54 /* HeatMapCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BB65D2440E2B900471A54 /* HeatMapCalculator.swift */; };
+		141BB6E02441431100471A54 /* PlaygroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BB6DF2441431100471A54 /* PlaygroundViewController.swift */; };
 		142AC6442433BAC300E7D9BF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142AC6432433BAC300E7D9BF /* AppDelegate.swift */; };
 		142AC6462433BAC300E7D9BF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142AC6452433BAC300E7D9BF /* SceneDelegate.swift */; };
 		142AC6482433BAC300E7D9BF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142AC6472433BAC300E7D9BF /* ViewController.swift */; };
@@ -172,17 +173,28 @@
 		1476B6D82439AA3200ACE674 /* SigmaSwiftStatistics in Frameworks */ = {isa = PBXBuildFile; productRef = 1476B6D72439AA3200ACE674 /* SigmaSwiftStatistics */; };
 		1476B6DB2439F18500ACE674 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1476B6DA2439F18500ACE674 /* Array+Extension.swift */; };
 		1476B6DD243A2EB200ACE674 /* KernelDensity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1476B6DC243A2EB200ACE674 /* KernelDensity.swift */; };
+		148C9B752441D57600834FF2 /* CreateGraphCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B742441D57600834FF2 /* CreateGraphCoordinator.swift */; };
+		148C9B772441E23200834FF2 /* PlaygroundGraphDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B762441E23200834FF2 /* PlaygroundGraphDetailsViewController.swift */; };
+		148C9B792442164500834FF2 /* CreateDatasetCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B782442164500834FF2 /* CreateDatasetCoordinator.swift */; };
+		148C9B7B2442195F00834FF2 /* PlaygroundGraphValueSelectionTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B7A2442195F00834FF2 /* PlaygroundGraphValueSelectionTableView.swift */; };
+		148C9B7D24421BA600834FF2 /* CreateGraphTypeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B7C24421BA600834FF2 /* CreateGraphTypeCoordinator.swift */; };
+		148C9B802442507B00834FF2 /* SelectDatasetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B7F2442507B00834FF2 /* SelectDatasetView.swift */; };
+		148C9B8224425A7400834FF2 /* ErrorAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B8124425A7400834FF2 /* ErrorAlertView.swift */; };
+		148C9B8424425FAB00834FF2 /* GridCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B8324425FAB00834FF2 /* GridCollectionViewLayout.swift */; };
+		148C9B862442608900834FF2 /* RawDataCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B852442608900834FF2 /* RawDataCollectionViewCell.swift */; };
+		148C9B89244268F100834FF2 /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B88244268F100834FF2 /* Themes.swift */; };
+		148C9B8C24426CB000834FF2 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B8B24426CB000834FF2 /* SettingsViewController.swift */; };
+		148C9B8E24426DE600834FF2 /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B8D24426DE600834FF2 /* ColorPickerView.swift */; };
+		148C9B9024426E2F00834FF2 /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B8F24426E2F00834FF2 /* ColorPickerViewController.swift */; };
 		14C995FE2433BEA4006BFF40 /* BitcoinTest.csv in Resources */ = {isa = PBXBuildFile; fileRef = 14C995FD2433BEA4006BFF40 /* BitcoinTest.csv */; };
 		14C996022433C497006BFF40 /* DatasetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C996012433C497006BFF40 /* DatasetsViewController.swift */; };
 		14C996052433C4AE006BFF40 /* GraphDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C996042433C4AE006BFF40 /* GraphDetailsViewController.swift */; };
-		14C996072433C6C9006BFF40 /* GraphDetailsValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C996062433C6C9006BFF40 /* GraphDetailsValueCell.swift */; };
 		14C9960A2433CAA4006BFF40 /* AddGraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C996092433CAA4006BFF40 /* AddGraphViewController.swift */; };
 		14C9964C2433D0BA006BFF40 /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C9964B2433D0BA006BFF40 /* CoreDataController.swift */; };
 		14C9964F2433D10A006BFF40 /* Graphs.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 14C9964D2433D10A006BFF40 /* Graphs.xcdatamodeld */; };
 		14C996582433D7C0006BFF40 /* BitcoinTest.csv in Resources */ = {isa = PBXBuildFile; fileRef = 14C995FD2433BEA4006BFF40 /* BitcoinTest.csv */; };
 		14C9965A2433DE66006BFF40 /* SavedGraph+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C996592433DE66006BFF40 /* SavedGraph+File.swift */; };
 		14C9965D24340F1F006BFF40 /* RawDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C9965C24340F1F006BFF40 /* RawDataViewController.swift */; };
-		14C9966024341009006BFF40 /* PlotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C9965F24341009006BFF40 /* PlotViewController.swift */; };
 		14C99663243415B9006BFF40 /* BarPlotView3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C99662243415B9006BFF40 /* BarPlotView3.swift */; };
 		14C996652434223A006BFF40 /* DataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C996642434223A006BFF40 /* DataPoint.swift */; };
 		14F2C50A243DCC0700211AD3 /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 14F2C509243DCC0700211AD3 /* CSV */; };
@@ -216,6 +228,7 @@
 		1403ED862434B78B004633DF /* train.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = train.csv; sourceTree = "<group>"; };
 		140C6BE324395CE5004F9DA3 /* HeatMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeatMapViewController.swift; sourceTree = "<group>"; };
 		141BB65D2440E2B900471A54 /* HeatMapCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeatMapCalculator.swift; sourceTree = "<group>"; };
+		141BB6DF2441431100471A54 /* PlaygroundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundViewController.swift; sourceTree = "<group>"; };
 		142AC6402433BAC300E7D9BF /* DataAnalyzer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DataAnalyzer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		142AC6432433BAC300E7D9BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		142AC6452433BAC300E7D9BF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -383,17 +396,28 @@
 		1476B6D4243991BB00ACE674 /* RowAnalysisDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowAnalysisDescriptionView.swift; sourceTree = "<group>"; };
 		1476B6DA2439F18500ACE674 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		1476B6DC243A2EB200ACE674 /* KernelDensity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KernelDensity.swift; sourceTree = "<group>"; };
+		148C9B742441D57600834FF2 /* CreateGraphCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGraphCoordinator.swift; sourceTree = "<group>"; };
+		148C9B762441E23200834FF2 /* PlaygroundGraphDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundGraphDetailsViewController.swift; sourceTree = "<group>"; };
+		148C9B782442164500834FF2 /* CreateDatasetCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateDatasetCoordinator.swift; sourceTree = "<group>"; };
+		148C9B7A2442195F00834FF2 /* PlaygroundGraphValueSelectionTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundGraphValueSelectionTableView.swift; sourceTree = "<group>"; };
+		148C9B7C24421BA600834FF2 /* CreateGraphTypeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGraphTypeCoordinator.swift; sourceTree = "<group>"; };
+		148C9B7F2442507B00834FF2 /* SelectDatasetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDatasetView.swift; sourceTree = "<group>"; };
+		148C9B8124425A7400834FF2 /* ErrorAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertView.swift; sourceTree = "<group>"; };
+		148C9B8324425FAB00834FF2 /* GridCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewLayout.swift; sourceTree = "<group>"; };
+		148C9B852442608900834FF2 /* RawDataCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawDataCollectionViewCell.swift; sourceTree = "<group>"; };
+		148C9B88244268F100834FF2 /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
+		148C9B8B24426CB000834FF2 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		148C9B8D24426DE600834FF2 /* ColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
+		148C9B8F24426E2F00834FF2 /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
 		14BC0D4F243E10BB007A6C73 /* Graphs 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Graphs 2.xcdatamodel"; sourceTree = "<group>"; };
 		14C995FD2433BEA4006BFF40 /* BitcoinTest.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = BitcoinTest.csv; sourceTree = "<group>"; };
 		14C996012433C497006BFF40 /* DatasetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatasetsViewController.swift; sourceTree = "<group>"; };
 		14C996042433C4AE006BFF40 /* GraphDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphDetailsViewController.swift; sourceTree = "<group>"; };
-		14C996062433C6C9006BFF40 /* GraphDetailsValueCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphDetailsValueCell.swift; sourceTree = "<group>"; };
 		14C996092433CAA4006BFF40 /* AddGraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGraphViewController.swift; sourceTree = "<group>"; };
 		14C9964B2433D0BA006BFF40 /* CoreDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
 		14C9964E2433D10A006BFF40 /* Graphs.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Graphs.xcdatamodel; sourceTree = "<group>"; };
 		14C996592433DE66006BFF40 /* SavedGraph+File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SavedGraph+File.swift"; sourceTree = "<group>"; };
 		14C9965C24340F1F006BFF40 /* RawDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawDataViewController.swift; sourceTree = "<group>"; };
-		14C9965F24341009006BFF40 /* PlotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotViewController.swift; sourceTree = "<group>"; };
 		14C99662243415B9006BFF40 /* BarPlotView3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarPlotView3.swift; sourceTree = "<group>"; };
 		14C996642434223A006BFF40 /* DataPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPoint.swift; sourceTree = "<group>"; };
 		14F2C50B243DD52F00211AD3 /* AddDataSetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDataSetController.swift; sourceTree = "<group>"; };
@@ -447,6 +471,15 @@
 			path = HeatMapViewController;
 			sourceTree = "<group>";
 		};
+		141BB6DE2441430600471A54 /* PlaygroundViewController */ = {
+			isa = PBXGroup;
+			children = (
+				148C9B732441D55400834FF2 /* CreateGraphCoordinator */,
+				141BB6DF2441431100471A54 /* PlaygroundViewController.swift */,
+			);
+			path = PlaygroundViewController;
+			sourceTree = "<group>";
+		};
 		142AC6372433BAC300E7D9BF = {
 			isa = PBXGroup;
 			children = (
@@ -472,6 +505,8 @@
 		142AC6422433BAC300E7D9BF /* DataAnalyzer */ = {
 			isa = PBXGroup;
 			children = (
+				148C9B87244268E500834FF2 /* Themes */,
+				148C9B7E2442506800834FF2 /* CommonUI */,
 				145853CC243D31E300737D5C /* DataAnalyzer.entitlements */,
 				1447918F243CEE690090E5A3 /* Charts */,
 				1476B6D92439F16F00ACE674 /* Extensions */,
@@ -815,6 +850,46 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		148C9B732441D55400834FF2 /* CreateGraphCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				148C9B742441D57600834FF2 /* CreateGraphCoordinator.swift */,
+				148C9B7C24421BA600834FF2 /* CreateGraphTypeCoordinator.swift */,
+				148C9B782442164500834FF2 /* CreateDatasetCoordinator.swift */,
+				148C9B7A2442195F00834FF2 /* PlaygroundGraphValueSelectionTableView.swift */,
+			);
+			path = CreateGraphCoordinator;
+			sourceTree = "<group>";
+		};
+		148C9B7E2442506800834FF2 /* CommonUI */ = {
+			isa = PBXGroup;
+			children = (
+				148C9B762441E23200834FF2 /* PlaygroundGraphDetailsViewController.swift */,
+				148C9B7F2442507B00834FF2 /* SelectDatasetView.swift */,
+				148C9B8124425A7400834FF2 /* ErrorAlertView.swift */,
+				148C9B8324425FAB00834FF2 /* GridCollectionViewLayout.swift */,
+				148C9B8D24426DE600834FF2 /* ColorPickerView.swift */,
+			);
+			path = CommonUI;
+			sourceTree = "<group>";
+		};
+		148C9B87244268E500834FF2 /* Themes */ = {
+			isa = PBXGroup;
+			children = (
+				148C9B88244268F100834FF2 /* Themes.swift */,
+			);
+			path = Themes;
+			sourceTree = "<group>";
+		};
+		148C9B8A24426CA600834FF2 /* SettingsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				148C9B8B24426CB000834FF2 /* SettingsViewController.swift */,
+				148C9B8F24426E2F00834FF2 /* ColorPickerViewController.swift */,
+			);
+			path = SettingsViewController;
+			sourceTree = "<group>";
+		};
 		14C995FC2433BE86006BFF40 /* TestData */ = {
 			isa = PBXGroup;
 			children = (
@@ -827,12 +902,10 @@
 		14C995FF2433C463006BFF40 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				148C9B8A24426CA600834FF2 /* SettingsViewController */,
 				14F2C50E243DEAC300211AD3 /* DASplitViewController */,
 				14C996002433C46B006BFF40 /* DatasetsViewController */,
 				14C996032433C4A3006BFF40 /* GraphDetailsViewController */,
-				1476B6CF24398B7E00ACE674 /* RowAnalysisViewController */,
-				140C6BE224395CD7004F9DA3 /* HeatMapViewController */,
-				14C996082433CA96006BFF40 /* AddGraphViewController */,
 			);
 			path = GUI;
 			sourceTree = "<group>";
@@ -849,10 +922,11 @@
 		14C996032433C4A3006BFF40 /* GraphDetailsViewController */ = {
 			isa = PBXGroup;
 			children = (
-				14C9965E24341000006BFF40 /* PlotViewController */,
 				14C9965B24340F0F006BFF40 /* RawDataViewController */,
+				1476B6CF24398B7E00ACE674 /* RowAnalysisViewController */,
+				140C6BE224395CD7004F9DA3 /* HeatMapViewController */,
+				141BB6DE2441430600471A54 /* PlaygroundViewController */,
 				14C996042433C4AE006BFF40 /* GraphDetailsViewController.swift */,
-				14C996062433C6C9006BFF40 /* GraphDetailsValueCell.swift */,
 			);
 			path = GraphDetailsViewController;
 			sourceTree = "<group>";
@@ -880,16 +954,9 @@
 			isa = PBXGroup;
 			children = (
 				14C9965C24340F1F006BFF40 /* RawDataViewController.swift */,
+				148C9B852442608900834FF2 /* RawDataCollectionViewCell.swift */,
 			);
 			path = RawDataViewController;
-			sourceTree = "<group>";
-		};
-		14C9965E24341000006BFF40 /* PlotViewController */ = {
-			isa = PBXGroup;
-			children = (
-				14C9965F24341009006BFF40 /* PlotViewController.swift */,
-			);
-			path = PlotViewController;
 			sourceTree = "<group>";
 		};
 		14C99661243415A2006BFF40 /* PlotViews */ = {
@@ -907,6 +974,7 @@
 		14F2C50E243DEAC300211AD3 /* DASplitViewController */ = {
 			isa = PBXGroup;
 			children = (
+				14C996082433CA96006BFF40 /* AddGraphViewController */,
 				14F2C50F243DEAD500211AD3 /* DASplitViewController.swift */,
 			);
 			path = DASplitViewController;
@@ -1158,10 +1226,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				14479269243CEE690090E5A3 /* IValueFormatter.swift in Sources */,
+				148C9B862442608900834FF2 /* RawDataCollectionViewCell.swift in Sources */,
 				144792B0243CEE6A0090E5A3 /* ChartDataProvider.swift in Sources */,
 				14479260243CEE690090E5A3 /* PieChartView.swift in Sources */,
 				144792B6243CEE6A0090E5A3 /* BubbleChartDataProvider.swift in Sources */,
 				1447917A243B69C80090E5A3 /* HistogramCalculator.swift in Sources */,
+				148C9B7D24421BA600834FF2 /* CreateGraphTypeCoordinator.swift in Sources */,
 				14479271243CEE6A0090E5A3 /* Platform.swift in Sources */,
 				14479177243B59820090E5A3 /* RowAnalysisHistogramView.swift in Sources */,
 				14479263243CEE690090E5A3 /* IAxisValueFormatter.swift in Sources */,
@@ -1169,13 +1239,17 @@
 				14C9965A2433DE66006BFF40 /* SavedGraph+File.swift in Sources */,
 				14479264243CEE690090E5A3 /* DefaultFillFormatter.swift in Sources */,
 				144792AF243CEE6A0090E5A3 /* BarChartDataProvider.swift in Sources */,
+				148C9B9024426E2F00834FF2 /* ColorPickerViewController.swift in Sources */,
 				14479182243C7E9B0090E5A3 /* ProbabilityDataCalculator.swift in Sources */,
+				148C9B772441E23200834FF2 /* PlaygroundGraphDetailsViewController.swift in Sources */,
+				148C9B752441D57600834FF2 /* CreateGraphCoordinator.swift in Sources */,
 				142AC6482433BAC300E7D9BF /* ViewController.swift in Sources */,
 				14479244243CEE690090E5A3 /* XAxisRendererHorizontalBarChart.swift in Sources */,
 				14479230243CEE690090E5A3 /* BubbleChartRenderer.swift in Sources */,
 				142AC6442433BAC300E7D9BF /* AppDelegate.swift in Sources */,
 				14479247243CEE690090E5A3 /* YAxisRendererRadarChart.swift in Sources */,
 				14F2C510243DEAD500211AD3 /* DASplitViewController.swift in Sources */,
+				148C9B8C24426CB000834FF2 /* SettingsViewController.swift in Sources */,
 				1447928C243CEE6A0090E5A3 /* PieChartDataEntry.swift in Sources */,
 				144792A4243CEE6A0090E5A3 /* IPieChartDataSet.swift in Sources */,
 				14479261243CEE690090E5A3 /* ChartAnimationEasing.swift in Sources */,
@@ -1191,6 +1265,7 @@
 				14479265243CEE690090E5A3 /* DefaultValueFormatter.swift in Sources */,
 				144792A2243CEE6A0090E5A3 /* LineScatterCandleRadarChartDataSet.swift in Sources */,
 				14479293243CEE6A0090E5A3 /* BarLineScatterCandleBubbleChartData.swift in Sources */,
+				148C9B7B2442195F00834FF2 /* PlaygroundGraphValueSelectionTableView.swift in Sources */,
 				14479285243CEE6A0090E5A3 /* AnimatedViewPortJob.swift in Sources */,
 				1447925E243CEE690090E5A3 /* BarChartView.swift in Sources */,
 				1447927E243CEE6A0090E5A3 /* ChartLimitLine.swift in Sources */,
@@ -1210,9 +1285,11 @@
 				1447926A243CEE690090E5A3 /* Fill.swift in Sources */,
 				1476B6D324398D9000ACE674 /* RowAnalysisTableViewCell.swift in Sources */,
 				14479270243CEE6A0090E5A3 /* Platform+Accessibility.swift in Sources */,
+				148C9B792442164500834FF2 /* CreateDatasetCoordinator.swift in Sources */,
 				14479234243CEE690090E5A3 /* YAxisRenderer.swift in Sources */,
 				144792A7243CEE6A0090E5A3 /* IRadarChartDataSet.swift in Sources */,
 				14C9964F2433D10A006BFF40 /* Graphs.xcdatamodeld in Sources */,
+				148C9B802442507B00834FF2 /* SelectDatasetView.swift in Sources */,
 				1447924F243CEE690090E5A3 /* HorizontalBarHighlighter.swift in Sources */,
 				1447926D243CEE6A0090E5A3 /* ViewPortHandler.swift in Sources */,
 				144792AC243CEE6A0090E5A3 /* ILineScatterCandleRadarChartDataSet.swift in Sources */,
@@ -1235,7 +1312,6 @@
 				14479288243CEE6A0090E5A3 /* BarChartDataEntry.swift in Sources */,
 				14479239243CEE690090E5A3 /* XAxisRenderer.swift in Sources */,
 				1447922E243CEE690090E5A3 /* LegendRenderer.swift in Sources */,
-				14C996072433C6C9006BFF40 /* GraphDetailsValueCell.swift in Sources */,
 				144792B1243CEE6A0090E5A3 /* CandleChartDataProvider.swift in Sources */,
 				1447927A243CEE6A0090E5A3 /* LegendEntry.swift in Sources */,
 				14479284243CEE6A0090E5A3 /* ZoomViewJob.swift in Sources */,
@@ -1266,18 +1342,19 @@
 				14479248243CEE690090E5A3 /* PieChartRenderer.swift in Sources */,
 				14479242243CEE690090E5A3 /* TriangleShapeRenderer.swift in Sources */,
 				1476B6DB2439F18500ACE674 /* Array+Extension.swift in Sources */,
+				148C9B89244268F100834FF2 /* Themes.swift in Sources */,
 				1447917E243BF8B90090E5A3 /* ScatterPlotView.swift in Sources */,
 				14479297243CEE6A0090E5A3 /* PieChartDataSet.swift in Sources */,
 				14479289243CEE6A0090E5A3 /* BarChartDataSet.swift in Sources */,
 				142AC6772433BC5D00E7D9BF /* ImportOperationQueue.swift in Sources */,
 				1476B6DD243A2EB200ACE674 /* KernelDensity.swift in Sources */,
 				14479256243CEE690090E5A3 /* RadarChartView.swift in Sources */,
+				148C9B8224425A7400834FF2 /* ErrorAlertView.swift in Sources */,
 				144792A6243CEE6A0090E5A3 /* ILineChartDataSet.swift in Sources */,
 				14479252243CEE690090E5A3 /* ChartHighlighter.swift in Sources */,
 				14479246243CEE690090E5A3 /* XAxisRendererRadarChart.swift in Sources */,
 				14479236243CEE690090E5A3 /* CombinedChartRenderer.swift in Sources */,
 				1476B6D124398B9600ACE674 /* RowAnalysisViewController.swift in Sources */,
-				14C9966024341009006BFF40 /* PlotViewController.swift in Sources */,
 				1447929C243CEE6A0090E5A3 /* PieChartData.swift in Sources */,
 				14C9960A2433CAA4006BFF40 /* AddGraphViewController.swift in Sources */,
 				14479254243CEE690090E5A3 /* CombinedHighlighter.swift in Sources */,
@@ -1287,6 +1364,7 @@
 				14479287243CEE6A0090E5A3 /* ChartData.swift in Sources */,
 				144792A5243CEE6A0090E5A3 /* IScatterChartDataSet.swift in Sources */,
 				1447924A243CEE690090E5A3 /* LineScatterCandleRadarRenderer.swift in Sources */,
+				148C9B8424425FAB00834FF2 /* GridCollectionViewLayout.swift in Sources */,
 				1447928A243CEE6A0090E5A3 /* RadarChartDataEntry.swift in Sources */,
 				1447927F243CEE6A0090E5A3 /* MarkerView.swift in Sources */,
 				144792B3243CEE6A0090E5A3 /* LineChartDataProvider.swift in Sources */,
@@ -1299,6 +1377,7 @@
 				144792A1243CEE6A0090E5A3 /* BarChartData.swift in Sources */,
 				14479253243CEE690090E5A3 /* IHighlighter.swift in Sources */,
 				1447928E243CEE6A0090E5A3 /* CombinedChartData.swift in Sources */,
+				141BB6E02441431100471A54 /* PlaygroundViewController.swift in Sources */,
 				14479275243CEE6A0090E5A3 /* ChartUtils.swift in Sources */,
 				1447923E243CEE690090E5A3 /* ChevronDownShapeRenderer.swift in Sources */,
 				1447926B243CEE6A0090E5A3 /* Transformer.swift in Sources */,
@@ -1326,6 +1405,7 @@
 				14479237243CEE690090E5A3 /* CandleStickChartRenderer.swift in Sources */,
 				14479278243CEE6A0090E5A3 /* MarkerImage.swift in Sources */,
 				1447926E243CEE6A0090E5A3 /* Platform+Gestures.swift in Sources */,
+				148C9B8E24426DE600834FF2 /* ColorPickerView.swift in Sources */,
 				14C996022433C497006BFF40 /* DatasetsViewController.swift in Sources */,
 				144792A8243CEE6A0090E5A3 /* IBarChartDataSet.swift in Sources */,
 				144792AA243CEE6A0090E5A3 /* IChartDataSet.swift in Sources */,

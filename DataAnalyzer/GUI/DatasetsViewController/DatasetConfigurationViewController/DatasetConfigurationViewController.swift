@@ -34,15 +34,12 @@ class DelimiterSelectionTableView: UITableViewController {
     override func loadView() {
         super.loadView()
         
-        
-        
         delimiters = [comma, semicolon, tab, colon, pipe]
     
-        
         self.tableView.estimatedRowHeight = 100.0;
-        self.tableView.register(DatasetNameTableViewCell.self, forCellReuseIdentifier: "NameCell")
+        self.tableView.register(NameInputTableViewCell.self, forCellReuseIdentifier: "NameCell")
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        self.tableView.register(DatasetStaticTextTableViewCell.self, forCellReuseIdentifier: "StaticValueCell")
+        self.tableView.register(StaticTextTableViewCell.self, forCellReuseIdentifier: "StaticValueCell")
         
     }
     
@@ -57,14 +54,11 @@ class DelimiterSelectionTableView: UITableViewController {
         return nil
     }
     
-    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return delimiters.count
     }
     
@@ -93,25 +87,35 @@ class DelimiterSelectionTableView: UITableViewController {
 
 
 
-class DatasetConfigurationViewController: UITableViewController, DelimiterSelectionDelegate, DatasetNamingProtocol {
+class DatasetConfigurationViewController: UITableViewController, DelimiterSelectionDelegate, ObjectNamingProtocol {
     
-    var dataset: GraphData!
+    var dataset: Dataset!
     
     var rawData: GraphRawData!
     
     override func loadView() {
         super.loadView()
         
-        
         if let name = dataset.name {
             self.title = name
         }
 
         self.tableView.estimatedRowHeight = 100.0;
-        self.tableView.register(DatasetNameTableViewCell.self, forCellReuseIdentifier: "NameCell")
+        self.tableView.register(NameInputTableViewCell.self, forCellReuseIdentifier: "NameCell")
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        self.tableView.register(DatasetStaticTextTableViewCell.self, forCellReuseIdentifier: "StaticValueCell")
-        
+        self.tableView.register(StaticTextTableViewCell.self, forCellReuseIdentifier: "StaticValueCell")
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let dataset = dataset {
+            do {
+                try dataset.managedObjectContext?.save()
+            }
+            catch {
+                ErrorAlertView.showError(with: String(describing: error), from: self)
+            }
+        }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -124,15 +128,12 @@ class DatasetConfigurationViewController: UITableViewController, DelimiterSelect
         }
         return nil
     }
-    
-    
+
     override func numberOfSections(in tableView: UITableView) -> Int {
-        
         return 1
     }
    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         switch section {
             case 0:
                 return 3
@@ -142,30 +143,25 @@ class DatasetConfigurationViewController: UITableViewController, DelimiterSelect
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         switch indexPath.section {
             case 0:
                 switch indexPath.row {
                 case 0:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "NameCell", for: indexPath) as! DatasetNameTableViewCell
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "NameCell", for: indexPath) as! NameInputTableViewCell
                     cell.setName(dataset.name)
                     cell.nameFieldChangeDelegate = self
                     return cell
-                    
                 case 1:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "StaticValueCell", for: indexPath) as! DatasetStaticTextTableViewCell
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "StaticValueCell", for: indexPath) as! StaticTextTableViewCell
                     cell.accessoryType = .disclosureIndicator
                     let nameString = NSLocalizedString("Delimiter", comment: "") + " :"
                     let valueString = " '\(dataset.delimiter ?? "")' "
                     cell.setValueName(nameString , value: valueString)
-                    
                     return cell
                 case 2:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "StaticValueCell", for: indexPath) as! DatasetStaticTextTableViewCell
-                    cell.setValueName( NSLocalizedString("File Id", comment: ""), value: dataset.localURL)
-                    
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "StaticValueCell", for: indexPath) as! StaticTextTableViewCell
+                    cell.setValueName( NSLocalizedString("File Id", comment: ""), value: dataset.uuid)
                     return cell
-                    
                 default:
                     break
             }
@@ -177,10 +173,6 @@ class DatasetConfigurationViewController: UITableViewController, DelimiterSelect
             default:
             break
         }
-        
-        
-        
-
         return tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
     }
     
@@ -193,7 +185,6 @@ class DatasetConfigurationViewController: UITableViewController, DelimiterSelect
             viewController.selectionDelegate = self
             self.navigationController?.pushViewController(viewController, animated: true)
         }
-        
     }
     
     func delimiterSelected(delimiter: Delimiter) {
@@ -201,33 +192,32 @@ class DatasetConfigurationViewController: UITableViewController, DelimiterSelect
         tableView.reloadData()
     }
     
-    func datasetNameFieldChanged(toString: String?) {
+    func objectNameFieldChanged(toString: String?) {
         dataset.name = toString
     }
 }
 
 
-protocol DatasetNamingProtocol: class {
+protocol ObjectNamingProtocol: class {
     
-    func datasetNameFieldChanged(toString: String?)
+    func objectNameFieldChanged(toString: String?)
 }
 
 
-class DatasetNameTableViewCell: UITableViewCell, UITextFieldDelegate {
+class NameInputTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     private var nameField: UITextField!
     
-    weak var nameFieldChangeDelegate: DatasetNamingProtocol?
+    weak var nameFieldChangeDelegate: ObjectNamingProtocol?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
                 
-        
+        self.selectionStyle = .none
         nameField = UITextField(frame: .zero)
         nameField.translatesAutoresizingMaskIntoConstraints = false
         nameField.placeholder = NSLocalizedString("Name:", comment: "")
         nameField.font = UIFont.boldSystemFont(ofSize: 16)
-//        nameField.delegate = self
         nameField.addTarget(self, action: #selector(nameDidChange), for: .editingChanged)
 
         self.contentView.addSubview(nameField)
@@ -253,13 +243,13 @@ class DatasetNameTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     @objc func nameDidChange() {
         if let delegate = nameFieldChangeDelegate {
-            delegate.datasetNameFieldChanged(toString: nameField.text)
+            delegate.objectNameFieldChanged(toString: nameField.text)
         }
     }
-    
 }
 
-class DatasetStaticTextTableViewCell: UITableViewCell {
+
+class StaticTextTableViewCell: UITableViewCell {
     
     private var staticTextLabel: UILabel!
     private var staticValueLabel: UILabel!
@@ -267,17 +257,15 @@ class DatasetStaticTextTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
                 
-        
+        self.accessoryType = .disclosureIndicator
         staticTextLabel = UILabel(frame: .zero)
         staticTextLabel.translatesAutoresizingMaskIntoConstraints = false
         
-
         staticValueLabel = UILabel(frame: .zero)
         staticValueLabel.translatesAutoresizingMaskIntoConstraints = false
         staticValueLabel.adjustsFontSizeToFitWidth = true
         staticValueLabel.minimumScaleFactor = 0.2
         
-
         self.contentView.addSubview(staticTextLabel)
         self.contentView.addSubview(staticValueLabel)
         
@@ -292,8 +280,6 @@ class DatasetStaticTextTableViewCell: UITableViewCell {
             staticValueLabel.topAnchor.constraint(equalTo: staticTextLabel.topAnchor),
             staticValueLabel.bottomAnchor.constraint(equalTo: staticTextLabel.bottomAnchor),
             staticValueLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -margin),
-            
-            
             staticTextLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 50.0)
             
         ])
@@ -307,5 +293,4 @@ class DatasetStaticTextTableViewCell: UITableViewCell {
         staticTextLabel.text = name
         staticValueLabel.text = value
     }
-    
 }

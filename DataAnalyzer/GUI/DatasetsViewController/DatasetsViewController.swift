@@ -11,9 +11,11 @@ import CoreData
 
 class DatasetsViewController: UITableViewController, NSFetchedResultsControllerDelegate {
         
-    var fetchedResultsController: NSFetchedResultsController<GraphData>!
+    var fetchedResultsController: NSFetchedResultsController<Dataset>!
     
     var parseQueue = ImportOperationQueue()
+    
+    var loadedDatasetUUID: String?
     
     override func loadView() {
         
@@ -36,7 +38,7 @@ class DatasetsViewController: UITableViewController, NSFetchedResultsControllerD
     func loadSavedData() {
         
         if self.fetchedResultsController == nil {
-            let request: NSFetchRequest<GraphData> = GraphData.fetchRequest()
+            let request: NSFetchRequest<Dataset> = Dataset.fetchRequest()
             let sort = NSSortDescriptor(key: "date", ascending: false)
             request.sortDescriptors = [sort]
             request.fetchBatchSize = 20
@@ -48,8 +50,9 @@ class DatasetsViewController: UITableViewController, NSFetchedResultsControllerD
             do {
                 try self.fetchedResultsController.performFetch()
                 self.tableView.reloadData()
-            } catch {
-                print("Fetch failed")
+            }
+            catch {
+                ErrorAlertView.showError(with: String(describing: error), from: self)
             }
         }
     }
@@ -59,7 +62,7 @@ class DatasetsViewController: UITableViewController, NSFetchedResultsControllerD
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if let fetchedResultsController = fetchedResultsController,
-            let sectionInfo = fetchedResultsController.sections?[0]{
+            let sectionInfo = fetchedResultsController.sections?[section]{
             
             return sectionInfo.numberOfObjects
         }
@@ -77,7 +80,7 @@ class DatasetsViewController: UITableViewController, NSFetchedResultsControllerD
             cell.textLabel?.text = name
         }
         else {
-            cell.textLabel?.text = graph.localURL
+            cell.textLabel?.text = graph.uuid
         }
         return cell
     }
@@ -85,72 +88,14 @@ class DatasetsViewController: UITableViewController, NSFetchedResultsControllerD
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        self.collapseDetailViewController = false
         
-        let graph = fetchedResultsController.object(at: indexPath)
-
-        if self.splitViewController!.viewControllers.count > 1 {
-            // splittable
-            if let splitDelegate = self.splitViewController?.delegate as? SplitViewDelegate {
-                let parseCSVOperation = CSVParseOperation(uuid: graph.localURL!, delimiter: graph.delimiter!)
-                
-                parseCSVOperation.completionBlock =
-                {
-                        DispatchQueue.main.sync {
-                            
-                            if parseCSVOperation.error == nil {
-                                splitDelegate.graphDetailsViewController?.dataset  = parseCSVOperation.result
-                            }
-                        }
-                }
-                
-                parseQueue.queue.addOperation(parseCSVOperation)
-            }
-        }
-        else {
-//            if let splitDelegate = self.splitViewController?.delegate as? SplitViewDelegate,
-//                let navigationController = self.splitViewController?.viewControllers[0] as? UINavigationController {
-//                let parseCSVOperation = CSVParseOperation(uuid: graph.localURL!, delimiter: graph.delimiter!)
-//                parseCSVOperation.completionBlock =
-//                { [weak self] in
-//                        DispatchQueue.main.sync {
-//
-//                            let detailsViewController = GraphDetailsViewController()
-//                            detailsViewController.dataset = parseCSVOperation.result
-//
-////                            splitDelegate.graphDetailsViewController?.dataset  = parseCSVOperation.result
-//                            navigationController.pushViewController(detailsViewController, animated: true)
-//                            //                    graphDetailsViewController.dataset = parseCSVOperation.result
-////                            self?.hide()
-//                            //                    self?.splitViewController?.toggleMasterView()
-//                        }
-//                }
-//
-//                parseQueue.queue.addOperation(parseCSVOperation)
-//
-//
-//            }
-        }
+        self.parseAndPushGraph(at: indexPath)
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//
-//    }
-    
-//    override func tableView(_ tableView: UITableView,
-//                            leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
-//    {
-//        let editAction = UIContextualAction(style: .normal, title:  "Edit", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-//            success(true)
-//        })
-//        editAction.backgroundColor = .blue
-//
-//        return UISwipeActionsConfiguration(actions: [editAction])
-//    }
     
     override func tableView(_ tableView: UITableView,
                             trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
@@ -167,15 +112,19 @@ class DatasetsViewController: UITableViewController, NSFetchedResultsControllerD
             
             success(true)
         })
-        editAction.backgroundColor = .blue
+        editAction.backgroundColor = UIColor.blue.withAlphaComponent(0.7)
         
         let deleteAction = UIContextualAction(style: .normal, title:  "Delete", handler: {
             [weak self]  (ac:UIContextualAction, view:UIView, success: (Bool) -> Void) in
             
             let graph = self?.fetchedResultsController.object(at: indexPath)
             
-            graph?.deleteFile()
-            
+            do {
+                try graph?.deleteFile()
+            }
+            catch {
+                ErrorAlertView.showError(with: String(describing: error), from: self!)
+            }
             
             success(true)
         })
@@ -186,15 +135,66 @@ class DatasetsViewController: UITableViewController, NSFetchedResultsControllerD
     
     // MARK: - NSFetchedResultsControllerDelegate
     
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        
+        if type == .delete {
+            
+            if let graph = anObject as? Dataset,
+                graph.uuid == self.loadedDatasetUUID {
+                
+                if let splitDelegate = self.splitViewController?.delegate as? SplitViewDelegate {
+                    splitDelegate.graphDetailsViewController?.dataset  = nil
+                }
+            }
+        }
+    }
+    
+    
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         
         DispatchQueue.main.async {
+            [weak self] in
+            
+            guard let self = self else {
+                return
+            }
+            
             self.tableView.reloadData()
         }
-        
     }
     
     // MARK: - Other Functions
+    
+    func parseAndPushGraph(at indexPath: IndexPath) {
+        let graph = fetchedResultsController.object(at: indexPath)
+
+        if self.splitViewController!.viewControllers.count > 1 {
+            // splittable
+            if let splitDelegate = self.splitViewController?.delegate as? SplitViewDelegate {
+                let parseCSVOperation = CSVParseOperation(uuid: graph.uuid!, delimiter: graph.delimiter!)
+                splitDelegate.graphDetailsViewController?.loadingDataset()
+                parseCSVOperation.completionBlock =
+                {
+                    [weak self] in
+                    
+                    DispatchQueue.main.sync {
+                        
+                        if parseCSVOperation.error == nil {
+                            
+                            self?.loadedDatasetUUID = graph.uuid!
+                            splitDelegate.graphDetailsViewController?.datasetLoaded()
+                            splitDelegate.graphDetailsViewController?.dataset  = parseCSVOperation.result
+                        }
+                        else {
+                            ErrorAlertView.showError(with: String(describing: parseCSVOperation.error), from: self!)
+                        }
+                    }
+                }
+                
+                parseQueue.queue.addOperation(parseCSVOperation)
+            }
+        }
+    }
     
     @objc func addGraph() {
         

@@ -21,7 +21,7 @@ class ImportOperationQueue {
 }
 
 
-typealias CalculationHandler = (_ data: BarDataSet?, _ indexPath: IndexPath?, _ error: Error?) -> Void
+typealias CalculationHandler = (_ data: HistorgramResult?, _ indexPath: IndexPath?, _ error: Error?) -> Void
 
 typealias ProbabilityDistributionCalculationHandler = (_ data: ProbabilityPlotDataSet?, _ indexPath: IndexPath?, _ error: Error?) -> Void
 
@@ -81,7 +81,7 @@ class CalculationsOperationQueue {
         
     }
     
-    func calculate(_ data: [Double], indexPath: IndexPath?, handler: @escaping CalculationHandler) {
+    func calculateDistribution(_ data: [Double], indexPath: IndexPath?, handler: @escaping CalculationHandler) {
         
         let hash = String(indexPath.hashValue)
         

@@ -7,7 +7,7 @@
 //
 
 import CoreData
-
+import UIKit
 
 class CoreDataController {
     
@@ -99,11 +99,45 @@ class CoreDataController {
                 //The callback block is expected to complete the User Interface and therefore should be presented back on the main queue so that the user interface does not need to be concerned with which queue this call is coming from.
 //                DispatchQueue.main.sync(execute: completionClosure)
                 DispatchQueue.main.sync {
+                    writeDefaults(inContext: shared.managedObjectContext)
                     completionClosure(shared)
                 }
             } catch {
                 fatalError("Error migrating store: \(error)")
             }
         }
+    }
+    
+    private class func writeDefaults(inContext: NSManagedObjectContext) {
+        
+        do {
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Settings")
+            let settings = try inContext.fetch(fetchRequest) as! [Settings]
+            if settings.first == nil {
+                let settingsObject = NSEntityDescription.insertNewObject(forEntityName: "Settings", into: CoreDataController.shared.managedObjectContext) as! Settings
+                
+                settingsObject.pgYAxisTextColor = UIColor.black
+                settingsObject.pgXAxisTextColor = UIColor.black
+                settingsObject.pgNormalLineWidth = Double(2.0)
+                settingsObject.pgNormalLineColor = UIColor.red
+                settingsObject.pgCircleColor = UIColor(red: 140.0/255.0, green: 234.0/255.0, blue: 255.0/255.0, alpha: 1.0)
+                settingsObject.pgBackgroundColor = UIColor.red
+                settingsObject.dgYAxisTextColor = UIColor.black
+                settingsObject.dgXAxisTextColor = UIColor.black
+                settingsObject.dgNormalLineWidth = Double(2.0)
+                settingsObject.dgNormalLineColor = UIColor.brown
+                settingsObject.dgFrequencyLineWidth = Double(2.0)
+                settingsObject.dgFrequencyLineColor = UIColor.white
+                settingsObject.dgBarColor = UIColor(red: 140.0/255.0, green: 234.0/255.0, blue: 255.0/255.0, alpha: 1.0)
+                settingsObject.dgBackgroundColor = UIColor.white
+                
+                try inContext.save()
+            }
+            
+        }
+        catch {
+            
+        }
+        
     }
 }
