@@ -33,3 +33,11 @@ class ProbabilityGraphTheme {
     var normalLineColor = UIColor.red
     var normalLineWidth = CGFloat(2.0)
 }
+
+class HeatmapTheme {
+    
+    var maxColor = UIColor(red: CGFloat(94.0/255.0), green: CGFloat(15.0/255.0), blue: CGFloat(32.0/255.0), alpha: 1.0)
+    var minColor = UIColor(red: CGFloat(17.0/255.0), green: CGFloat(49.0/255.0), blue: CGFloat(94.0/255.0), alpha: 1.0)
+    var valuesVisible = false
+}
+

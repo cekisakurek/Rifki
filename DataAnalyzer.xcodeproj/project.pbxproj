@@ -197,6 +197,9 @@
 		14C9965D24340F1F006BFF40 /* RawDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C9965C24340F1F006BFF40 /* RawDataViewController.swift */; };
 		14C99663243415B9006BFF40 /* BarPlotView3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C99662243415B9006BFF40 /* BarPlotView3.swift */; };
 		14C996652434223A006BFF40 /* DataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C996642434223A006BFF40 /* DataPoint.swift */; };
+		14EE7E7B2444750200AD5D2C /* AnalysisTabSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EE7E7A2444750200AD5D2C /* AnalysisTabSettingsViewController.swift */; };
+		14EE7E7D2444754300AD5D2C /* HeatmapSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EE7E7C2444754300AD5D2C /* HeatmapSettingsViewController.swift */; };
+		14EE7E7F24448BDB00AD5D2C /* CreateThemeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EE7E7E24448BDB00AD5D2C /* CreateThemeCoordinator.swift */; };
 		14F2C50A243DCC0700211AD3 /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 14F2C509243DCC0700211AD3 /* CSV */; };
 		14F2C50C243DD52F00211AD3 /* AddDataSetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2C50B243DD52F00211AD3 /* AddDataSetController.swift */; };
 		14F2C510243DEAD500211AD3 /* DASplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2C50F243DEAD500211AD3 /* DASplitViewController.swift */; };
@@ -420,6 +423,9 @@
 		14C9965C24340F1F006BFF40 /* RawDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawDataViewController.swift; sourceTree = "<group>"; };
 		14C99662243415B9006BFF40 /* BarPlotView3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarPlotView3.swift; sourceTree = "<group>"; };
 		14C996642434223A006BFF40 /* DataPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPoint.swift; sourceTree = "<group>"; };
+		14EE7E7A2444750200AD5D2C /* AnalysisTabSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisTabSettingsViewController.swift; sourceTree = "<group>"; };
+		14EE7E7C2444754300AD5D2C /* HeatmapSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeatmapSettingsViewController.swift; sourceTree = "<group>"; };
+		14EE7E7E24448BDB00AD5D2C /* CreateThemeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateThemeCoordinator.swift; sourceTree = "<group>"; };
 		14F2C50B243DD52F00211AD3 /* AddDataSetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDataSetController.swift; sourceTree = "<group>"; };
 		14F2C50F243DEAD500211AD3 /* DASplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DASplitViewController.swift; sourceTree = "<group>"; };
 		14F2C512243DF9F500211AD3 /* DatasetConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatasetConfigurationViewController.swift; sourceTree = "<group>"; };
@@ -856,6 +862,7 @@
 				148C9B742441D57600834FF2 /* CreateGraphCoordinator.swift */,
 				148C9B7C24421BA600834FF2 /* CreateGraphTypeCoordinator.swift */,
 				148C9B782442164500834FF2 /* CreateDatasetCoordinator.swift */,
+				14EE7E7E24448BDB00AD5D2C /* CreateThemeCoordinator.swift */,
 				148C9B7A2442195F00834FF2 /* PlaygroundGraphValueSelectionTableView.swift */,
 			);
 			path = CreateGraphCoordinator;
@@ -886,6 +893,8 @@
 			children = (
 				148C9B8B24426CB000834FF2 /* SettingsViewController.swift */,
 				148C9B8F24426E2F00834FF2 /* ColorPickerViewController.swift */,
+				14EE7E7A2444750200AD5D2C /* AnalysisTabSettingsViewController.swift */,
+				14EE7E7C2444754300AD5D2C /* HeatmapSettingsViewController.swift */,
 			);
 			path = SettingsViewController;
 			sourceTree = "<group>";
@@ -1237,6 +1246,7 @@
 				14479263243CEE690090E5A3 /* IAxisValueFormatter.swift in Sources */,
 				14479299243CEE6A0090E5A3 /* ChartDataSet.swift in Sources */,
 				14C9965A2433DE66006BFF40 /* SavedGraph+File.swift in Sources */,
+				14EE7E7F24448BDB00AD5D2C /* CreateThemeCoordinator.swift in Sources */,
 				14479264243CEE690090E5A3 /* DefaultFillFormatter.swift in Sources */,
 				144792AF243CEE6A0090E5A3 /* BarChartDataProvider.swift in Sources */,
 				148C9B9024426E2F00834FF2 /* ColorPickerViewController.swift in Sources */,
@@ -1295,7 +1305,9 @@
 				144792AC243CEE6A0090E5A3 /* ILineScatterCandleRadarChartDataSet.swift in Sources */,
 				1447925A243CEE690090E5A3 /* HorizontalBarChartView.swift in Sources */,
 				14479281243CEE6A0090E5A3 /* AnimatedZoomViewJob.swift in Sources */,
+				14EE7E7D2444754300AD5D2C /* HeatmapSettingsViewController.swift in Sources */,
 				1447929B243CEE6A0090E5A3 /* ScatterChartData.swift in Sources */,
+				14EE7E7B2444750200AD5D2C /* AnalysisTabSettingsViewController.swift in Sources */,
 				1447923A243CEE690090E5A3 /* LineRadarRenderer.swift in Sources */,
 				144792A0243CEE6A0090E5A3 /* RadarChartDataSet.swift in Sources */,
 				141BB65E2440E2B900471A54 /* HeatMapCalculator.swift in Sources */,

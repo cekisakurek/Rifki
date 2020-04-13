@@ -10,8 +10,7 @@ import UIKit
 
 class SettingsViewController: UITableViewController {
     
-    
-    let items = [NSLocalizedString("Analysis Tab", comment: "")]
+    let items = [NSLocalizedString("Analysis Tab", comment: ""),NSLocalizedString("Heatmap Tab", comment: "")]
     
     override func loadView() {
         super.loadView()
@@ -30,6 +29,9 @@ class SettingsViewController: UITableViewController {
     }
     
     @objc func dismissController() {
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "SettingsChanged"), object: nil)
+        
         self.dismiss(animated: true) {
             
         }
@@ -39,16 +41,14 @@ class SettingsViewController: UITableViewController {
         return UITableView.automaticDimension
     }
     
-
     override func numberOfSections(in tableView: UITableView) -> Int {
-        
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return 1
+        return items.count
     }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let item = items[indexPath.row]
@@ -63,232 +63,16 @@ class SettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let pickerViewController = DistributionGraphSettingsViewController()
-        self.navigationController?.pushViewController(pickerViewController, animated: true)
-        
+        if indexPath.row == 0 {
+            let pickerViewController = AnalysisTabSettingsViewController()
+            self.navigationController?.pushViewController(pickerViewController, animated: true)
+        }
+        else if indexPath.row == 1 {
+            let pickerViewController = HeatmapSettingsViewController()
+            self.navigationController?.pushViewController(pickerViewController, animated: true)
+        }
     }
 }
-
-
-
-
-
-class DistributionGraphSettingsViewController: UITableViewController, ColorPickerFromTableViewDelegate {
-    
-    func colorPicker(_ picker: ColorPickerViewController, didChange color: UIColor, forIndexPath: IndexPath) {
-        distributionGraphChangeColor(color, index: forIndexPath.row)
-        tableView.reloadData()
-    }
-    
-    
-    class DistributionGraphFrequencyLineWidthDelegate: ObjectValueInputProtocol {
-        
-        weak var settings: Settings?
-        
-        func valueInputFieldChanged(toValue: Double?) {
-            if let settings = settings,
-                let value = toValue {
-                settings.dgFrequencyLineWidth = value
-            }
-        }
-    }
-
-    class DistributionGraphNormalLineWidthDelegate: ObjectValueInputProtocol {
-        
-        weak var settings: Settings?
-        
-        func valueInputFieldChanged(toValue: Double?) {
-            if let settings = settings,
-                let value = toValue {
-                settings.dgNormalLineWidth = value
-            }
-        }
-    }
-    
-    var frequencyLineDelegate = DistributionGraphFrequencyLineWidthDelegate()
-    var normalLineDelegate = DistributionGraphNormalLineWidthDelegate()
-    
-    var settings: Settings?
-    
-    let distributionGraphItems = ["Background Color",
-                                  "X-Axis Text Color",
-                                  "Y-Axis Text Color",
-                                  "Bar Color",
-                                  "Frequency Line Color",
-                                  "Frequency Line Width",
-                                  "Normal Line Color",
-                                  "Normal Line Width"]
-    
-    func distributionGraphValueForIndex(_ index: Int) -> Double? {
-        switch index {
-            case 5:
-                return Double(settings!.dgFrequencyLineWidth)
-            case 7:
-                return Double(settings!.dgNormalLineWidth)
-            default:
-                return nil
-        }
-    }
-    
-    func distributionGraphChangeColor(_ color: UIColor, index: Int) {
-        switch index {
-            case 0:
-                settings?.dgBackgroundColor = color
-            case 1:
-                settings?.dgXAxisTextColor = color
-            case 2:
-                settings?.dgYAxisTextColor = color
-            case 3:
-                settings?.dgBarColor = color
-            case 4:
-                settings?.dgFrequencyLineColor = color
-            case 5:
-                break
-            case 6:
-                settings?.dgNormalLineColor = color
-            case 7:
-                break
-            default:
-                break;
-        }
-    }
-    
-    func distributionGraphColorForIndex(_ index: Int) -> UIColor? {
-        switch index {
-            case 0:
-                return settings?.dgBackgroundColor as? UIColor
-            case 1:
-                return settings?.dgXAxisTextColor as? UIColor
-            case 2:
-                return settings?.dgYAxisTextColor as? UIColor
-            case 3:
-                return settings?.dgBarColor as? UIColor
-            case 4:
-                return settings?.dgFrequencyLineColor as? UIColor
-            case 5:
-                return nil // frequency line width
-            case 6:
-                return settings?.dgNormalLineColor as? UIColor
-            case 7:
-                return nil // normal line width
-            default:
-                return nil
-        }
-    }
-    
-    override func loadView() {
-        super.loadView()
-        
-        self.view.backgroundColor = UIColor.white
-        
-        self.title = NSLocalizedString("Settings", comment: "")
-        
-        self.tableView.estimatedRowHeight = 100.0;
-        self.tableView.register(NameInputTableViewCell.self, forCellReuseIdentifier: "NameCell")
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        self.tableView.register(ColorSelectionTableViewCell.self, forCellReuseIdentifier: "ColorCell")
-        self.tableView.register(DoubleValueInputTableViewCell.self, forCellReuseIdentifier: "DoubleValueCell")
-        
-        
-        do {
-            let context = CoreDataController.shared.managedObjectContext
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Settings")
-            let settings = try context!.fetch(fetchRequest) as! [Settings]
-            if let settingsObject = settings.first {
-                self.settings = settingsObject
-                self.frequencyLineDelegate.settings = self.settings
-                self.normalLineDelegate.settings = self.settings
-            }
-        }
-        catch {
-            ErrorAlertView.showError(with: String(describing: error), from: self)
-        }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        do {
-            try CoreDataController.shared.managedObjectContext.save()
-            //            try self.settings?.managedObjectContext?.save()
-        }
-        catch {
-            ErrorAlertView.showError(with: String(describing: error), from: self)
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return NSLocalizedString("Distribution Graph", comment: "")
-        }
-        else if section == 1 {
-            return NSLocalizedString("Probability Graph", comment: "")
-        }
-        return nil
-        
-    }
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return distributionGraphItems.count
-        }
-        return 0
-    }
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if indexPath.section == 0 {
-            let item = distributionGraphItems[indexPath.row]
-                        
-            if let color = distributionGraphColorForIndex(indexPath.row) {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "ColorCell", for: indexPath) as! ColorSelectionTableViewCell
-                cell.accessoryType = .disclosureIndicator
-                cell.setValueName(item, color: color)
-                return cell
-            }
-            else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "DoubleValueCell", for: indexPath) as! DoubleValueInputTableViewCell
-                cell.accessoryType = .none
-                if indexPath.row == 5 {
-                    cell.valueFieldChangeDelegate = self.frequencyLineDelegate
-                }
-                if indexPath.row == 7 {
-                    cell.valueFieldChangeDelegate = self.normalLineDelegate
-                }
-                
-                
-                let value = distributionGraphValueForIndex(indexPath.row)
-                cell.setValueName(item, value: value)
-                return cell
-            }
-        }
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.accessoryType = .none
-        return cell
-        
-    }
-    
-    // MARK: - UITableViewDelegate
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let pickerViewController = ColorPickerViewController()
-        pickerViewController.fromIndexPath = indexPath
-        pickerViewController.tableColorDelegate = self
-        self.navigationController?.pushViewController(pickerViewController, animated: true)
-        
-    }
-}
-
-
-
 
 
 class ColorSelectionTableViewCell: UITableViewCell {
@@ -302,10 +86,12 @@ class ColorSelectionTableViewCell: UITableViewCell {
         self.accessoryType = .disclosureIndicator
         staticTextLabel = UILabel(frame: .zero)
         staticTextLabel.translatesAutoresizingMaskIntoConstraints = false
+//        staticTextLabel.layer.borderColor = UIColor.lightGray.cgColor
+//        staticTextLabel.layer.borderWidth = 1.0
         
         colorView = UIView(frame: .zero)
         colorView.layer.cornerRadius = 4.0
-        colorView.layer.borderColor = UIColor.lightGray.cgColor
+        colorView.layer.borderColor = UIColor(white: 215.0/255.0, alpha: 1.0).cgColor
         colorView.layer.borderWidth = 1.0
         colorView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -322,7 +108,7 @@ class ColorSelectionTableViewCell: UITableViewCell {
             
             colorView.topAnchor.constraint(equalTo: staticTextLabel.topAnchor),
             colorView.bottomAnchor.constraint(equalTo: staticTextLabel.bottomAnchor),
-            colorView.widthAnchor.constraint(equalToConstant: 50.0),
+            colorView.widthAnchor.constraint(equalToConstant: 80.0),
             colorView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -margin),
             staticTextLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 50.0)
             
@@ -339,6 +125,82 @@ class ColorSelectionTableViewCell: UITableViewCell {
         
     }
     
+}
+
+protocol ObjectBooleanInputProtocol: class {
+    
+    func valueInputFieldChanged(toValue: Bool)
+}
+
+class BoolValueInputTableViewCell: UITableViewCell, UITextFieldDelegate {
+    
+    private var staticTextLabel: UILabel!
+    
+    private var valueSwitchContainer: UIView!
+    private var valueSwitch: UISwitch!
+    
+    weak var valueSwitchChangeDelegate: ObjectBooleanInputProtocol?
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        self.accessoryType = .disclosureIndicator
+        staticTextLabel = UILabel(frame: .zero)
+        staticTextLabel.translatesAutoresizingMaskIntoConstraints = false
+//        staticTextLabel.layer.borderColor = UIColor.lightGray.cgColor
+//        staticTextLabel.layer.borderWidth = 1.0
+        
+        
+        valueSwitchContainer = UIView(frame: .zero)
+        valueSwitchContainer.translatesAutoresizingMaskIntoConstraints = false
+//        valueSwitchContainer.layer.borderColor = UIColor.lightGray.cgColor
+//        valueSwitchContainer.layer.borderWidth = 1.0
+        
+        valueSwitch = UISwitch(frame: .zero)
+        valueSwitch.translatesAutoresizingMaskIntoConstraints = false
+        valueSwitch.addTarget(self, action: #selector(valueDidChange), for: .valueChanged)
+        
+        
+        
+        self.contentView.addSubview(staticTextLabel)
+        self.contentView.addSubview(valueSwitchContainer)
+        valueSwitchContainer.addSubview(valueSwitch)
+        
+        let margin = CGFloat(8.0)
+        
+        NSLayoutConstraint.activate([
+            staticTextLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: margin),
+            staticTextLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: margin),
+            staticTextLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -margin),
+            staticTextLabel.trailingAnchor.constraint(equalTo: valueSwitchContainer.leadingAnchor, constant: -margin),
+            
+            valueSwitchContainer.topAnchor.constraint(equalTo: staticTextLabel.topAnchor),
+            valueSwitchContainer.bottomAnchor.constraint(equalTo: staticTextLabel.bottomAnchor),
+            valueSwitchContainer.widthAnchor.constraint(equalToConstant: 80.0),
+            valueSwitchContainer.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -margin - 30.0),
+            staticTextLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 50.0),
+            
+            valueSwitch.centerYAnchor.constraint(equalTo: valueSwitchContainer.centerYAnchor),
+            valueSwitch.centerXAnchor.constraint(equalTo: valueSwitchContainer.centerXAnchor)
+            
+            
+            
+        ])
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setValueName(_ name: String, value: Bool) {
+        staticTextLabel.text = name
+        valueSwitch.isOn = value
+    }
+    @objc func valueDidChange() {
+        if let delegate = valueSwitchChangeDelegate {
+            delegate.valueInputFieldChanged(toValue: valueSwitch.isOn)
+        }
+    }
 }
 
 protocol ObjectValueInputProtocol: class {
@@ -359,6 +221,8 @@ class DoubleValueInputTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.accessoryType = .disclosureIndicator
         staticTextLabel = UILabel(frame: .zero)
         staticTextLabel.translatesAutoresizingMaskIntoConstraints = false
+//        staticTextLabel.layer.borderColor = UIColor.lightGray.cgColor
+//        staticTextLabel.layer.borderWidth = 1.0
         
         valueField = UITextField(frame: .zero)
 //        valueField.backgroundColor = UIColor.lightGray
@@ -368,6 +232,10 @@ class DoubleValueInputTableViewCell: UITableViewCell, UITextFieldDelegate {
         valueField.delegate = self
         valueField.font = UIFont.boldSystemFont(ofSize: 16)
         valueField.addTarget(self, action: #selector(valueDidChange), for: .editingChanged)
+        valueField.borderStyle = .roundedRect
+        
+//        valueField.layer.borderColor = UIColor.lightGray.cgColor
+//        valueField.layer.borderWidth = 1.0
         
         self.contentView.addSubview(staticTextLabel)
         self.contentView.addSubview(valueField)
@@ -382,7 +250,7 @@ class DoubleValueInputTableViewCell: UITableViewCell, UITextFieldDelegate {
             
             valueField.topAnchor.constraint(equalTo: staticTextLabel.topAnchor),
             valueField.bottomAnchor.constraint(equalTo: staticTextLabel.bottomAnchor),
-            valueField.widthAnchor.constraint(equalToConstant: 100.0),
+            valueField.widthAnchor.constraint(equalToConstant: 80.0),
             valueField.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -margin - 30.0),
             staticTextLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 50.0)
             

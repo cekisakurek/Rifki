@@ -23,7 +23,7 @@ class ImportOperationQueue {
 
 typealias CalculationHandler = (_ data: HistorgramResult?, _ indexPath: IndexPath?, _ error: Error?) -> Void
 
-typealias ProbabilityDistributionCalculationHandler = (_ data: ProbabilityPlotDataSet?, _ indexPath: IndexPath?, _ error: Error?) -> Void
+typealias ProbabilityDistributionCalculationHandler = (_ data: ProbabilityResult?, _ indexPath: IndexPath?, _ error: Error?) -> Void
 
 typealias HeatMapCalculationHandler = (_ data: HeatMapResult?, _ error: Error?) -> Void
 

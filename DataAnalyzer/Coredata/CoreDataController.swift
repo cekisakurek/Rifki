@@ -131,6 +131,23 @@ class CoreDataController {
                 settingsObject.dgBarColor = UIColor(red: 140.0/255.0, green: 234.0/255.0, blue: 255.0/255.0, alpha: 1.0)
                 settingsObject.dgBackgroundColor = UIColor.white
                 
+                
+                let maxRed = CGFloat(94.0/255.0)
+                let maxGreen = CGFloat(15.0/255.0)
+                let maxBlue = CGFloat(32.0/255.0)
+                
+                
+                let minRed = CGFloat(17.0/255.0)
+                let minGreen = CGFloat(49.0/255.0)
+                let minBlue = CGFloat(94.0/255.0)
+                
+                let maxColor = UIColor(red: maxRed, green: maxGreen, blue: maxBlue, alpha: 1.0)
+                let minColor = UIColor(red: minRed, green: minGreen, blue: minBlue, alpha: 1.0)
+                
+                settingsObject.heatmapMaxColor = maxColor
+                settingsObject.heatmapMinColor = minColor
+                settingsObject.heatmapValuesVisible = true
+                
                 try inContext.save()
             }
             

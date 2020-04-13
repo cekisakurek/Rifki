@@ -241,6 +241,10 @@ class NameInputTableViewCell: UITableViewCell, UITextFieldDelegate {
         nameField.text = name
     }
     
+    func setPlaceholder(_ placeholder: String?) {
+        nameField.placeholder = placeholder
+    }
+    
     @objc func nameDidChange() {
         if let delegate = nameFieldChangeDelegate {
             delegate.objectNameFieldChanged(toString: nameField.text)

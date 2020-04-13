@@ -8,6 +8,47 @@
 
 import UIKit
 import SigmaSwiftStatistics
+import CoreData
+
+@IBDesignable class InsetLabel: UILabel {
+    @IBInspectable var topInset: CGFloat = 0.0
+    @IBInspectable var leftInset: CGFloat = 0.0
+    @IBInspectable var bottomInset: CGFloat = 0.0
+    @IBInspectable var rightInset: CGFloat = 0.0
+
+    var insets: UIEdgeInsets {
+        get {
+            return UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
+        }
+        set {
+            topInset = newValue.top
+            leftInset = newValue.left
+            bottomInset = newValue.bottom
+            rightInset = newValue.right
+        }
+    }
+
+    override func drawText(in rect: CGRect) {
+        super.drawText(in: rect.inset(by: insets))
+    }
+
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
+        var adjSize = super.sizeThatFits(size)
+        adjSize.width += leftInset + rightInset
+        adjSize.height += topInset + bottomInset
+
+        return adjSize
+    }
+
+    override var intrinsicContentSize: CGSize {
+        var contentSize = super.intrinsicContentSize
+        contentSize.width += leftInset + rightInset
+        contentSize.height += topInset + bottomInset
+
+        return contentSize
+    }
+}
+
 
 extension Double {
     /// Rounds the double to decimal places value
@@ -61,9 +102,7 @@ class HeatMapLabelContainerView: UIView {
         guard let labels = labels else {
             return totalHeight
         }
-        
-//        let n = labels.count
-        
+                
         let labelHeight = CGFloat(50.0)
         let labelWidth = self.labelWidth()
         
@@ -74,7 +113,8 @@ class HeatMapLabelContainerView: UIView {
             let w = labelWidth
             let h = labelHeight
             
-            let label = UILabel(frame: CGRect(x: x, y: y, width: w, height: h))
+            let label = InsetLabel(frame: CGRect(x: x, y: y, width: w, height: h))
+            label.insets = UIEdgeInsets(top: 8.0, left: 8.0, bottom: 8.0, right: 8.0)
             label.text = text
             label.textAlignment = alignment
             labelViews.append(label)
@@ -92,6 +132,10 @@ class HeatMapLabelContainerView: UIView {
 
 
 class HeatMapMatrixView: UIView {
+    
+    var maxColor: UIColor!
+    var minColor: UIColor!
+    var valuesVisible: Bool = false
     
     var width: Int = 0
     var height: Int = 0
@@ -137,18 +181,20 @@ class HeatMapMatrixView: UIView {
                         color.setFill()
                         bpath.fill()
                         
-                        let valueString = stringFromValue(col)// String(format:"%.2f",col)
-                        let paragraphStyle = NSMutableParagraphStyle()
-                        paragraphStyle.alignment = .center
-                        let font = UIFont.systemFont(ofSize: 10)
-                        let attributes = [
-                            NSAttributedString.Key.paragraphStyle: paragraphStyle,
-                            NSAttributedString.Key.font: font,
-                            NSAttributedString.Key.foregroundColor: UIColor.black
-                        ]
-                        
-                        let textInset = drect.insetBy(dx: 0, dy: (drect.height - font.pointSize)/2)
-                        valueString.draw(in: textInset, withAttributes: attributes)
+                        if valuesVisible {
+                            let valueString = stringFromValue(col)// String(format:"%.2f",col)
+                            let paragraphStyle = NSMutableParagraphStyle()
+                            paragraphStyle.alignment = .center
+                            let font = UIFont.systemFont(ofSize: 10)
+                            let attributes = [
+                                NSAttributedString.Key.paragraphStyle: paragraphStyle,
+                                NSAttributedString.Key.font: font,
+                                NSAttributedString.Key.foregroundColor: UIColor.black
+                            ]
+                            
+                            let textInset = drect.insetBy(dx: 0, dy: (drect.height - font.pointSize)/2)
+                            valueString.draw(in: textInset, withAttributes: attributes)
+                        }
                     }
                 }
             }
@@ -156,19 +202,7 @@ class HeatMapMatrixView: UIView {
     }
     
     func colorForValue(value: Double) -> UIColor {
-        
-        let maxRed = CGFloat(94.0/255.0)
-        let maxGreen = CGFloat(15.0/255.0)
-        let maxBlue = CGFloat(32.0/255.0)
-        
-        
-        let minRed = CGFloat(17.0/255.0)
-        let minGreen = CGFloat(49.0/255.0)
-        let minBlue = CGFloat(94.0/255.0)
-        
-        let maxColor = UIColor(red: maxRed, green: maxGreen, blue: maxBlue, alpha: 1.0)
-        let minColor = UIColor(red: minRed, green: minGreen, blue: minBlue, alpha: 1.0)
-        
+                
         let whiteColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
         if value > 0.0 {
@@ -218,6 +252,11 @@ extension UIColor {
 
 class HeatMapContainerView: UIView {
     
+    private var maxColor: UIColor!
+    private var minColor: UIColor!
+    private var valuesVisible: Bool = false
+    
+    
     private(set) var labels: [String]?
     private(set) var corrolation: [[Double]]?
     
@@ -239,6 +278,15 @@ class HeatMapContainerView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setColors(max: UIColor, min: UIColor) {
+        maxColor = max
+        minColor = min
+    }
+    
+    func setValuesVisible(_ visible: Bool) {
+        valuesVisible = visible
     }
     
     
@@ -264,12 +312,16 @@ class HeatMapContainerView: UIView {
         leftAxisLabelContainer = HeatMapLabelContainerView()
         bottomAxisLabelContainer = HeatMapLabelContainerView()
         heatMapMatrixView = HeatMapMatrixView()
+        heatMapMatrixView.minColor = minColor
+        heatMapMatrixView.maxColor = maxColor
+        heatMapMatrixView.valuesVisible = valuesVisible
         
         self.addSubview(leftAxisLabelContainer)
         self.addSubview(bottomAxisLabelContainer)
         self.addSubview(heatMapMatrixView)
         
         let edgeInsets = UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50)
+        
         
         
         let height = leftAxisLabelContainer.setLabels(labels, alignment: .right)
@@ -373,6 +425,9 @@ class HeatMapViewController: UIViewController, UIScrollViewDelegate {
     
     var calculationQueue = CalculationsOperationQueue()
     
+    private var heatmapTheme = HeatmapTheme()
+    
+    private var result: HeatMapResult?
     
     var dataset: GraphRawData? {
         didSet {
@@ -383,10 +438,9 @@ class HeatMapViewController: UIViewController, UIScrollViewDelegate {
                 self.calculationQueue.calculateHeatMap(dataset) {
                     (result, error) in
                     
-                    self.heatMapContainer.setLabels(result?.labels, corrolation: result?.matrix)
+                    self.result = result
+                    self.drawHeatmap()
                     activityIndicatorView.hide()
-                    self.view.setNeedsLayout()
-                    
                 }
             }
         }
@@ -409,18 +463,42 @@ class HeatMapViewController: UIViewController, UIScrollViewDelegate {
         scrollView.contentInset = UIEdgeInsets(top: top, left: left, bottom: top, right: left)
     }
     
+    @objc func updateTheme() {
+        do {
+            let context = CoreDataController.shared.managedObjectContext
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Settings")
+            let settings = try context!.fetch(fetchRequest) as! [Settings]
+            if let settingsObject = settings.first {
+                heatmapTheme.maxColor = settingsObject.heatmapMaxColor as! UIColor
+                heatmapTheme.minColor = settingsObject.heatmapMinColor as! UIColor
+                heatmapTheme.valuesVisible = settingsObject.heatmapValuesVisible
+                heatMapContainer.setColors(max: heatmapTheme.maxColor, min: heatmapTheme.minColor)
+                heatMapContainer.setValuesVisible(heatmapTheme.valuesVisible)
+                drawHeatmap()
+            }
+        }
+        catch {
+            ErrorAlertView.showError(with: String(describing: error), from: self)
+        }
+    }
+    
 
     override func loadView() {
         super.loadView()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(updateTheme), name: NSNotification.Name(rawValue: "SettingsChanged"), object: nil)
+        
+        updateTheme()
         
         self.view.backgroundColor = UIColor.white
         
         heatMapContainer.frame = self.view.bounds
         heatMapContainer.layer.borderColor = UIColor.lightGray.cgColor
         heatMapContainer.layer.borderWidth = 1.0
-//        heatMapContainer.translatesAutoresizingMaskIntoConstraints = false
+
         
+        heatMapContainer.setColors(max: heatmapTheme.maxColor, min: heatmapTheme.minColor)
+        heatMapContainer.setValuesVisible(heatmapTheme.valuesVisible)
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.delegate = self
@@ -431,44 +509,14 @@ class HeatMapViewController: UIViewController, UIScrollViewDelegate {
         scrollView.addSubview(heatMapContainer)
         self.view.addSubview(scrollView)
         
-        
-//        scrollView.addSubview(leftAxisLabelContainer)
-//        bottomAxisLabelContainer.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
-//        scrollView.addSubview(bottomAxisLabelContainer)
-//
-//        scrollView.addSubview(heatMapMatrixView)
-        
-        
-        
         let defaultConstraints = [
             scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
             scrollView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
-//            heatMapContainer.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: margins),
-//            heatMapContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: margins),
-//            heatMapContainer.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -margins),
-//            heatMapContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -margins)
         ]
 
         NSLayoutConstraint.activate(defaultConstraints)
-        
-        
-//        barPlotView = RowAnalysisHistogramView(frame: .zero)
-//        barPlotView.translatesAutoresizingMaskIntoConstraints = false
-//        self.view.addSubview(barPlotView)
-//
-//        let defaultConstraints = [
-//            barPlotView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-//            barPlotView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-//            barPlotView.heightAnchor.constraint(equalToConstant: 500.0),
-//            barPlotView.widthAnchor.constraint(equalToConstant: 500.0)
-////            barPlotView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-////            barPlotView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
-//        ]
-//
-//        NSLayoutConstraint.activate(defaultConstraints)
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -477,8 +525,7 @@ class HeatMapViewController: UIViewController, UIScrollViewDelegate {
         // if needs scroll
         if heatMapContainer.bounds.size.width > self.view.bounds.size.width  ||
             heatMapContainer.bounds.size.height > self.view.bounds.size.height {
-            
-//            scrollView.contentSize = CGSize(width: heatMapContainer.bounds.size.width, height: heatMapContainer.bounds.size.height)
+
         }
         else {
             heatMapContainer.frame = CGRect(x: (self.view.bounds.size.width - heatMapContainer.bounds.size.width) / 2.0,
@@ -488,11 +535,6 @@ class HeatMapViewController: UIViewController, UIScrollViewDelegate {
             
         }
         scrollView.contentSize = heatMapContainer.bounds.size
-        
-        
-        
-        
-        
     }
     
     override func viewDidLoad() {
@@ -501,13 +543,22 @@ class HeatMapViewController: UIViewController, UIScrollViewDelegate {
         if let dataset = dataset {
             let activityIndicatorView = CalculationIndicatorView.showFrom(view: self.view, message: NSLocalizedString("Generating Heatmap", comment: ""))
             self.calculationQueue.calculateHeatMap(dataset) {
-                (result, error) in
-
-                self.heatMapContainer.setLabels(result?.labels, corrolation: result?.matrix)
-                activityIndicatorView.hide()
-                self.view.setNeedsLayout()
                 
+                [weak self] (result, error) in
+
+                guard let self = self else {
+                    return
+                }
+                
+                self.result = result
+                self.drawHeatmap()
+                activityIndicatorView.hide()
             }
         }
+    }
+    
+    func drawHeatmap() {
+        self.heatMapContainer.setLabels(result?.labels, corrolation: result?.matrix)
+        self.view.setNeedsLayout()
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 let leftAndRightPaddings: CGFloat = 10.0
 
@@ -141,6 +142,13 @@ class PlaygroundViewController: UICollectionViewController, NSFetchedResultsCont
             
             createGraphCoordinator = CreateGraphCoordinator(with: self, availableHeaders: dataset!.headers!, uuid: dataset!.uuid)
             createGraphCoordinator?.start()
+            
+//            let fontConfig = UIFontPickerViewController.Configuration()
+//            fontConfig.includeFaces = true
+//            let fontPicker = UIFontPickerViewController(configuration: fontConfig)
+////            fontPicker.delegate = self
+//            self.present(fontPicker, animated: true, completion: nil)
+                
         }
         else {
             var translatedIndexPath = indexPath
@@ -236,51 +244,40 @@ class PlaygroundGraphViewController: UIViewController, ChartViewDelegate {
     
     private var graphView: CombinedChartView!
     
-    var distributionPlotLeftAxisTitleLabel: UILabel!
-    var distributionPlotXAxisTitleLabel: UILabel!
+    private var plotTitleLabel: UILabel!
+    
+    var leftAxisTitleLabel: UILabel!
+    var bottomAxisTitleLabel: UILabel!
     
     override func loadView() {
         super.loadView()
         
         self.view.backgroundColor = UIColor.white
         
-        let axisLabelFonts = UIFont.systemFont(ofSize: 13.0)
-        let plotTitleFont = UIFont.boldSystemFont(ofSize: 20.0)
         
-        let distributionPlotTitleLabel = UILabel(frame: .zero)
-        distributionPlotTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        distributionPlotTitleLabel.font = plotTitleFont
-        distributionPlotTitleLabel.textColor = UIColor.black
-        distributionPlotTitleLabel.textAlignment = .center
-        distributionPlotTitleLabel.text = graph?.name
-        self.view.addSubview(distributionPlotTitleLabel)
+        plotTitleLabel = UILabel(frame: .zero)
+        plotTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        plotTitleLabel.textAlignment = .center
         
-        distributionPlotLeftAxisTitleLabel = UILabel(frame: CGRect(x: 0, y: 0.0, width: self.view.bounds.size.height, height: 50.0))
-//        distributionPlotLeftAxisTitleLabel.backgroundColor = UIColor.red
-        distributionPlotLeftAxisTitleLabel.font = axisLabelFonts
-        distributionPlotLeftAxisTitleLabel.textColor = UIColor.black
-        distributionPlotLeftAxisTitleLabel.textAlignment = .center
-        distributionPlotLeftAxisTitleLabel.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
-        self.view.addSubview(distributionPlotLeftAxisTitleLabel)
+        self.view.addSubview(plotTitleLabel)
         
+        leftAxisTitleLabel = UILabel(frame: CGRect(x: 0, y: 0.0, width: self.view.bounds.size.height, height: 50.0))
+        leftAxisTitleLabel.textAlignment = .center
+        leftAxisTitleLabel.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
+        self.view.addSubview(leftAxisTitleLabel)
         
-        
-        distributionPlotXAxisTitleLabel = UILabel(frame: .zero)
-        distributionPlotXAxisTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        distributionPlotXAxisTitleLabel.font = axisLabelFonts
-        distributionPlotXAxisTitleLabel.textColor = UIColor.black
-        distributionPlotXAxisTitleLabel.textAlignment = .center
-        self.view.addSubview(distributionPlotXAxisTitleLabel)
+        bottomAxisTitleLabel = UILabel(frame: .zero)
+        bottomAxisTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        bottomAxisTitleLabel.textAlignment = .center
+        self.view.addSubview(bottomAxisTitleLabel)
         
         graphView = CombinedChartView(frame: .zero)
         graphView.translatesAutoresizingMaskIntoConstraints = false
         graphView.delegate = self
         graphView.legend.enabled = false
         graphView.backgroundColor = UIColor.white
-//        graphView.isHidden = true
-        let xAxis = graphView.xAxis
-        xAxis.labelPosition = .bottom
-        xAxis.labelTextColor = UIColor.black
+        
+        graphView.xAxis.labelPosition = .bottom
         
         graphView.autoScaleMinMaxEnabled = false
         
@@ -288,13 +285,6 @@ class PlaygroundGraphViewController: UIViewController, ChartViewDelegate {
         graphView.leftAxis.gridColor = .clear
         graphView.rightAxis.gridColor = .clear
         
-        graphView.leftAxis.labelTextColor = UIColor.black
-        graphView.rightAxis.labelTextColor = UIColor.black
-        graphView.xAxis.labelTextColor = UIColor.black
-        graphView.isUserInteractionEnabled = false
-        
-        graphView.layer.borderColor = UIColor.lightGray.cgColor
-        graphView.layer.borderWidth = 1.0
         
         graphView.noDataTextColor = UIColor.black
         graphView.noDataText = NSLocalizedString("No chart data available.", comment: "")
@@ -307,51 +297,78 @@ class PlaygroundGraphViewController: UIViewController, ChartViewDelegate {
         let plotBottomMargin = CGFloat(40.0)
         
         NSLayoutConstraint.activate([
-            distributionPlotTitleLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: titleTopMargin),
-            distributionPlotTitleLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: leftMargin),
-            distributionPlotTitleLabel.bottomAnchor.constraint(equalTo: graphView.topAnchor, constant: -titleMargin),
-            distributionPlotTitleLabel.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -rightMargin),
+            plotTitleLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: titleTopMargin),
+            plotTitleLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: leftMargin),
+            plotTitleLabel.bottomAnchor.constraint(equalTo: graphView.topAnchor, constant: -titleMargin),
+            plotTitleLabel.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -rightMargin),
             
             graphView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: leftMargin),
-            graphView.bottomAnchor.constraint(equalTo: distributionPlotXAxisTitleLabel.topAnchor),
+            graphView.bottomAnchor.constraint(equalTo: bottomAxisTitleLabel.topAnchor),
             graphView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -rightMargin),
             
-            distributionPlotXAxisTitleLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: leftMargin),
-            distributionPlotXAxisTitleLabel.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -plotBottomMargin),
-            distributionPlotXAxisTitleLabel.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -rightMargin),
-            distributionPlotXAxisTitleLabel.heightAnchor.constraint(equalToConstant: 50.0)
+            bottomAxisTitleLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: leftMargin),
+            bottomAxisTitleLabel.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -plotBottomMargin),
+            bottomAxisTitleLabel.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -rightMargin),
+            bottomAxisTitleLabel.heightAnchor.constraint(equalToConstant: 50.0)
         ])
         
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        distributionPlotLeftAxisTitleLabel.frame = CGRect(x: 0.0,
-                                                          y: graphView.frame.origin.y,
-                                                          width: distributionPlotLeftAxisTitleLabel.frame.size.width, height: graphView.frame.height)
+        leftAxisTitleLabel.frame = CGRect(x: 0.0,
+                                          y: graphView.frame.origin.y,
+                                          width: leftAxisTitleLabel.frame.size.width, height: graphView.frame.height)
+    }
+    
+    func fontWithName(_ name: String, size: CGFloat) -> UIFont {
+        
+        if name == ".SFNS-Regular" {
+            return UIFont.systemFont(ofSize: size)
+        }
+        else if let selectedFont = UIFont(name: name, size: size) {
+            return selectedFont
+        }
+        else {
+            return UIFont.systemFont(ofSize: size)
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if let graph = graph {
+            
+            graphView.backgroundColor = graph.backgroundColor as? UIColor
+            
+            plotTitleLabel.text = graph.name
+            plotTitleLabel.font = UIFont(name: graph.titleFontName!, size: CGFloat(graph.titleFontSize))
+            plotTitleLabel.textColor = graph.titleColor as? UIColor
+            
+            leftAxisTitleLabel.text = graph.yAxisName
+            leftAxisTitleLabel.font = self.fontWithName(graph.yAxisTextFontName!, size: CGFloat(graph.yAxisTextFontSize))
+            leftAxisTitleLabel.textColor = graph.yAxisTextColor as? UIColor
+            
+            bottomAxisTitleLabel.text = graph.xAxisName
+            bottomAxisTitleLabel.font = self.fontWithName(graph.xAxisTextFontName!, size: CGFloat(graph.xAxisTextFontSize))
+            bottomAxisTitleLabel.textColor = graph.xAxisTextColor as? UIColor
+            
+            graphView.leftAxis.labelTextColor = graph.yAxisTextColor as? UIColor ?? UIColor.black
+            graphView.rightAxis.labelTextColor = graph.yAxisTextColor as? UIColor ?? UIColor.black
+            graphView.xAxis.labelTextColor = graph.xAxisTextColor as? UIColor ?? UIColor.black
+        }
+        
+        
         for graphData in graph!.data!  {
-            
-            
             
             if let d = graphData as? GraphData {
                 let xAxis = d.xAxis!
                 let yAxis = d.yAxis!
                 
-                distributionPlotXAxisTitleLabel.text = xAxis
-                distributionPlotLeftAxisTitleLabel.text = yAxis
-                
                 let (xColumn, _) = dataset!.column(named: xAxis)
                 let (yColumn, _) = dataset!.column(named: yAxis)
                 
                 let xColumnAsDoubleArray = xColumn as! [Double]
-                
-                
-                
                 
                 if graph!.type == "Line" {
                     
@@ -363,11 +380,14 @@ class PlaygroundGraphViewController: UIViewController, ChartViewDelegate {
                     }
                     entries.sort(by: { $0.x < $1.x })
                     
+                    let lineColor = (d.lineColor as? UIColor ?? UIColor.black)
+                    let lineWidth = d.lineWidth
+                    
                     let chartDataSet = LineChartDataSet(entries: entries)
-                    chartDataSet.colors = [UIColor.red]
+                    chartDataSet.colors = [lineColor]
                     chartDataSet.mode = .linear
                     chartDataSet.drawCirclesEnabled = false
-                    chartDataSet.lineWidth = 2.0
+                    chartDataSet.lineWidth = CGFloat(lineWidth)
                     
                     let combinedChart = CombinedChartData()
                     combinedChart.lineData = LineChartData(dataSet: chartDataSet)
@@ -383,8 +403,10 @@ class PlaygroundGraphViewController: UIViewController, ChartViewDelegate {
                     }
                     entries.sort(by: { $0.x < $1.x })
                     
+                    let color = (d.barColor as? UIColor ?? UIColor.black)
                     
                     let chartDataSet = BarChartDataSet(entries: entries)
+                    chartDataSet.colors = [color]
                     let combinedChart = CombinedChartData()
                     combinedChart.barData = BarChartData(dataSet: chartDataSet)
                     self.graphView.data = combinedChart
@@ -400,8 +422,13 @@ class PlaygroundGraphViewController: UIViewController, ChartViewDelegate {
                     }
                     entries.sort(by: { $0.x < $1.x })
                     
+                    let color = (d.circleColor as? UIColor ?? UIColor.black)
+                    let circleSize = d.circleSize
+                    
                     let chartDataSet = ScatterChartDataSet(entries: entries)
                     chartDataSet.drawValuesEnabled = false
+                    chartDataSet.colors = [color]
+                    chartDataSet.scatterShapeSize = CGFloat(circleSize)
                     chartDataSet.setScatterShape(.circle)
                     
                     let combinedChart = CombinedChartData()

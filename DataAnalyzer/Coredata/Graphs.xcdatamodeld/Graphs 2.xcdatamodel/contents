@@ -9,13 +9,30 @@
         <relationship name="graphs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Graph" inverseName="workset" inverseEntity="Graph"/>
     </entity>
     <entity name="Graph" representedClassName="Graph" syncable="YES" codeGenerationType="class">
+        <attribute name="backgroundColor" optional="YES" attributeType="Transformable"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="titleColor" optional="YES" attributeType="Transformable"/>
+        <attribute name="titleFontName" optional="YES" attributeType="String"/>
+        <attribute name="titleFontSize" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="xAxisName" optional="YES" attributeType="String"/>
+        <attribute name="xAxisTextColor" optional="YES" attributeType="Transformable"/>
+        <attribute name="xAxisTextFontName" optional="YES" attributeType="String"/>
+        <attribute name="xAxisTextFontSize" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="yAxisName" optional="YES" attributeType="String"/>
+        <attribute name="yAxisTextColor" optional="YES" attributeType="Transformable"/>
+        <attribute name="yAxisTextFontName" optional="YES" attributeType="String"/>
+        <attribute name="yAxisTextFontSize" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="data" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GraphData" inverseName="graph" inverseEntity="GraphData"/>
         <relationship name="workset" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dataset" inverseName="graphs" inverseEntity="Dataset"/>
     </entity>
     <entity name="GraphData" representedClassName="GraphData" syncable="YES" codeGenerationType="class">
+        <attribute name="barColor" optional="YES" attributeType="Transformable"/>
+        <attribute name="circleColor" optional="YES" attributeType="Transformable"/>
+        <attribute name="circleSize" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="lineColor" optional="YES" attributeType="Transformable"/>
+        <attribute name="lineWidth" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="xAxis" optional="YES" attributeType="String"/>
         <attribute name="yAxis" optional="YES" attributeType="String"/>
         <relationship name="graph" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Graph" inverseName="data" inverseEntity="Graph"/>
@@ -29,6 +46,9 @@
         <attribute name="dgNormalLineWidth" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="dgXAxisTextColor" optional="YES" attributeType="Transformable"/>
         <attribute name="dgYAxisTextColor" optional="YES" attributeType="Transformable"/>
+        <attribute name="heatmapMaxColor" optional="YES" attributeType="Transformable"/>
+        <attribute name="heatmapMinColor" optional="YES" attributeType="Transformable"/>
+        <attribute name="heatmapValuesVisible" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="pgBackgroundColor" optional="YES" attributeType="Transformable"/>
         <attribute name="pgCircleColor" optional="YES" attributeType="Transformable"/>
         <attribute name="pgNormalLineColor" optional="YES" attributeType="Transformable"/>
@@ -38,8 +58,8 @@
     </entity>
     <elements>
         <element name="Dataset" positionX="-500.10546875" positionY="-101.15234375" width="128" height="133"/>
-        <element name="Graph" positionX="-501.00390625" positionY="145.68359375" width="128" height="118"/>
-        <element name="GraphData" positionX="-133.99609375" positionY="164.3359375" width="128" height="88"/>
-        <element name="Settings" positionX="-315" positionY="72" width="128" height="253"/>
+        <element name="Graph" positionX="-501.00390625" positionY="145.68359375" width="128" height="298"/>
+        <element name="GraphData" positionX="-133.99609375" positionY="164.3359375" width="128" height="163"/>
+        <element name="Settings" positionX="-315" positionY="72" width="128" height="298"/>
     </elements>
 </model>
