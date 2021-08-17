@@ -24,13 +24,12 @@ class CreateDatasetTableViewController: UITableViewController   {
     
     class LineGraphDelegate: ColorPickerFromTableViewDelegate, ObjectValueInputProtocol {
         
+        weak var coordinator: CreateDatasetCoordinator?
+        weak var viewController: CreateDatasetTableViewController?
+        
         func valueInputFieldChanged(toValue: Double?) {
             coordinator?.currentDataset().lineWidth = toValue!
         }
-        
-        
-        weak var coordinator: CreateDatasetCoordinator?
-        weak var viewController: CreateDatasetTableViewController?
         
         func colorPicker(_ picker: ColorPickerViewController, didChange color: UIColor, forIndexPath: IndexPath) {
             coordinator?.currentDataset().lineColor = color
@@ -40,13 +39,12 @@ class CreateDatasetTableViewController: UITableViewController   {
     
     class ScatterGraphDelegate: ColorPickerFromTableViewDelegate, ObjectValueInputProtocol {
         
+        weak var coordinator: CreateDatasetCoordinator?
+        weak var viewController: CreateDatasetTableViewController?
+        
         func valueInputFieldChanged(toValue: Double?) {
             coordinator?.currentDataset().circleSize = toValue!
         }
-        
-        
-        weak var coordinator: CreateDatasetCoordinator?
-        weak var viewController: CreateDatasetTableViewController?
         
         func colorPicker(_ picker: ColorPickerViewController, didChange color: UIColor, forIndexPath: IndexPath) {
             coordinator?.currentDataset().circleColor = color
@@ -54,11 +52,15 @@ class CreateDatasetTableViewController: UITableViewController   {
         }
     }
     
-    
-    class XAxisDelegate: ObjectNamingProtocol, PlaygroundGraphValueSelectionDelegate, ColorPickerFromTableViewDelegate {
+    class XAxisDelegate: ObjectNamingProtocol, PlaygroundGraphValueSelectionDelegate, ColorPickerFromTableViewDelegate, FontSelectionDelegate {
         
         weak var coordinator: CreateDatasetCoordinator?
         weak var viewController: CreateDatasetTableViewController?
+        
+        func fontSelectionController(_ controller: FontSelectionTableViewController, didSelect font: UIFont) {
+            coordinator?.graph.xAxisTextFontName = font.fontName
+            viewController?.tableView.reloadData()
+        }
         
         func colorPicker(_ picker: ColorPickerViewController, didChange color: UIColor, forIndexPath: IndexPath) {
             coordinator?.graph.xAxisTextColor = color
@@ -75,10 +77,15 @@ class CreateDatasetTableViewController: UITableViewController   {
         }
     }
     
-    class YAxisDelegate: ObjectNamingProtocol, PlaygroundGraphValueSelectionDelegate, ColorPickerFromTableViewDelegate {
+    class YAxisDelegate: ObjectNamingProtocol, PlaygroundGraphValueSelectionDelegate, ColorPickerFromTableViewDelegate, FontSelectionDelegate {
         
         weak var coordinator: CreateDatasetCoordinator?
         weak var viewController: CreateDatasetTableViewController?
+        
+        func fontSelectionController(_ controller: FontSelectionTableViewController, didSelect font: UIFont) {
+            coordinator?.graph.yAxisTextFontName = font.fontName
+            viewController?.tableView.reloadData()
+        }
         
         func colorPicker(_ picker: ColorPickerViewController, didChange color: UIColor, forIndexPath: IndexPath) {
             coordinator?.graph.yAxisTextColor = color
@@ -148,10 +155,8 @@ class CreateDatasetTableViewController: UITableViewController   {
         self.tableView.register(NameInputTableViewCell.self, forCellReuseIdentifier: "NameCell")
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         self.tableView.register(StaticTextTableViewCell.self, forCellReuseIdentifier: "StaticValueCell")
-        self.tableView.register(ColorSelectionTableViewCell.self, forCellReuseIdentifier: "ColorCell")
-        self.tableView.register(DoubleValueInputTableViewCell.self, forCellReuseIdentifier: "DoubleValueCell")
-        
-        
+        self.tableView.register(ColorSelectionTableViewCell.self, forCellReuseIdentifier: ColorSelectionTableViewCell.identifier)
+        self.tableView.register(DoubleValueInputTableViewCell.self, forCellReuseIdentifier: DoubleValueInputTableViewCell.identifier)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -165,9 +170,9 @@ class CreateDatasetTableViewController: UITableViewController   {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
             case 0:
-                return 3
+                return 4
             case 1:
-                return 3
+                return 4
             case 2:
                 switch self.coordinator?.graph.type {
                     case .Bar:
@@ -221,7 +226,17 @@ class CreateDatasetTableViewController: UITableViewController   {
                 cell.setValueName(name, color: color)
                 return cell
             }
-            
+            else if indexPath.row == 3 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "StaticValueCell", for: indexPath) as! StaticTextTableViewCell
+                
+                let nameString = NSLocalizedString("Font Name", comment: "") + " :"
+                var valueString = self.coordinator?.graph.xAxisTextFontName
+                if valueString == systemFontName {
+                    valueString = NSLocalizedString("System Font", comment: "")
+                }
+                cell.setValueName(nameString, value: valueString)
+                return cell
+            }
         }
         else if indexPath.section == 1 {
             if indexPath.row == 0 {
@@ -243,6 +258,17 @@ class CreateDatasetTableViewController: UITableViewController   {
                 let name = NSLocalizedString("Text Color", comment: "") + " :"
                 let color = self.coordinator?.graph.yAxisTextColor
                 cell.setValueName(name, color: color)
+                return cell
+            }
+            else if indexPath.row == 3 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "StaticValueCell", for: indexPath) as! StaticTextTableViewCell
+                
+                let nameString = NSLocalizedString("Font Name", comment: "") + " :"
+                var valueString = self.coordinator?.graph.yAxisTextFontName
+                if valueString == systemFontName {
+                    valueString = NSLocalizedString("System Font", comment: "")
+                }
+                cell.setValueName(nameString, value: valueString)
                 return cell
             }
         }
@@ -294,17 +320,16 @@ class CreateDatasetTableViewController: UITableViewController   {
                 
                 return cell
             }
-            
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         return cell
-        
     }
 
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        // TODO: Refactor
         if indexPath.section == 0 {
             if indexPath.row == 0 {
                 let selectionViewController = PlaygroundGraphValueSelectionTableView(style: .plain)
@@ -318,7 +343,11 @@ class CreateDatasetTableViewController: UITableViewController   {
                 pickerViewController.tableColorDelegate = xAxisDelegate
                 self.navigationController?.pushViewController(pickerViewController, animated: true)
             }
-            
+            else if indexPath.row == 3 {
+                let pickerViewController = FontSelectionTableViewController(style: .plain)
+                pickerViewController.selectionDelegate = xAxisDelegate
+                self.navigationController?.pushViewController(pickerViewController, animated: true)
+            }
         }
         else if indexPath.section == 1 {
             if indexPath.row == 0 {
@@ -331,6 +360,11 @@ class CreateDatasetTableViewController: UITableViewController   {
                 let pickerViewController = ColorPickerViewController()
                 pickerViewController.fromIndexPath = indexPath
                 pickerViewController.tableColorDelegate = yAxisDelegate
+                self.navigationController?.pushViewController(pickerViewController, animated: true)
+            }
+            else if indexPath.row == 3 {
+                let pickerViewController = FontSelectionTableViewController(style: .plain)
+                pickerViewController.selectionDelegate = yAxisDelegate
                 self.navigationController?.pushViewController(pickerViewController, animated: true)
             }
         }
@@ -362,7 +396,6 @@ class CreateDatasetTableViewController: UITableViewController   {
     }
 }
 
-
 class CreateDatasetCoordinator: Coordinator {
     
     required init(type: PlaygroundGraphType) {
@@ -370,9 +403,8 @@ class CreateDatasetCoordinator: Coordinator {
         
         let viewController = CreateDatasetTableViewController(style: .plain)
         viewController.coordinator = self
-        viewController.title = NSLocalizedString("Create Dataset", comment: "")
+        viewController.title = NSLocalizedString("Select Data", comment: "")
         self.rootViewController = viewController
-        
     }
     
     func selectableItems() -> [Selectable] {
@@ -386,7 +418,7 @@ class CreateDatasetCoordinator: Coordinator {
     }
     
     func start() {
-        
+
         if let parentCoordinator = parentCoordinator {
             parentCoordinator.rootViewController.navigationController!.pushViewController(self.rootViewController, animated: true)
         }
@@ -422,76 +454,76 @@ class CreateDatasetCoordinator: Coordinator {
     func saveGraph() {
         
         do {
+            let context = CoreDataController.shared.writeContext
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Dataset")
+            fetchRequest.predicate = NSPredicate(format: "uuid == %@", graph.uuid)
+            let datasets = try context.fetch(fetchRequest) as! [Dataset]
             
-            if let context = CoreDataController.shared.managedObjectContext {
-                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Dataset")
-                fetchRequest.predicate = NSPredicate(format: "uuid == %@", graph.uuid)
-                let datasets = try context.fetch(fetchRequest) as! [Dataset]
+            if let selectedSet = datasets.first {
                 
-                if let selectedSet = datasets.first {
-                    
-                    let graphObject = NSEntityDescription.insertNewObject(forEntityName: "Graph", into: CoreDataController.shared.managedObjectContext) as! Graph
-                    
-                    graphObject.backgroundColor = graph.backgroundColor
-                    let currentDate = Date()
-                    graphObject.createdDate = currentDate
-                    if let chosenName = graph.name {
-                        graphObject.name = chosenName
-                    }
-                    else {
-                        let formatter = DateFormatter()
-                        formatter.dateStyle = .medium
-                        formatter.timeStyle = .medium
-                        graphObject.name = formatter.string(from: currentDate)
-                    }
-                    
-                    graphObject.titleColor = graph.titleColor
-                    graphObject.titleFontName = graph.titleFontName
-                    graphObject.titleFontSize = graph.titleFontSize
-                    graphObject.type = self.graph.type.rawValue
-                    
-                    graphObject.xAxisTextColor = graph.xAxisTextColor
-                    graphObject.xAxisTextFontName = graph.xAxisTextFontName
-                    graphObject.xAxisTextFontSize = graph.xAxisTextFontSize
-                    
-                    
-                    graphObject.yAxisTextColor = graph.yAxisTextColor
-                    graphObject.yAxisTextFontName = graph.yAxisTextFontName
-                    graphObject.yAxisTextFontSize = graph.yAxisTextFontSize
-                    
-                    graphObject.workset = selectedSet
-                    
-                    var i = 0
-                    for set in self.graph.datasets {
-                        let graphData = NSEntityDescription.insertNewObject(forEntityName: "GraphData", into: CoreDataController.shared.managedObjectContext) as! GraphData
-                        
-                        if i == 0 {
-                            graphObject.xAxisName = set.xAxisName
-                            graphObject.yAxisName = set.yAxisName
-                        }
-                        
-                        graphData.xAxis = set.xAxisName
-                        graphData.yAxis = set.yAxisName
-                        
-                        switch graph.type {
-                            case .Bar:
-                                graphData.barColor = set.barColor
-                            case .Line:
-                                graphData.lineWidth = set.lineWidth
-                                graphData.lineColor = set.lineColor
-                            case .Scatter:
-                                graphData.circleSize = set.circleSize
-                                graphData.circleColor = set.circleColor
-                            case .None:
-                                break;
-                        }
-                        graphObject.addToData(graphData)
-                        
-                        i += 1
-                    }
-                    try CoreDataController.shared.managedObjectContext.save()
-                    
+                let graphObject = NSEntityDescription.insertNewObject(forEntityName: "Graph", into: context) as! Graph
+                
+                graphObject.backgroundColor = graph.backgroundColor
+                let currentDate = Date()
+                graphObject.createdDate = currentDate
+                if let chosenName = graph.name {
+                    graphObject.name = chosenName
                 }
+                else {
+                    let formatter = DateFormatter()
+                    formatter.dateStyle = .medium
+                    formatter.timeStyle = .medium
+                    graphObject.name = formatter.string(from: currentDate)
+                }
+                let uuid = UUID().uuidString
+                graphObject.uuid = uuid
+                
+                graphObject.titleColor = graph.titleColor
+                graphObject.titleFontName = graph.titleFontName
+                graphObject.titleFontSize = graph.titleFontSize
+                graphObject.type = graph.type.rawValue
+                
+                graphObject.xAxisTextColor = graph.xAxisTextColor
+                graphObject.xAxisTextFontName = graph.xAxisTextFontName
+                graphObject.xAxisTextFontSize = graph.xAxisTextFontSize
+                graphObject.xAxisName = graph.xAxisDisplayName
+                
+                graphObject.yAxisTextColor = graph.yAxisTextColor
+                graphObject.yAxisTextFontName = graph.yAxisTextFontName
+                graphObject.yAxisTextFontSize = graph.yAxisTextFontSize
+                graphObject.yAxisName = graph.yAxisDisplayName
+                
+                graphObject.workset = selectedSet
+                
+                for set in self.graph.datasets {
+                    let graphData = NSEntityDescription.insertNewObject(forEntityName: "GraphData", into: context) as! GraphData
+                    
+                    
+                    if graphObject.xAxisName == nil {
+                        graphObject.xAxisName = set.xAxisName
+                    }
+                    if graphObject.yAxisName == nil {
+                        graphObject.yAxisName = set.yAxisName
+                    }
+                    
+                    graphData.xAxis = set.xAxisName
+                    graphData.yAxis = set.yAxisName
+                    
+                    switch graph.type {
+                    case .Bar:
+                        graphData.barColor = set.barColor
+                    case .Line:
+                        graphData.lineWidth = set.lineWidth
+                        graphData.lineColor = set.lineColor
+                    case .Scatter:
+                        graphData.circleSize = set.circleSize
+                        graphData.circleColor = set.circleColor
+                    case .None:
+                        break;
+                    }
+                    graphObject.addToData(graphData)
+                }
+                try context.save()
             }
             dismiss()
             
@@ -503,9 +535,6 @@ class CreateDatasetCoordinator: Coordinator {
     }
     
     func dismiss() {
-        
-        self.rootViewController.navigationController?.dismiss(animated: true, completion: {
-            
-        })
+        self.rootViewController.navigationController?.dismiss(animated: true, completion: { })
     }
 }

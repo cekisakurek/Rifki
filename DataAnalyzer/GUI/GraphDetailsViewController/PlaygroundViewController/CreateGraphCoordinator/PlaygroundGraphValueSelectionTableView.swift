@@ -9,10 +9,8 @@
 import UIKit
 
 protocol PlaygroundGraphValueSelectionDelegate: class {
-    
     func itemSelected(_ selected: Selectable)
 }
-
 
 class PlaygroundGraphValueSelectionTableView: UITableViewController {
     
@@ -26,7 +24,6 @@ class PlaygroundGraphValueSelectionTableView: UITableViewController {
         self.tableView.register(NameInputTableViewCell.self, forCellReuseIdentifier: "NameCell")
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         self.tableView.register(StaticTextTableViewCell.self, forCellReuseIdentifier: "StaticValueCell")
-        
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -40,14 +37,11 @@ class PlaygroundGraphValueSelectionTableView: UITableViewController {
         return nil
     }
     
-    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return items.count
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -16,7 +16,6 @@ enum PlaygroundGraphType: String {
     case Scatter
 }
 
-
 class GraphDataSet {
     var xAxisName: String!
     var yAxisName: String!
@@ -30,6 +29,8 @@ class GraphDataSet {
     var barColor: UIColor = UIColor.cyan
 }
 
+let systemBoldFontName = "System-Bold"
+let systemFontName = "System"
 
 class PlaygroundGraph {
     var name: String?
@@ -38,24 +39,23 @@ class PlaygroundGraph {
     var uuid: String!
     var availableHeaders: [String]!
     
-    var titleFontSize: Double = 24.0
+    var titleFontSize: Double = 40.0
     
-    var titleFontName: String = UIFont.boldSystemFont(ofSize: 24).fontName
+    var titleFontName: String = systemBoldFontName
     var titleColor: UIColor = UIColor.black
     
     var backgroundColor: UIColor = UIColor.white
     
     var xAxisDisplayName: String?
-    var yAxisTextFontSize: Double = 18.0
-    var yAxisTextFontName: String = UIFont.systemFont(ofSize: 18.0).fontName
+    var yAxisTextFontSize: Double = 30.0
+    var yAxisTextFontName: String = systemFontName
     var yAxisTextColor: UIColor = UIColor.black
     
     var yAxisDisplayName: String?
-    var xAxisTextFontSize: Double = 18.0
-    var xAxisTextFontName: String = UIFont.systemFont(ofSize: 18.0).fontName
+    var xAxisTextFontSize: Double = 30.0
+    var xAxisTextFontName: String = systemFontName
     var xAxisTextColor: UIColor = UIColor.black
 }
-
 
 struct Selectable {
     
@@ -63,15 +63,12 @@ struct Selectable {
     var value: Any
 }
 
-
 class Coordinator {
     weak var parentCoordinator: Coordinator?
     var subCoordiantors = [Coordinator]()
     var rootViewController: UIViewController!
     var graph: PlaygroundGraph!
-    
 }
-
 
 class CreateGraphCoordinator: Coordinator {
     
@@ -93,21 +90,15 @@ class CreateGraphCoordinator: Coordinator {
         createGraphViewController.title = NSLocalizedString("Graph Creation", comment: "")
         let navigationController = UINavigationController(rootViewController: createGraphViewController)
         self.rootViewController = navigationController
-        self.presentViewController.present(navigationController, animated: true) {
-
-        }
+        self.presentViewController.present(navigationController, animated: true)
     }
     
     func cancel() {
-        self.rootViewController.dismiss(animated: true) {
-            
-        }
+        self.rootViewController.dismiss(animated: true)
     }
     
     func save() {
-        self.rootViewController.dismiss(animated: true) {
-            
-        }
+        self.rootViewController.dismiss(animated: true)
     }
     
     func graphTypes() -> [Selectable] {
@@ -129,15 +120,31 @@ class CreateGraphCoordinator: Coordinator {
     }
 }
 
-class CreateGraphNameTypeViewController: UITableViewController, ObjectNamingProtocol, ColorPickerFromTableViewDelegate, UIFontPickerViewControllerDelegate {
+class CreateGraphNameTypeViewController: UITableViewController,
+                                         ObjectNamingProtocol,
+                                         ObjectValueInputProtocol,
+                                         ColorPickerFromTableViewDelegate,
+                                         FontSelectionDelegate {
     
-    func fontPickerViewControllerDidPickFont(_ viewController: UIFontPickerViewController) {
-        // attempt to read the selected font descriptor, but exit quietly if that fails
-//        guard let descriptor = viewController.selectedFontDescriptor else { return }
-
-//        let font = UIFont(descriptor: descriptor, size: 36)
-//        yourLabel.font = font
+    var items: [Selectable]!
+    weak var coordinator: CreateGraphCoordinator?
+    
+    // MARK: - FontSelectionDelegate
+    
+    func fontSelectionController(_ controller: FontSelectionTableViewController, didSelect font: UIFont) {
+        self.coordinator?.graph.titleFontName = font.fontName
+        tableView.reloadData()
     }
+    
+    // MARK: - ObjectValueInputProtocol
+    
+    func valueInputFieldChanged(toValue: Double?) {
+        if let value = toValue {
+            self.coordinator?.graph.titleFontSize = value
+        }
+    }
+    
+    // MARK: - ColorPickerFromTableViewDelegate
     
     func colorPicker(_ picker: ColorPickerViewController, didChange color: UIColor, forIndexPath: IndexPath) {
         if forIndexPath.row == 1 {
@@ -146,18 +153,14 @@ class CreateGraphNameTypeViewController: UITableViewController, ObjectNamingProt
         else if forIndexPath.row == 2 {
             self.coordinator?.graph.backgroundColor = color
         }
-        
         tableView.reloadData()
     }
     
+    // MARK: - ObjectNamingProtocol
     
     func objectNameFieldChanged(toString: String?) {
         self.coordinator?.graph.name = toString
     }
-    
-    
-    var items: [Selectable]!
-    weak var coordinator: CreateGraphCoordinator?
     
     override func loadView() {
         super.loadView()
@@ -169,22 +172,20 @@ class CreateGraphNameTypeViewController: UITableViewController, ObjectNamingProt
         self.tableView.register(NameInputTableViewCell.self, forCellReuseIdentifier: "NameCell")
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         self.tableView.register(StaticTextTableViewCell.self, forCellReuseIdentifier: "StaticValueCell")
-        self.tableView.register(ColorSelectionTableViewCell.self, forCellReuseIdentifier: "ColorCell")
+        self.tableView.register(ColorSelectionTableViewCell.self, forCellReuseIdentifier: ColorSelectionTableViewCell.identifier)
+        self.tableView.register(DoubleValueInputTableViewCell.self, forCellReuseIdentifier: DoubleValueInputTableViewCell.identifier)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
         
-    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return 5
+        return 6
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -207,11 +208,24 @@ class CreateGraphNameTypeViewController: UITableViewController, ObjectNamingProt
             let cell = tableView.dequeueReusableCell(withIdentifier: "StaticValueCell", for: indexPath) as! StaticTextTableViewCell
             
             let nameString = NSLocalizedString("Font", comment: "") + " :"
-            let valueString = NSLocalizedString("System Font", comment: "")
+            var valueString = self.coordinator?.graph.titleFontName
+            let systemFontName = systemBoldFontName
+            if valueString == systemFontName {
+                valueString = NSLocalizedString("System Bold Font", comment: "")
+            }
             cell.setValueName(nameString, value: valueString)
             return cell
         }
         if indexPath.row == 3 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "DoubleValueCell", for: indexPath) as! DoubleValueInputTableViewCell
+            cell.accessoryType = .none
+            let nameString = NSLocalizedString("Font Size", comment: "") + " :"
+            let value = self.coordinator?.graph.titleFontSize
+            cell.valueFieldChangeDelegate = self
+            cell.setValueName(nameString, value: value)
+            return cell
+        }
+        if indexPath.row == 4 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ColorCell", for: indexPath) as! ColorSelectionTableViewCell
             cell.accessoryType = .disclosureIndicator
             let name = NSLocalizedString("Background Color", comment: "") + " :"
@@ -219,7 +233,7 @@ class CreateGraphNameTypeViewController: UITableViewController, ObjectNamingProt
             cell.setValueName(name, color: color)
             return cell
         }
-        if indexPath.row == 4 {
+        if indexPath.row == 5 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "StaticValueCell", for: indexPath) as! StaticTextTableViewCell
             
             let nameString = NSLocalizedString("Type", comment: "") + " :"
@@ -231,7 +245,6 @@ class CreateGraphNameTypeViewController: UITableViewController, ObjectNamingProt
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
             return cell
         }
-        
     }
     
     // MARK: - UITableViewDelegate
@@ -245,20 +258,17 @@ class CreateGraphNameTypeViewController: UITableViewController, ObjectNamingProt
             self.navigationController?.pushViewController(pickerViewController, animated: true)
         }
         if indexPath.section == 0 && indexPath.row == 2 {
-            let pickerViewController = UIFontPickerViewController()
-//            pickerViewController.delegate = self
-//            pickerViewController.fromIndexPath = indexPath
-//            pickerViewController.tableColorDelegate = self
-//            self.navigationController?.pushViewController(pickerViewController, animated: true)
-            present(pickerViewController, animated: true)
+            let pickerViewController = FontSelectionTableViewController(style: .plain)
+            pickerViewController.selectionDelegate = self
+            self.navigationController?.pushViewController(pickerViewController, animated: true)
         }
-        if indexPath.section == 0 && indexPath.row == 3 {
+        if indexPath.section == 0 && indexPath.row == 4 {
             let pickerViewController = ColorPickerViewController()
             pickerViewController.fromIndexPath = indexPath
             pickerViewController.tableColorDelegate = self
             self.navigationController?.pushViewController(pickerViewController, animated: true)
         }
-        if indexPath.section == 0 && indexPath.row == 4 {
+        if indexPath.section == 0 && indexPath.row == 5 {
             self.coordinator!.selectGraphType()
         }
     }
@@ -269,19 +279,5 @@ class CreateGraphNameTypeViewController: UITableViewController, ObjectNamingProt
     
     @objc func save() {
         self.coordinator?.save()
-    }
-}
-
-
-class FontPickerContainerViewController: UIViewController {
-    
-    override func loadView() {
-        super.loadView()
-        
-        self.view.backgroundColor = UIColor.white
-        
-        let pickerViewController = UIFontPickerViewController()
-        pickerViewController.view.frame = self.view.bounds
-        self.view.addSubview(pickerViewController.view)
     }
 }

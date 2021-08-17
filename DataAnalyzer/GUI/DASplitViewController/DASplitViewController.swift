@@ -8,25 +8,21 @@
 
 import UIKit
 
-
 class DASplitViewController: UISplitViewController, UIDropInteractionDelegate, AddDatasetViewControllerDelegate {
     
     var addDataSetController: AddDataSetController?
     
     func addDatasetController(_ controller: AddDataSetController, didAddDatasetAtURL: URL) {
-        
+        // We import the file in addDatasetController
+        // no op
     }
     
     func addDatasetControllerCancelled(_ controller: AddDataSetController) {
-        
+        // no op
     }
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.view.addInteraction(UIDropInteraction(delegate: self))
-        
     }
     
     func showAddDatasetDialog() {
@@ -41,39 +37,12 @@ class DASplitViewController: UISplitViewController, UIDropInteractionDelegate, A
         addDataSetController?.fileURL = url
         addDataSetController?.showSettings()
     }
-    
-//    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
-//        print(interaction)
-//        return true
-//    }
-//
-//    func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
-//      //only want external app sessions
-//      if session.localDragSession == nil {
-//        return UIDropProposal(operation: .copy)
-//      }
-//      return UIDropProposal(operation: .cancel)
-//    }
-    
 }
 
 class SplitViewDelegate: NSObject, UISplitViewControllerDelegate {
     
-    
     weak var savedGraphsViewController: DatasetsViewController?
     weak var  graphDetailsViewController: GraphDetailsViewController?
-    
-    
-//    func splitViewController(_ svc: UISplitViewController,
-//                             willShow vc: UIViewController,
-//                             invalidating barButtonItem: UIBarButtonItem)
-//    {
-////        if let detailView = svc.viewControllers.first as? UINavigationController {
-////            svc.navigationItem.backBarButtonItem = nil
-////            detailView.topViewController?.navigationItem.leftBarButtonItem = nil
-////        }
-//        print(vc)
-//    }
     
     func splitViewController(_ splitViewController: UISplitViewController,
                              collapseSecondary secondaryViewController: UIViewController,
@@ -87,24 +56,6 @@ class SplitViewDelegate: NSObject, UISplitViewControllerDelegate {
             return true
         }
         return false
-        
-//
-//        guard let navigationController = primaryViewController as? UINavigationController,
-//            let controller = navigationController.topViewController as? DatasetsViewController
-//        else {
-//            return true
-//        }
-//
-//        return false
     }
-//    func splitViewController(_ svc: UISplitViewController, willChangeTo displayMode: UISplitViewController.DisplayMode) {
-//
-//        print(displayMode)
-//    }
 }
-//extension UISplitViewController {
-//    func toggleMasterView() {
-//        let barButtonItem = self.displayModeButtonItem
-//        UIApplication.shared.sendAction(barButtonItem.action!, to: barButtonItem.target, from: nil, for: nil)
-//    }
-//}
+

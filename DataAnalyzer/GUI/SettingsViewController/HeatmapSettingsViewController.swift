@@ -9,8 +9,7 @@
 import UIKit
 import CoreData
 
-class HeatmapSettingsViewController: UITableViewController, ColorPickerFromTableViewDelegate {
-    
+class HeatmapSettingsViewController: UITableViewController {
     
     class HeatmalShowValueSelectionDelegate: ObjectBooleanInputProtocol {
         
@@ -31,17 +30,6 @@ class HeatmapSettingsViewController: UITableViewController, ColorPickerFromTable
                  NSLocalizedString("Show Values", comment: ""),
                  
     ]
-    
-    func colorPicker(_ picker: ColorPickerViewController, didChange color: UIColor, forIndexPath: IndexPath) {
-        if forIndexPath.section == 0 {
-            heatmapChangeColor(color, index: forIndexPath.row)
-        }
-        else if forIndexPath.section == 1 {
-            heatmapChangeColor(color, index: forIndexPath.row)
-        }
-        
-        tableView.reloadData()
-    }
     
     func heatmapChangeColor(_ color: UIColor, index: Int) {
         switch index {
@@ -75,14 +63,14 @@ class HeatmapSettingsViewController: UITableViewController, ColorPickerFromTable
         self.tableView.estimatedRowHeight = 100.0;
         self.tableView.register(NameInputTableViewCell.self, forCellReuseIdentifier: "NameCell")
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        self.tableView.register(ColorSelectionTableViewCell.self, forCellReuseIdentifier: "ColorCell")
+        self.tableView.register(ColorSelectionTableViewCell.self, forCellReuseIdentifier: ColorSelectionTableViewCell.identifier)
         self.tableView.register(BoolValueInputTableViewCell.self, forCellReuseIdentifier: "BoolValueCell")
         
         
         do {
-            let context = CoreDataController.shared.managedObjectContext
+            let context = CoreDataController.shared.viewContext
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Settings")
-            let settings = try context!.fetch(fetchRequest) as! [Settings]
+            let settings = try context.fetch(fetchRequest) as! [Settings]
             if let settingsObject = settings.first {
                 self.settings = settingsObject
                 self.heatmapShowValueSelectionDelegate.settings = self.settings
@@ -96,7 +84,7 @@ class HeatmapSettingsViewController: UITableViewController, ColorPickerFromTable
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
         do {
-            try CoreDataController.shared.managedObjectContext.save()
+            try CoreDataController.shared.writeContext.save()
         }
         catch {
             ErrorAlertView.showError(with: String(describing: error), from: self)
@@ -146,6 +134,18 @@ class HeatmapSettingsViewController: UITableViewController, ColorPickerFromTable
         self.navigationController?.pushViewController(pickerViewController, animated: true)
         
     }
+}
+
+extension HeatmapSettingsViewController: ColorPickerFromTableViewDelegate {
     
-    
+    func colorPicker(_ picker: ColorPickerViewController, didChange color: UIColor, forIndexPath: IndexPath) {
+        if forIndexPath.section == 0 {
+            heatmapChangeColor(color, index: forIndexPath.row)
+        }
+        else if forIndexPath.section == 1 {
+            heatmapChangeColor(color, index: forIndexPath.row)
+        }
+        
+        tableView.reloadData()
+    }
 }

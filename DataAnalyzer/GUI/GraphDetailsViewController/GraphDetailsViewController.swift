@@ -14,16 +14,16 @@ class GraphDetailsViewController: UIViewController, UIPageViewControllerDelegate
     
     private var selectDatasetView: SelectDatasetView!
     
-    var pageViewController: UIPageViewController?
+    var pageViewController: DAPageViewController!
     
     var dataset: GraphRawData? {
         didSet {
             
             if dataset == nil {
-                showSelectDatasetView()
+                self.showSelectDatasetView()
             }
             else {
-                hideSelectDatasetView()
+                self.hideSelectDatasetView()
             }
             
             self.rawDataViewController.dataset = dataset
@@ -35,8 +35,6 @@ class GraphDetailsViewController: UIViewController, UIPageViewControllerDelegate
       
     var currentIndex: Int = 0
     
-    var pageController: UIPageViewController!
-    
     let rawDataViewController = RawDataViewController()
     let rowAnalysisViewController = RowAnalysisViewController()
     let heatmapViewController = HeatMapViewController()
@@ -45,110 +43,121 @@ class GraphDetailsViewController: UIViewController, UIPageViewControllerDelegate
     override func loadView() {
         super.loadView()
         
+        self.view.backgroundColor = UIColor.white
+        
         self.title = NSLocalizedString("Details", comment: "")
         
         self.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
         self.navigationItem.leftItemsSupplementBackButton = true
-        
+
         let settingsItem = UIBarButtonItem(title: NSLocalizedString("Settings", comment: ""), style: .plain, target: self, action: #selector(showSettings))
         self.navigationItem.rightBarButtonItem = settingsItem
-        
+
         let items = [
             NSLocalizedString("Raw Data", comment: ""),
             NSLocalizedString("Analysis", comment: ""),
             NSLocalizedString("Heatmap", comment: ""),
             NSLocalizedString("Playground", comment: "")
         ]
-        
+
         let segmentControl = UISegmentedControl(items: items)
         segmentControl.selectedSegmentIndex = 0
         segmentControl.addTarget(self, action: #selector(changeViewController), for: .valueChanged)
+        segmentControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .selected)
+
+        segmentControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
 
         self.navigationItem.titleView = segmentControl
-        
-        pageController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: [:])
-        
-        pageController.isDoubleSided = true
-//        pageController.dataSource = self
-        pageController.delegate = self
-        
-        let contentControllers = [rawDataViewController]
-        
-        pageController.setViewControllers(contentControllers, direction: UIPageViewController.NavigationDirection.forward, animated: true, completion: nil)
-        
-        pageViewController = pageController
-        
-        self.addChild(pageViewController!)
-        self.view.insertSubview(pageViewController!.view, at: 0)
-        pageViewController!.didMove(toParent: self)
-        
-        selectDatasetView = SelectDatasetView(frame: .zero)
-        selectDatasetView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(selectDatasetView)
 
-        let defaultConstraints = [
-            self.selectDatasetView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            self.selectDatasetView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            self.selectDatasetView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-            self.selectDatasetView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
-        ]
-        
-        NSLayoutConstraint.activate(defaultConstraints)
+        self.pageViewController = DAPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: [:])
+        self.pageViewController.view.backgroundColor = UIColor.white
+        self.pageViewController.isDoubleSided = true
+        self.pageViewController.delegate = self
+
+        let contentControllers = [self.rawDataViewController]
+
+        self.pageViewController.setViewControllers(contentControllers, direction: UIPageViewController.NavigationDirection.forward, animated: true, completion: nil)
+
+
+        self.addChild(self.pageViewController!)
+        self.view.insertSubview(self.pageViewController!.view, at: 0)
+        self.pageViewController.didMove(toParent: self)
+
+        self.selectDatasetView = SelectDatasetView(frame: .zero)
+        self.selectDatasetView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.selectDatasetView)
+
+        NSLayoutConstraint.activate([
+            self.selectDatasetView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            self.selectDatasetView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.selectDatasetView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            self.selectDatasetView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+        ])
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.pageViewController.view.frame = self.view.frame
     }
     
     @objc func changeViewController(sender: UISegmentedControl) {
         
         var direction: UIPageViewController.NavigationDirection = UIPageViewController.NavigationDirection.reverse
         
-        if currentIndex < sender.selectedSegmentIndex {
+        if self.currentIndex < sender.selectedSegmentIndex {
             direction = UIPageViewController.NavigationDirection.forward
         }
         
         switch sender.selectedSegmentIndex {
             case 0:
-                pageController.setViewControllers([rawDataViewController], direction: direction, animated: true, completion: nil)
+                self.pageViewController.setViewControllers([rawDataViewController], direction: direction, animated: true, completion: nil)
             case 1:
-                pageController.setViewControllers([rowAnalysisViewController], direction: direction, animated: true, completion: nil)
+                self.pageViewController.setViewControllers([rowAnalysisViewController], direction: direction, animated: true, completion: nil)
             case 2:
-                pageController.setViewControllers([heatmapViewController
+                self.pageViewController.setViewControllers([heatmapViewController
                 ], direction: direction, animated: true, completion: nil)
             case 3:
-                pageController.setViewControllers([playgroundViewController], direction: direction, animated: true, completion: nil)
+                self.pageViewController.setViewControllers([playgroundViewController], direction: direction, animated: true, completion: nil)
             default:
                 break
         }
         
-        currentIndex = sender.selectedSegmentIndex
+        self.currentIndex = sender.selectedSegmentIndex
     }
     
     
     // MARK: - Show/Hide functions
     
     func loadingDataset() {
-        showSelectDatasetView()
-        selectDatasetView.startAnimating(with: NSLocalizedString("Dataset is loading", comment: ""))
+        self.showSelectDatasetView()
+        self.selectDatasetView.startAnimating(with: NSLocalizedString("Dataset is loading", comment: ""))
     }
     
     func datasetLoaded() {
-        hideSelectDatasetView()
-        selectDatasetView.stopAnimating()
+        self.hideSelectDatasetView()
+        self.selectDatasetView.stopAnimating()
     }
     
     func hideSelectDatasetView() {
-        selectDatasetView.isHidden = true
+        self.selectDatasetView.isHidden = true
     }
     
     func showSelectDatasetView() {
-        selectDatasetView.isHidden = false
+        self.selectDatasetView.isHidden = false
     }
  
     @objc func showSettings() {
         let viewController = SettingsViewController()
         let navigationController = UINavigationController(rootViewController: viewController)
-        
-        self.present(navigationController, animated: true) {
-            
-        }
+        self.present(navigationController, animated: true)
     }
+}
 
+
+class DAPageViewController: UIPageViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = UIColor.white
+    }
 }

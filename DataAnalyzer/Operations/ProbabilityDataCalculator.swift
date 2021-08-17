@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Charts
 
 import SigmaSwiftStatistics
 
@@ -29,13 +30,8 @@ func probabilityDistrubition(data: [Double]) -> [[Double]] {
             q = (Double(i) - 0.3175) / (n + 0.365)
         }
         let n = Sigma.normalQuantile(p: q, μ: 0, σ: 1)!
-        //            print(n)
         dist.append([n,sortedData[i]])
-        
-        
     }
-    
-    
     return dist
 }
 
@@ -88,49 +84,27 @@ class ProbabilityDataCalculator: Operation {
         
         if !data.isEmpty {
           
-            
             let distribution = probabilityDistrubition(data: data)
             
-//            var dataPoints = [BarDataPoint]()
             var probabilities = [ChartDataEntry]()
             for item in distribution {
                 let entry = ChartDataEntry(x: item[0], y: item[1])
                 probabilities.append(entry)
-//                let xPoint = PointDoubleValue(value: item[0], label: "Theoretical Quantiles")
-//                let yPoint = PointDoubleValue(value: item[1], label: "Ordered Values")
-//                let point = BarDataPoint(x: xPoint, y: yPoint)
-//                dataPoints.append(point)
             }
-            
             
             let (b,m) = lsr(distribution)
 
-//            var normalPoints = [BarDataPoint]()
             var normalEntries = [ChartDataEntry]()
             for p in distribution {
                 let x = p[0]
                 let y = (m * x) + b
                 let entry = ChartDataEntry(x: x, y: y)
                 normalEntries.append(entry)
-//                let xPoint = PointDoubleValue(value: x, label: "Theoretical Quantiles")
-//                let yPoint = PointDoubleValue(value: y, label: "Ordered Values")
-//                let point = BarDataPoint(x: xPoint, y: yPoint)
-//                normalPoints.append(point)
-                
             }
             
             
             let dataSet = ProbabilityResult(probabilities: probabilities, normal: normalEntries)
             self.result = dataSet
-            
-//            var entries = [ChartDataEntry]()
-//            for point in dataPoints {
-//                let entry = ChartDataEntry(x: point.x.value, y: point.y.value)
-//
-//                entries.append(entry)
-//            }
         }
     }
-    
-
 }

@@ -13,88 +13,85 @@ class RawDataViewController: UIViewController, UICollectionViewDataSource, UICol
     
     private var collectionView: UICollectionView!
     
-    let leftAndRightPaddings: CGFloat = 10.0
-    
-    var numberOfItemsPerRow: Int = 0
-    
+    private let leftAndRightPaddings: CGFloat = 10.0
+        
     private let cellReuseIdentifier = "collectionCell"
     
-    var dataset: GraphRawData? {
+    private var appTheme = AppTheme()
+    
+    public var dataset: GraphRawData? {
         didSet {
-            
             if let dataset = dataset {
-                
                 let rowCount = (dataset.rows.count)
                 let columnCount = (dataset.headers?.count)!
-                
-                numberOfItemsPerRow = columnCount
-                
-                let layout = collectionView.collectionViewLayout as! GridCollectionViewLayout
+                                
+                let layout = self.collectionView.collectionViewLayout as! GridCollectionViewLayout
                 layout.columnCount = columnCount + 1
                 layout.rowCount = rowCount + 1
                 layout.invalidateLayout()
-                collectionView.reloadData()
+                self.collectionView.reloadData()
             }
             else {
-                
-                let layout = collectionView.collectionViewLayout as! GridCollectionViewLayout
+                let layout = self.collectionView.collectionViewLayout as! GridCollectionViewLayout
                 layout.columnCount = 0
                 layout.rowCount = 0
                 layout.invalidateLayout()
-                collectionView.reloadData()
+                self.collectionView.reloadData()
             }
         }
     }
 
     override func loadView() {
         super.loadView()
+        
+        self.view.backgroundColor = UIColor.red
+        
         let flowLayout = GridCollectionViewLayout()
-        flowLayout.minimumInteritemSpacing = leftAndRightPaddings/2.0
+        flowLayout.minimumInteritemSpacing = self.leftAndRightPaddings/2.0
         flowLayout.sectionInset = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
         flowLayout.itemSize = CGSize(width: 100.0, height: 50.0)
         
         self.collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: flowLayout)
         self.collectionView.translatesAutoresizingMaskIntoConstraints = false
-        self.collectionView.register(RawDataCollectionViewCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
-        
-        collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "headerView")
-        
+        self.collectionView.register(RawDataCollectionViewCell.self, forCellWithReuseIdentifier: self.cellReuseIdentifier)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-        self.collectionView.backgroundColor = UIColor.lightGray
+        self.collectionView.backgroundColor = UIColor.white
         self.view.addSubview(self.collectionView)
         
-        let defaultConstraints = [
+        NSLayoutConstraint.activate([
             self.collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.collectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            self.collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-            self.collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
-        ]
-        
-        NSLayoutConstraint.activate(defaultConstraints)
+            self.collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            self.collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+        ])
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.view.layoutIfNeeded()
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        
-        if let items = dataset?.rows {
+        if let items = self.dataset?.rows {
             return items.count + 1
         }
         return 0
-        
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
-    {
-        return dataset!.headers!.count + 1
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let headers = self.dataset?.headers {
+            return headers.count + 1
+        }
+        return 0
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
-    {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! RawDataCollectionViewCell
-        cell.backgroundColor = UIColor.white
+        cell.backgroundColor = self.appTheme.rawDataCell1Background
         
         if indexPath.item == 0 {
-            cell.backgroundColor = UIColor.gray
+            cell.backgroundColor = self.appTheme.rawDataCell2Background
             if indexPath.section > 0 {
                 cell.setString(string: String(indexPath.section))
             }
@@ -104,34 +101,23 @@ class RawDataViewController: UIViewController, UICollectionViewDataSource, UICol
             return cell
         }
         
-        if indexPath.section == 0 {
-            cell.setString(string: dataset?.headers?[indexPath.item - 1])
-            cell.backgroundColor = UIColor.gray
+        if let dataset = self.dataset {
+            if indexPath.section == 0 {
+                cell.setString(string: dataset.headers?[indexPath.item - 1])
+                cell.backgroundColor = self.appTheme.rawDataCell2Background
+            }
+            else {
+                cell.setString(string: (dataset.rows[indexPath.section - 1][indexPath.item - 1] as! String))
+            }
         }
-        else {
-            cell.setString(string: (dataset?.rows[indexPath.section - 1][indexPath.item - 1] as! String))
-        }
-        
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        
-        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "headerView", for: indexPath as IndexPath)
-
-        headerView.backgroundColor = UIColor.red
-
-        return headerView
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-
-        if section == 0 {
-            return CGSize(width: collectionView.frame.size.width, height: 100)
-        }
-        else {
-            return CGSize.zero
-        }
-    }
+    // TODO: Implement row errors
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//
+//        if let cell = collectionView.cellForItem(at: indexPath) {
+//            cell.backgroundColor = UIColor.red
+//        }
+//    }
 }

@@ -14,7 +14,6 @@ struct HeatMapResult {
     var matrix: [[Double]]
 }
 
-
 class HeatMapCalculator: Operation {
     
     private(set) var identifier: String!
@@ -49,7 +48,6 @@ class HeatMapCalculator: Operation {
         var minValue = Double.greatestFiniteMagnitude
         var maxValue = 0.0
         
-        
         for (columnIndex, columnName) in labels.enumerated() {
             var rowCorr = [Double](repeating: 0.0, count: labels.count)
             let (columnValues, _) = dataset!.column(named: columnName)
@@ -80,8 +78,5 @@ class HeatMapCalculator: Operation {
         
         let result = HeatMapResult(labels: labels, matrix: corr)
         self.result = result
-        
-
-        
     }
 }

@@ -8,7 +8,12 @@
 
 import UIKit
 
-class DistributionGraphTheme {
+protocol GraphTheme {
+    
+}
+
+
+class DistributionGraphTheme: GraphTheme {
     
     var backgroundColor = UIColor.white
     var xAxisTextColor = UIColor.black
@@ -23,7 +28,7 @@ class DistributionGraphTheme {
 }
 
 
-class ProbabilityGraphTheme {
+class ProbabilityGraphTheme: GraphTheme{
     
     var backgroundColor = UIColor.white
     var xAxisTextColor = UIColor.black
@@ -41,3 +46,8 @@ class HeatmapTheme {
     var valuesVisible = false
 }
 
+class AppTheme {
+    var rawDataCell1Background = UIColor.white
+    var rawDataCell2Background = UIColor(red: CGFloat(210.0/255.0), green: CGFloat(210.0/255.0), blue: CGFloat(210.0/255.0), alpha: 1.0)
+    
+}

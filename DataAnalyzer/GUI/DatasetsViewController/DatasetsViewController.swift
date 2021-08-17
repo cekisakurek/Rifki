@@ -8,14 +8,15 @@
 
 import UIKit
 import CoreData
+import NotificationBannerSwift
 
 class DatasetsViewController: UITableViewController, NSFetchedResultsControllerDelegate {
         
     var fetchedResultsController: NSFetchedResultsController<Dataset>!
-    
-    var parseQueue = ImportOperationQueue()
-    
+    var parseQueue = ImportOperation()
     var loadedDatasetUUID: String?
+    
+    // MARK: - View
     
     override func loadView() {
         
@@ -26,35 +27,14 @@ class DatasetsViewController: UITableViewController, NSFetchedResultsControllerD
         
         let addItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addGraph))
         self.navigationItem.rightBarButtonItem = addItem
-        
         self.navigationItem.leftBarButtonItem = editButtonItem
         
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        
-        loadSavedData()
-
     }
     
-    func loadSavedData() {
-        
-        if self.fetchedResultsController == nil {
-            let request: NSFetchRequest<Dataset> = Dataset.fetchRequest()
-            let sort = NSSortDescriptor(key: "date", ascending: false)
-            request.sortDescriptors = [sort]
-            request.fetchBatchSize = 20
-
-            self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
-                                                                        managedObjectContext: CoreDataController.shared.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
-            self.fetchedResultsController.delegate = self
-
-            do {
-                try self.fetchedResultsController.performFetch()
-                self.tableView.reloadData()
-            }
-            catch {
-                ErrorAlertView.showError(with: String(describing: error), from: self)
-            }
-        }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        loadSavedData()
     }
     
     // MARK: - UITableViewDatasource
@@ -62,7 +42,7 @@ class DatasetsViewController: UITableViewController, NSFetchedResultsControllerD
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if let fetchedResultsController = fetchedResultsController,
-            let sectionInfo = fetchedResultsController.sections?[section]{
+            let sectionInfo = fetchedResultsController.sections?[section] {
             
             return sectionInfo.numberOfObjects
         }
@@ -88,7 +68,6 @@ class DatasetsViewController: UITableViewController, NSFetchedResultsControllerD
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         self.parseAndPushGraph(at: indexPath)
     }
     
@@ -96,12 +75,11 @@ class DatasetsViewController: UITableViewController, NSFetchedResultsControllerD
         return true
     }
     
-    
     override func tableView(_ tableView: UITableView,
-                            trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
-    {
+                            trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let editAction = UIContextualAction(style: .normal, title:  "Edit", handler: {
+            
             [weak self] (ac: UIContextualAction, view: UIView, success: (Bool) -> Void) in
             
             let graph = self?.fetchedResultsController.object(at: indexPath)
@@ -115,6 +93,7 @@ class DatasetsViewController: UITableViewController, NSFetchedResultsControllerD
         editAction.backgroundColor = UIColor.blue.withAlphaComponent(0.7)
         
         let deleteAction = UIContextualAction(style: .normal, title:  "Delete", handler: {
+            
             [weak self]  (ac:UIContextualAction, view:UIView, success: (Bool) -> Void) in
             
             let graph = self?.fetchedResultsController.object(at: indexPath)
@@ -149,15 +128,12 @@ class DatasetsViewController: UITableViewController, NSFetchedResultsControllerD
         }
     }
     
-    
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         
         DispatchQueue.main.async {
             [weak self] in
             
-            guard let self = self else {
-                return
-            }
+            guard let self = self else { return }
             
             self.tableView.reloadData()
         }
@@ -165,32 +141,88 @@ class DatasetsViewController: UITableViewController, NSFetchedResultsControllerD
     
     // MARK: - Other Functions
     
+    func loadSavedData() {
+        
+        if self.fetchedResultsController == nil {
+            
+            let request: NSFetchRequest<Dataset> = Dataset.fetchRequest()
+            let sort = NSSortDescriptor(key: "date", ascending: false)
+            request.sortDescriptors = [sort]
+            request.fetchBatchSize = 20
+
+            self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
+                                                                        managedObjectContext: CoreDataController.shared.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+            self.fetchedResultsController.delegate = self
+
+            do {
+                try self.fetchedResultsController.performFetch()
+                self.tableView.reloadData()
+            }
+            catch {
+                ErrorAlertView.showError(with: String(describing: error), from: self)
+            }
+        }
+    }
+    
     func parseAndPushGraph(at indexPath: IndexPath) {
         let graph = fetchedResultsController.object(at: indexPath)
 
         if self.splitViewController!.viewControllers.count > 1 {
             // splittable
             if let splitDelegate = self.splitViewController?.delegate as? SplitViewDelegate {
-                let parseCSVOperation = CSVParseOperation(uuid: graph.uuid!, delimiter: graph.delimiter!)
+                
+                let parseCSVOperation = CSVParseOperation(uuid: graph.uuid!, delimiter: graph.delimiter!, hasHeader: graph.hasHeader)
                 splitDelegate.graphDetailsViewController?.loadingDataset()
                 parseCSVOperation.completionBlock =
                 {
                     [weak self] in
                     
+                    guard let self = self else { return }
+                    
                     DispatchQueue.main.sync {
                         
                         if parseCSVOperation.error == nil {
                             
-                            self?.loadedDatasetUUID = graph.uuid!
+                            self.loadedDatasetUUID = graph.uuid!
                             splitDelegate.graphDetailsViewController?.datasetLoaded()
                             splitDelegate.graphDetailsViewController?.dataset  = parseCSVOperation.result
+                            
+                            let analyzeOperation = DataAnalyseOperation(data: parseCSVOperation.result!)
+                            analyzeOperation.completionBlock = {
+                                DispatchQueue.main.sync {
+                                    var stringRepresentation = NSLocalizedString("Type Inconsistency", comment: "")
+                                    stringRepresentation += ":"
+                                    stringRepresentation += "\n"
+                                    stringRepresentation += " - "
+                                    stringRepresentation += analyzeOperation.warnings.joined(separator: "\n - ")
+                                    
+                                    
+                                    let title = NSLocalizedString("Warning", comment: "")
+                                    
+                                    
+                                    let banner = GrowingNotificationBanner(title: title, subtitle: stringRepresentation, style: .warning)
+                                    banner.autoDismiss = false
+                                    banner.dismissOnTap = true
+                                    banner.dismissOnSwipeUp = true
+                                    
+                                    
+                                    
+                                    
+                                    banner.show(bannerPosition: .bottom, on: splitDelegate.graphDetailsViewController!)
+                                    
+                                }
+                            }
+                            
+                            
+                            
+                            self.parseQueue.queue.addOperation(analyzeOperation)
+                            
                         }
                         else {
-                            ErrorAlertView.showError(with: String(describing: parseCSVOperation.error), from: self!)
+                            ErrorAlertView.showError(with: String(describing: parseCSVOperation.error), from: self)
                         }
                     }
                 }
-                
                 parseQueue.queue.addOperation(parseCSVOperation)
             }
         }

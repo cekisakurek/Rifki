@@ -2,12 +2,57 @@
   "object": {
     "pins": [
       {
+        "package": "Charts",
+        "repositoryURL": "https://github.com/danielgindi/Charts.git",
+        "state": {
+          "branch": null,
+          "revision": "7ac4a05e83d279bac305a472af9128c2a0eca3d7",
+          "version": "3.5.0"
+        }
+      },
+      {
+        "package": "CSV.swift",
+        "repositoryURL": "https://github.com/yaslab/CSV.swift.git",
+        "state": {
+          "branch": null,
+          "revision": "81d2874c51db364d7e1d71b0d99018a294c87ac1",
+          "version": "2.4.3"
+        }
+      },
+      {
+        "package": "MarqueeLabel",
+        "repositoryURL": "https://github.com/cbpowell/MarqueeLabel",
+        "state": {
+          "branch": null,
+          "revision": "f2c72a5f8568579dade6350dc26a482076d3d346",
+          "version": "4.3.0"
+        }
+      },
+      {
+        "package": "NotificationBannerSwift",
+        "repositoryURL": "https://github.com/Daltron/NotificationBanner",
+        "state": {
+          "branch": null,
+          "revision": "2ce5c49d8ee4865f01a3ce3bbe078664c78c7a3c",
+          "version": "3.0.6"
+        }
+      },
+      {
         "package": "SigmaSwiftStatistics",
         "repositoryURL": "https://github.com/cekisakurek/SigmaSwiftStatistics.git",
         "state": {
           "branch": "master",
           "revision": "f7353825c3e569000aef0cf698b08210a81bfb89",
           "version": null
+        }
+      },
+      {
+        "package": "SnapKit",
+        "repositoryURL": "https://github.com/SnapKit/SnapKit",
+        "state": {
+          "branch": null,
+          "revision": "d458564516e5676af9c70b4f4b2a9178294f1bc6",
+          "version": "5.0.1"
         }
       }
     ]

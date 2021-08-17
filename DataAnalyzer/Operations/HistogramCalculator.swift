@@ -8,13 +8,38 @@
 
 import Foundation
 import SigmaSwiftStatistics
-
+import Charts
 
 struct HistorgramResult {
     var histogramEntries: [BarChartDataEntry]
     var frequencies: [ChartDataEntry]
     var normal: [ChartDataEntry]
     var width: Double
+    
+    var p: Double = 0.0
+    var w: Double = 0.0
+    var alpha: Double = 0.05
+    var isGaussian = false
+}
+
+struct BinEdge {
+    var leftValue: Double
+    var rightValue: Double
+    var values: [Double: Double]?
+    
+    var itemCount = 0
+    
+    func frequency() -> Double? {
+        var totalFreq = 0.0
+        if let values = values {
+            for (_, freq) in values {
+                totalFreq += freq
+            }
+            let avgFreq = totalFreq / Double(values.count)
+            return avgFreq
+        }
+        return nil;
+    }
 }
 
 class HistogramCalculator: Operation {
@@ -36,7 +61,7 @@ class HistogramCalculator: Operation {
             return
         }
         
-        guard let data = data else { return }
+        guard var data = data else { return }
         
         if isCancelled {
             return
@@ -44,11 +69,12 @@ class HistogramCalculator: Operation {
         
         if !data.isEmpty {
           
-            let (frequencies, maxFreq, _) = data.frequencies()
+            data.prepare()
+            let (frequencies, maxValue, minValue) = data.frequencies()
             
             let n = Double(data.count)
-            let maxValue = data.maxValue()
-            let minValue = data.minValue()
+//            let maxValue = data.maxValue()
+//            let minValue = data.minValue()
             
             let q3 = Sigma.percentile(data, percentile: 0.75)!
             let q1 = Sigma.percentile(data, percentile: 0.25)!
@@ -66,6 +92,8 @@ class HistogramCalculator: Operation {
                 binSize = 100
             }
             
+            
+            
             var bins = [Int: Int]()
             let sortedData = data.sorted()
             
@@ -79,7 +107,6 @@ class HistogramCalculator: Operation {
                     }
                 }
             }
-
             
             var binEdges = [BinEdge]()
             for i in 0..<binSize {
@@ -88,37 +115,53 @@ class HistogramCalculator: Operation {
                 edge.values = [Double:Double]()
 
 
-                for (value, density) in frequencies {
-
+                for value in sortedData {
                     if value >= edge.leftValue && value < edge.rightValue {
-                        edge.values![value] = density
+                        if edge.values![value] != nil {
+                            edge.values![value]! += 1
+                        }
+                        else {
+                            edge.values![value] = 1
+                        }
+                        edge.itemCount += 1
                     }
                 }
                 binEdges.append(edge)
             }
-
-            
-            
-            
-            
-            
             
             let histogramEntries = calculateData(from: binEdges)
             let frequency = calculateFrequency(from: frequencies)
             let normal = calculateNormalFrequency(from: data)
-            let set = HistorgramResult(histogramEntries: histogramEntries, frequencies: frequency, normal: normal, width: Double(h))
             
+            var set = HistorgramResult(histogramEntries: histogramEntries, frequencies: frequency, normal: normal, width: Double(h))
+            
+            if let (w, p) = calcSwilk(data: data) {
+                set.w = w
+                set.p = p
+                
+                if p > set.alpha {
+                    set.isGaussian = true
+//                    print("Sample looks Gaussian (fail to reject H0)")
+                    
+                }
+                else {
+                    set.isGaussian = false
+//                    print("Sample does not look Gaussian (reject H0)")
+                }
+            }
             self.result = set
-            
-//            let dataSet = BarDataSet(points: dataPoints, maxXValue: maxValue, maxYValue: maxFreq, width: Double(h), frequencies: freqPoints, normalFrequencies: normalPoints)
-//
-//
-//            self.result = dataSet
-//
-            
-
-          
         }
+    }
+    
+    func calcSwilk(data: [Double]) -> (Double, Double)? {
+        let arr = data.sorted()
+        
+        let (w, p, error) = Rifki.swilk(x: arr)
+        
+        if error == .noError {
+            return (w, p)
+        }
+        return nil
     }
     
     func calculateNormalFrequency(from data: [Double]) -> [ChartDataEntry] {
@@ -135,7 +178,6 @@ class HistogramCalculator: Operation {
         }
         let (normalFrequencies, _, _) = dist.frequencies()
         
-//        var normalPoints = [BarDataPoint]()
         var entries = [ChartDataEntry]()
         let sortedNormalFreqKeys = normalFrequencies.keys.sorted()
         for key in sortedNormalFreqKeys {
@@ -144,10 +186,6 @@ class HistogramCalculator: Operation {
             
             let entry = ChartDataEntry(x: Double(key), y: Double(value))
             entries.append(entry)
-//            let xPoint = PointDoubleValue(value: Double(key), label: "bin")
-//            let yPoint = PointDoubleValue(value: Double(value), label: "Freq")
-//            let point = BarDataPoint(x: xPoint, y: yPoint)
-//            normalPoints.append(point)
         }
         return entries
         
@@ -174,70 +212,9 @@ class HistogramCalculator: Operation {
         for edge in binEdges {
             
             let entry = BarChartDataEntry(x: Double((edge.leftValue + edge.rightValue)/2.0),
-                                          y: Double(edge.values?.count ?? 0))
+                                          y: Double(edge.itemCount))
             histogramEntries.append(entry)
-            
-            //                let xPoint = PointDoubleValue(value: Double((edge.leftValue + edge.rightValue)/2.0), label: "bin")
-            //                let yPoint = PointDoubleValue(value: Double(edge.values?.count ?? 0), label: "Freq")
-            //                let point = BarDataPoint(x: xPoint, y: yPoint)
-            //                dataPoints.append(point)
         }
         return histogramEntries
     }
-    
 }
-
-
-//     let (frequencies, maxFreq, _) = data.frequencies()
-//
-//            let n = Double(data.count)
-//            let maxValue = data.maxValue()
-//            let minValue = data.minValue()
-//
-//            let q3 = Sigma.percentile(data, percentile: 0.75)!
-//            let q1 = Sigma.percentile(data, percentile: 0.25)!
-//
-//            let irq = q3 - q1
-//            var h =  2 * irq * pow(n, -1.0/3.0)
-//
-//            if h == 0 {
-//                h = log2(n) + 1
-//            }
-//
-//            var binSize = max(Int(((maxValue - minValue) / h)),1)
-////
-////            if binSize > 100 {
-////                binSize = 100
-////            }
-//
-//
-//            var binEdges = [BinEdge]()
-//            for i in 0..<binSize {
-//                var edge = BinEdge(leftValue: minValue + (h * Double(i)), rightValue: (minValue + h) + h * Double(i))
-//                edge.values = [Double:Double]()
-//
-//
-//                for (value, density) in frequencies {
-//
-//                    if value >= edge.leftValue && value < edge.rightValue {
-//                        edge.values![value] = density
-//                    }
-//                }
-//                binEdges.append(edge)
-//            }
-//
-//            var dataPoints = [BarDataPoint]()
-//
-//            for (i, edge) in binEdges.enumerated() {
-//
-//                let xPoint = PointDoubleValue(value: Double(i), label: "bin")
-//                let yPoint = PointDoubleValue(value: Double(edge.values?.count ?? 0), label: "Freq")
-//                let point = BarDataPoint(x: xPoint, y: yPoint)
-//                dataPoints.append(point)
-//
-//            }
-//
-//            let dataSet = BarDataSet(points: dataPoints, maxXValue: maxValue, maxYValue: maxFreq)
-//
-//            self.result = dataSet
-//

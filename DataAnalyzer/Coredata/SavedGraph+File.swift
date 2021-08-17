@@ -14,6 +14,16 @@ enum DatasetError: String, Error {
   case fileNotFound = "FileNotFound"
 }
 
+extension Graph {
+    
+    func delete() throws {
+    
+        self.managedObjectContext?.delete(self)
+        try self.managedObjectContext?.save()
+    }
+}
+
+
 extension Dataset {
     
     func loadRaw() -> [[String]]? {
@@ -57,7 +67,6 @@ extension Dataset {
             throw DatasetError.fileNotFound
         }
     }
-    
 }
 
 
@@ -70,33 +79,23 @@ enum GraphColumnDataType {
     
 }
 
-
-
-
 class GraphRawData {
     
-    var raw: [[String]]!
-    
-    var headers: [String]?
-    
-    var rows: [[Any]]!
-    
-    var hasHeader: Bool = true
-    
-    var uuid: String!
-    
-    
-//    var processedRows: [[Any]]!
+    var raw :        [[String]]!
+    var headers :    [String]?
+    var rows :       [[Any]]!
+    var hasHeader =  true
+    var uuid :       String!
     
     init(reader: CSVReader) {
         
-        if let header = reader.headerRow {
-            
-            headers = header
-        }
         var rows = [[Any]]()
         while let row = reader.next() {
             rows.append(row)
+        }
+        if let header = reader.headerRow {
+            
+            headers = header
         }
         self.rows = rows
     }
@@ -107,8 +106,6 @@ class GraphRawData {
             return column(atIndex: index)
         }
         return (nil, .Unknown)
-        
-    
     }
     
     func column(atIndex: Int) -> ([Any], GraphColumnDataType) {
@@ -118,8 +115,7 @@ class GraphRawData {
         
         var type = GraphColumnDataType.Unknown
         
-        
-        for (index, row) in rows!.enumerated() {
+        for (_, row) in rows!.enumerated() {
             
             type = GraphRawData.typeOf(value: row[atIndex])
             switch type {
@@ -131,47 +127,14 @@ class GraphRawData {
                     arr.append(Double(0.0))
                 }
             default:
-                print(row[atIndex])
                 arr.append(Double(0.0))
                 break
             }
-            
-            
-            
-            
         }
         return (arr, type)
         
     }
-    
-//    func columnAsInt(columnIndex: Int) -> [Int] {
-//        
-////        let rows = self.rows
-//        var arr = [Int]()
-//        
-////        for (_, row) in rows.enumerated() {
-////            if let intValue = Int(row[columnIndex]) {
-////                arr.append(intValue)
-////            }
-////        }
-//        return arr
-//    }
-//    
-//    
-//    func columnAsDouble(columnIndex: Int) -> [Double] {
-//        
-////        let rows = self.rows
-//        var arr = [Double]()
-//        
-////        for (_, row) in rows.enumerated() {
-////            if let doubleValue = Double(row[columnIndex]) {
-////                arr.append(doubleValue)
-////            }
-////        }
-//        return arr
-//    }
-//    
-//    
+
     func typeOfColumn(columnIndex: Int) -> GraphColumnDataType {
         
         if columnIndex == 0 {
@@ -185,14 +148,14 @@ class GraphRawData {
         }
         return .Unknown
     }
-//
-    
     
     class func typeOf(value: Any) -> GraphColumnDataType {
-        
+     
         if value is String {
             
-            let str = value as! String
+            let v = (value as! String).replacingOccurrences(of: ",", with: ".")
+            
+            let str = v
             
             if !str.isEmpty {
                 
@@ -203,12 +166,10 @@ class GraphRawData {
                 else {
                     return .String
                 }
-                
             }
         }
         return .Unknown
     }
-    
     
     class func typeOfData(data: [Any]) -> GraphColumnDataType {
         
@@ -227,29 +188,22 @@ class GraphRawData {
                             // integer
                             return .Number
                         }
-                        
                     }
                     else {
                         return .String
                     }
-
                 }
             }
         }
         return .Unknown
     }
-    
-
 }
-
-
-
 
 extension FloatingPoint {
   var isInteger: Bool { rounded() == self }
 }
 
-import UIKit
+
 class Document: UIDocument {
     
     override func contents(forType typeName: String) throws -> Any {

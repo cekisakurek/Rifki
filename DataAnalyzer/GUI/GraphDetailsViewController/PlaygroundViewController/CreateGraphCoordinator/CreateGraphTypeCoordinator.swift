@@ -16,14 +16,12 @@ class CreateGraphTypeCoordinator: Coordinator {
         viewController.coordinator = self
         viewController.title = NSLocalizedString("Select Type", comment: "")
         self.rootViewController = viewController
-        
     }
     
     func start() {
         if let parentCoordinator = parentCoordinator as? CreateGraphCoordinator {
             (parentCoordinator.rootViewController as! UINavigationController).pushViewController(self.rootViewController, animated: true)
         }
-        
     }
     
     func selectDataset(with graphType: PlaygroundGraphType) {
@@ -37,7 +35,6 @@ class CreateGraphTypeCoordinator: Coordinator {
     }
 }
 
-
 class SelectGraphTypeViewController: UITableViewController {
     
     weak var coordinator: CreateGraphTypeCoordinator?
@@ -47,7 +44,6 @@ class SelectGraphTypeViewController: UITableViewController {
     override func loadView() {
         super.loadView()
 
-        
         let bar = Selectable(key: NSLocalizedString("Bar Graph", comment: ""), value: PlaygroundGraphType.Bar)
         let line = Selectable(key: NSLocalizedString("Line Graph", comment: ""), value: PlaygroundGraphType.Line)
         let scatter = Selectable(key: NSLocalizedString("Scatter Graph", comment: ""), value: PlaygroundGraphType.Scatter)
@@ -64,14 +60,13 @@ class SelectGraphTypeViewController: UITableViewController {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
         return items.count
     }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let item = items[indexPath.row]
@@ -79,7 +74,6 @@ class SelectGraphTypeViewController: UITableViewController {
         cell.accessoryType = .disclosureIndicator
         cell.textLabel?.text = item.key
         return cell
-
     }
 
     // MARK: - UITableViewDelegate
