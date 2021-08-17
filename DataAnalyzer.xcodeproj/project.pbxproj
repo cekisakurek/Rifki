@@ -79,6 +79,7 @@
 		AED835B226C9D5F000F847E2 /* NotificationBannerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AED835B126C9D5F000F847E2 /* NotificationBannerSwift */; };
 		AED835B726CB2AF500F847E2 /* BaseGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED835B626CB2AF500F847E2 /* BaseGraphView.swift */; };
 		AED835BC26CBE1EA00F847E2 /* ShapiroWilk.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED835BB26CBE1E900F847E2 /* ShapiroWilk.swift */; };
+		AED835CE26CC379500F847E2 /* Dataset+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED835CD26CC379500F847E2 /* Dataset+Ext.swift */; };
 		AEDA616E26C9661E00AB3CF6 /* ColorTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDA616D26C9661E00AB3CF6 /* ColorTransformer.swift */; };
 /* End PBXBuildFile section */
 
@@ -175,6 +176,7 @@
 		AED835A826C9A97C00F847E2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		AED835B626CB2AF500F847E2 /* BaseGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseGraphView.swift; sourceTree = "<group>"; };
 		AED835BB26CBE1E900F847E2 /* ShapiroWilk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapiroWilk.swift; sourceTree = "<group>"; };
+		AED835CD26CC379500F847E2 /* Dataset+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dataset+Ext.swift"; sourceTree = "<group>"; };
 		AEDA616D26C9661E00AB3CF6 /* ColorTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTransformer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -427,6 +429,7 @@
 				14C9964D2433D10A006BFF40 /* Graphs.xcdatamodeld */,
 				14C996592433DE66006BFF40 /* SavedGraph+File.swift */,
 				AEDA616D26C9661E00AB3CF6 /* ColorTransformer.swift */,
+				AED835CD26CC379500F847E2 /* Dataset+Ext.swift */,
 			);
 			path = Coredata;
 			sourceTree = "<group>";
@@ -687,6 +690,7 @@
 				142AC6462433BAC300E7D9BF /* SceneDelegate.swift in Sources */,
 				1476B6DB2439F18500ACE674 /* Array+Extension.swift in Sources */,
 				148C9B89244268F100834FF2 /* Themes.swift in Sources */,
+				AED835CE26CC379500F847E2 /* Dataset+Ext.swift in Sources */,
 				142AC6772433BC5D00E7D9BF /* ImportOperationQueue.swift in Sources */,
 				AE411F7A2459AD7200FABAD6 /* AddGraphCollectionViewCell.swift in Sources */,
 				1476B6DD243A2EB200ACE674 /* KernelDensity.swift in Sources */,
