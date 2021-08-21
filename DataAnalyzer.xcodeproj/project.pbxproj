@@ -9,78 +9,55 @@
 /* Begin PBXBuildFile section */
 		1403ED872434B78C004633DF /* train.csv in Resources */ = {isa = PBXBuildFile; fileRef = 1403ED862434B78B004633DF /* train.csv */; };
 		1403ED882434B7AD004633DF /* train.csv in Resources */ = {isa = PBXBuildFile; fileRef = 1403ED862434B78B004633DF /* train.csv */; };
-		140C6BE424395CE5004F9DA3 /* HeatMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C6BE324395CE5004F9DA3 /* HeatMapViewController.swift */; };
-		141BB65E2440E2B900471A54 /* HeatMapCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BB65D2440E2B900471A54 /* HeatMapCalculator.swift */; };
-		141BB6E02441431100471A54 /* PlaygroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141BB6DF2441431100471A54 /* PlaygroundViewController.swift */; };
-		142AC6442433BAC300E7D9BF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142AC6432433BAC300E7D9BF /* AppDelegate.swift */; };
-		142AC6462433BAC300E7D9BF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142AC6452433BAC300E7D9BF /* SceneDelegate.swift */; };
 		142AC64D2433BAC600E7D9BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 142AC64C2433BAC600E7D9BF /* Assets.xcassets */; };
 		142AC6502433BAC600E7D9BF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 142AC64E2433BAC600E7D9BF /* LaunchScreen.storyboard */; };
 		142AC65B2433BAC600E7D9BF /* DataAnalyzerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142AC65A2433BAC600E7D9BF /* DataAnalyzerTests.swift */; };
 		142AC6662433BAC600E7D9BF /* DataAnalyzerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142AC6652433BAC600E7D9BF /* DataAnalyzerUITests.swift */; };
-		142AC6752433BB8D00E7D9BF /* CSVImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142AC6742433BB8D00E7D9BF /* CSVImporter.swift */; };
-		142AC6772433BC5D00E7D9BF /* ImportOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142AC6762433BC5D00E7D9BF /* ImportOperationQueue.swift */; };
-		1447917A243B69C80090E5A3 /* HistogramCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14479179243B69C80090E5A3 /* HistogramCalculator.swift */; };
-		14479182243C7E9B0090E5A3 /* ProbabilityDataCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14479181243C7E9B0090E5A3 /* ProbabilityDataCalculator.swift */; };
-		14722C2124465A65006EF476 /* FontSelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14722C2024465A65006EF476 /* FontSelectionTableViewController.swift */; };
-		1476B6D124398B9600ACE674 /* RowAnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1476B6D024398B9600ACE674 /* RowAnalysisViewController.swift */; };
-		1476B6D5243991BB00ACE674 /* RowAnalysisDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1476B6D4243991BB00ACE674 /* RowAnalysisDescriptionView.swift */; };
 		1476B6D82439AA3200ACE674 /* SigmaSwiftStatistics in Frameworks */ = {isa = PBXBuildFile; productRef = 1476B6D72439AA3200ACE674 /* SigmaSwiftStatistics */; };
-		1476B6DB2439F18500ACE674 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1476B6DA2439F18500ACE674 /* Array+Extension.swift */; };
 		1476B6DD243A2EB200ACE674 /* KernelDensity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1476B6DC243A2EB200ACE674 /* KernelDensity.swift */; };
-		148C9B752441D57600834FF2 /* CreateGraphCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B742441D57600834FF2 /* CreateGraphCoordinator.swift */; };
-		148C9B772441E23200834FF2 /* PlaygroundGraphDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B762441E23200834FF2 /* PlaygroundGraphDetailsViewController.swift */; };
-		148C9B792442164500834FF2 /* CreateDatasetCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B782442164500834FF2 /* CreateDatasetCoordinator.swift */; };
-		148C9B7B2442195F00834FF2 /* PlaygroundGraphValueSelectionTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B7A2442195F00834FF2 /* PlaygroundGraphValueSelectionTableView.swift */; };
-		148C9B7D24421BA600834FF2 /* CreateGraphTypeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B7C24421BA600834FF2 /* CreateGraphTypeCoordinator.swift */; };
-		148C9B802442507B00834FF2 /* SelectDatasetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B7F2442507B00834FF2 /* SelectDatasetView.swift */; };
-		148C9B8224425A7400834FF2 /* ErrorAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B8124425A7400834FF2 /* ErrorAlertView.swift */; };
 		148C9B8424425FAB00834FF2 /* GridCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B8324425FAB00834FF2 /* GridCollectionViewLayout.swift */; };
-		148C9B862442608900834FF2 /* RawDataCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B852442608900834FF2 /* RawDataCollectionViewCell.swift */; };
 		148C9B89244268F100834FF2 /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B88244268F100834FF2 /* Themes.swift */; };
-		148C9B8C24426CB000834FF2 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B8B24426CB000834FF2 /* SettingsViewController.swift */; };
 		148C9B8E24426DE600834FF2 /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B8D24426DE600834FF2 /* ColorPickerView.swift */; };
-		148C9B9024426E2F00834FF2 /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C9B8F24426E2F00834FF2 /* ColorPickerViewController.swift */; };
 		14C995FE2433BEA4006BFF40 /* BitcoinTest.csv in Resources */ = {isa = PBXBuildFile; fileRef = 14C995FD2433BEA4006BFF40 /* BitcoinTest.csv */; };
-		14C996022433C497006BFF40 /* DatasetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C996012433C497006BFF40 /* DatasetsViewController.swift */; };
-		14C996052433C4AE006BFF40 /* GraphDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C996042433C4AE006BFF40 /* GraphDetailsViewController.swift */; };
-		14C9964C2433D0BA006BFF40 /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C9964B2433D0BA006BFF40 /* CoreDataController.swift */; };
 		14C9964F2433D10A006BFF40 /* Graphs.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 14C9964D2433D10A006BFF40 /* Graphs.xcdatamodeld */; };
 		14C996582433D7C0006BFF40 /* BitcoinTest.csv in Resources */ = {isa = PBXBuildFile; fileRef = 14C995FD2433BEA4006BFF40 /* BitcoinTest.csv */; };
-		14C9965A2433DE66006BFF40 /* SavedGraph+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C996592433DE66006BFF40 /* SavedGraph+File.swift */; };
-		14C9965D24340F1F006BFF40 /* RawDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C9965C24340F1F006BFF40 /* RawDataViewController.swift */; };
-		14EE7E7B2444750200AD5D2C /* AnalysisTabSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EE7E7A2444750200AD5D2C /* AnalysisTabSettingsViewController.swift */; };
-		14EE7E7D2444754300AD5D2C /* HeatmapSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EE7E7C2444754300AD5D2C /* HeatmapSettingsViewController.swift */; };
 		14F2C50A243DCC0700211AD3 /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 14F2C509243DCC0700211AD3 /* CSV */; };
-		14F2C510243DEAD500211AD3 /* DASplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2C50F243DEAD500211AD3 /* DASplitViewController.swift */; };
-		14F2C513243DF9F500211AD3 /* DatasetConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2C512243DF9F500211AD3 /* DatasetConfigurationViewController.swift */; };
 		98B74FC024489C1400B94CAC /* 256.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B74FBF24489C1400B94CAC /* 256.png */; };
-		AE411F672459A77200FABAD6 /* DelimiterSelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE411F662459A77200FABAD6 /* DelimiterSelectionTableViewController.swift */; };
-		AE411F692459AB5B00FABAD6 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE411F682459AB5B00FABAD6 /* InsetLabel.swift */; };
-		AE411F6B2459AB7800FABAD6 /* Double+Rounding.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE411F6A2459AB7800FABAD6 /* Double+Rounding.swift */; };
 		AE411F6D2459ABAC00FABAD6 /* Color+Interpolate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE411F6C2459ABAC00FABAD6 /* Color+Interpolate.swift */; };
-		AE411F6F2459ABDB00FABAD6 /* HeatMapLabelContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE411F6E2459ABDB00FABAD6 /* HeatMapLabelContainerView.swift */; };
-		AE411F712459ABF800FABAD6 /* HeatMapMatrixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE411F702459ABF800FABAD6 /* HeatMapMatrixView.swift */; };
-		AE411F732459AC1000FABAD6 /* HeatMapContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE411F722459AC1000FABAD6 /* HeatMapContainerView.swift */; };
-		AE411F752459AC2D00FABAD6 /* HeatmapCalculationIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE411F742459AC2D00FABAD6 /* HeatmapCalculationIndicatorView.swift */; };
-		AE411F782459AD0B00FABAD6 /* PlaygroundGraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE411F772459AD0B00FABAD6 /* PlaygroundGraphViewController.swift */; };
-		AE411F7A2459AD7200FABAD6 /* AddGraphCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE411F792459AD7200FABAD6 /* AddGraphCollectionViewCell.swift */; };
-		AE411F7C2459AD8300FABAD6 /* GraphThumbnailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE411F7B2459AD8300FABAD6 /* GraphThumbnailCollectionViewCell.swift */; };
+		AE5EFDF726D0548C00C25AE3 /* RotatedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFDF626D0548C00C25AE3 /* RotatedText.swift */; };
+		AE5EFDFD26D0552300C25AE3 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFDFC26D0552300C25AE3 /* Math.swift */; };
+		AE5EFE0526D0559A00C25AE3 /* HistogramCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFE0426D0559A00C25AE3 /* HistogramCalculator.swift */; };
+		AE5EFE0A26D0568400C25AE3 /* ProbabilityCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFE0926D0568400C25AE3 /* ProbabilityCalculator.swift */; };
+		AE5EFE0F26D056D500C25AE3 /* DescriptionCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFE0E26D056D500C25AE3 /* DescriptionCalculator.swift */; };
+		AE5EFE1A26D0593800C25AE3 /* UniqueValueCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFE1926D0593800C25AE3 /* UniqueValueCalculator.swift */; };
+		AE5EFE1F26D071B000C25AE3 /* AddGraphViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFE1E26D071B000C25AE3 /* AddGraphViewModel.swift */; };
+		AE5EFE2426D07FF100C25AE3 /* PlaygroundGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFE2326D07FF100C25AE3 /* PlaygroundGraphView.swift */; };
+		AE5EFE2C26D09C2D00C25AE3 /* QGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFE2B26D09C2D00C25AE3 /* QGrid.swift */; };
+		AE5EFE4D26D1B6EB00C25AE3 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFE4C26D1B6EB00C25AE3 /* ProgressView.swift */; };
+		AE5EFE5526D1BBE600C25AE3 /* UserGraphViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFE5426D1BBE600C25AE3 /* UserGraphViewModel.swift */; };
 		AEB511A8245881EF000081FF /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = AEB511A7245881EF000081FF /* Charts */; };
-		AEB511AC24589433000081FF /* ImportLocalDatasetSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB511AB24589433000081FF /* ImportLocalDatasetSettingsViewController.swift */; };
-		AEB511AE2458947E000081FF /* AddDataSetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB511AD2458947E000081FF /* AddDataSetController.swift */; };
-		AEB511B0245894F5000081FF /* ImportRemoteDatasetSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB511AF245894F5000081FF /* ImportRemoteDatasetSettingsViewController.swift */; };
-		AEB511B424598384000081FF /* NameInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB511B324598384000081FF /* NameInputTableViewCell.swift */; };
-		AEB511B62459839F000081FF /* StaticTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB511B52459839F000081FF /* StaticTextTableViewCell.swift */; };
-		AEB511B8245985D9000081FF /* BoolValueInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB511B7245985D9000081FF /* BoolValueInputTableViewCell.swift */; };
-		AEB511BA24598605000081FF /* DoubleValueInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB511B924598605000081FF /* DoubleValueInputTableViewCell.swift */; };
-		AEB511BC2459863B000081FF /* String+Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB511BB2459863B000081FF /* String+Double.swift */; };
-		AEB511BE2459864D000081FF /* ColorSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB511BD2459864D000081FF /* ColorSelectionTableViewCell.swift */; };
 		AED835B226C9D5F000F847E2 /* NotificationBannerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AED835B126C9D5F000F847E2 /* NotificationBannerSwift */; };
-		AED835B726CB2AF500F847E2 /* BaseGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED835B626CB2AF500F847E2 /* BaseGraphView.swift */; };
 		AED835BC26CBE1EA00F847E2 /* ShapiroWilk.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED835BB26CBE1E900F847E2 /* ShapiroWilk.swift */; };
 		AED835CE26CC379500F847E2 /* Dataset+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED835CD26CC379500F847E2 /* Dataset+Ext.swift */; };
-		AEDA616E26C9661E00AB3CF6 /* ColorTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDA616D26C9661E00AB3CF6 /* ColorTransformer.swift */; };
+		AEE1B7AE26CDBE4000E4687A /* DatasetSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE1B7AD26CDBE4000E4687A /* DatasetSelectionView.swift */; };
+		AEE1B7B726CDBEA800E4687A /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE1B7B626CDBEA800E4687A /* RootView.swift */; };
+		AEE1B7C026CDC39500E4687A /* DatasetDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE1B7BF26CDC39500E4687A /* DatasetDetailsView.swift */; };
+		AEE1B7C926CDC7AD00E4687A /* RawAnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE1B7C826CDC7AD00E4687A /* RawAnalysisView.swift */; };
+		AEE1B7D226CDC9E000E4687A /* ColumnAnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE1B7D126CDC9E000E4687A /* ColumnAnalysisView.swift */; };
+		AEE1B7DA26CDCB2400E4687A /* RawAnalysisCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE1B7D926CDCB2400E4687A /* RawAnalysisCollectionView.swift */; };
+		AEE1B7E526CDDFC900E4687A /* DistributionGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE1B7E426CDDFC900E4687A /* DistributionGraphView.swift */; };
+		AEE1B7EA26CDE0FA00E4687A /* ProbabilityGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE1B7E926CDE0FA00E4687A /* ProbabilityGraphView.swift */; };
+		AEE1B7F026CDE78400E4687A /* ColumnAnalysisViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE1B7EF26CDE78400E4687A /* ColumnAnalysisViewModel.swift */; };
+		AEE1B7F826CE829700E4687A /* ColumnDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE1B7F726CE829700E4687A /* ColumnDescriptionView.swift */; };
+		AEE1B80126CEA23700E4687A /* HeatmapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE1B80026CEA23700E4687A /* HeatmapView.swift */; };
+		AEE1B80626CEA2CD00E4687A /* ZoomableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE1B80526CEA2CD00E4687A /* ZoomableScrollView.swift */; };
+		AEE1B80C26CEA37A00E4687A /* HeatmapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE1B80B26CEA37A00E4687A /* HeatmapViewModel.swift */; };
+		AEE1B81B26CEF8BE00E4687A /* PlaygroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE1B81A26CEF8BE00E4687A /* PlaygroundView.swift */; };
+		AEE1B82726CEFA0B00E4687A /* PlaygroundViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE1B82626CEFA0B00E4687A /* PlaygroundViewModel.swift */; };
+		AEE1B83826CF111000E4687A /* ImportDatasetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE1B83726CF111000E4687A /* ImportDatasetView.swift */; };
+		AEE1B88526CF263E00E4687A /* RifkiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE1B88426CF263E00E4687A /* RifkiApp.swift */; };
+		AEE1B88B26CF2ED800E4687A /* ImportDatasetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE1B88A26CF2ED800E4687A /* ImportDatasetViewModel.swift */; };
+		AEE1B89426CF36E700E4687A /* RootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE1B89326CF36E700E4687A /* RootViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,12 +79,7 @@
 
 /* Begin PBXFileReference section */
 		1403ED862434B78B004633DF /* train.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = train.csv; sourceTree = "<group>"; };
-		140C6BE324395CE5004F9DA3 /* HeatMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeatMapViewController.swift; sourceTree = "<group>"; };
-		141BB65D2440E2B900471A54 /* HeatMapCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeatMapCalculator.swift; sourceTree = "<group>"; };
-		141BB6DF2441431100471A54 /* PlaygroundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundViewController.swift; sourceTree = "<group>"; };
 		142AC6402433BAC300E7D9BF /* Rifki.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rifki.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		142AC6432433BAC300E7D9BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		142AC6452433BAC300E7D9BF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		142AC64C2433BAC600E7D9BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		142AC64F2433BAC600E7D9BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		142AC6512433BAC600E7D9BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -117,67 +89,50 @@
 		142AC6612433BAC600E7D9BF /* DataAnalyzerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DataAnalyzerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		142AC6652433BAC600E7D9BF /* DataAnalyzerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAnalyzerUITests.swift; sourceTree = "<group>"; };
 		142AC6672433BAC600E7D9BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		142AC6742433BB8D00E7D9BF /* CSVImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVImporter.swift; sourceTree = "<group>"; };
-		142AC6762433BC5D00E7D9BF /* ImportOperationQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportOperationQueue.swift; sourceTree = "<group>"; };
-		14479179243B69C80090E5A3 /* HistogramCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistogramCalculator.swift; sourceTree = "<group>"; };
-		14479181243C7E9B0090E5A3 /* ProbabilityDataCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProbabilityDataCalculator.swift; sourceTree = "<group>"; };
 		145853CC243D31E300737D5C /* DataAnalyzer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DataAnalyzer.entitlements; sourceTree = "<group>"; };
-		14722C2024465A65006EF476 /* FontSelectionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSelectionTableViewController.swift; sourceTree = "<group>"; };
-		1476B6D024398B9600ACE674 /* RowAnalysisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowAnalysisViewController.swift; sourceTree = "<group>"; };
-		1476B6D4243991BB00ACE674 /* RowAnalysisDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowAnalysisDescriptionView.swift; sourceTree = "<group>"; };
-		1476B6DA2439F18500ACE674 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		1476B6DC243A2EB200ACE674 /* KernelDensity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KernelDensity.swift; sourceTree = "<group>"; };
-		148C9B742441D57600834FF2 /* CreateGraphCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGraphCoordinator.swift; sourceTree = "<group>"; };
-		148C9B762441E23200834FF2 /* PlaygroundGraphDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundGraphDetailsViewController.swift; sourceTree = "<group>"; };
-		148C9B782442164500834FF2 /* CreateDatasetCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateDatasetCoordinator.swift; sourceTree = "<group>"; };
-		148C9B7A2442195F00834FF2 /* PlaygroundGraphValueSelectionTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundGraphValueSelectionTableView.swift; sourceTree = "<group>"; };
-		148C9B7C24421BA600834FF2 /* CreateGraphTypeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGraphTypeCoordinator.swift; sourceTree = "<group>"; };
-		148C9B7F2442507B00834FF2 /* SelectDatasetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDatasetView.swift; sourceTree = "<group>"; };
-		148C9B8124425A7400834FF2 /* ErrorAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertView.swift; sourceTree = "<group>"; };
 		148C9B8324425FAB00834FF2 /* GridCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewLayout.swift; sourceTree = "<group>"; };
-		148C9B852442608900834FF2 /* RawDataCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawDataCollectionViewCell.swift; sourceTree = "<group>"; };
 		148C9B88244268F100834FF2 /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
-		148C9B8B24426CB000834FF2 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		148C9B8D24426DE600834FF2 /* ColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
-		148C9B8F24426E2F00834FF2 /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
 		14BC0D4F243E10BB007A6C73 /* Graphs 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Graphs 2.xcdatamodel"; sourceTree = "<group>"; };
 		14C995FD2433BEA4006BFF40 /* BitcoinTest.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = BitcoinTest.csv; sourceTree = "<group>"; };
-		14C996012433C497006BFF40 /* DatasetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatasetsViewController.swift; sourceTree = "<group>"; };
-		14C996042433C4AE006BFF40 /* GraphDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphDetailsViewController.swift; sourceTree = "<group>"; };
-		14C9964B2433D0BA006BFF40 /* CoreDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
 		14C9964E2433D10A006BFF40 /* Graphs.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Graphs.xcdatamodel; sourceTree = "<group>"; };
-		14C996592433DE66006BFF40 /* SavedGraph+File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SavedGraph+File.swift"; sourceTree = "<group>"; };
-		14C9965C24340F1F006BFF40 /* RawDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawDataViewController.swift; sourceTree = "<group>"; };
-		14EE7E7A2444750200AD5D2C /* AnalysisTabSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisTabSettingsViewController.swift; sourceTree = "<group>"; };
-		14EE7E7C2444754300AD5D2C /* HeatmapSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeatmapSettingsViewController.swift; sourceTree = "<group>"; };
-		14F2C50F243DEAD500211AD3 /* DASplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DASplitViewController.swift; sourceTree = "<group>"; };
-		14F2C512243DF9F500211AD3 /* DatasetConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatasetConfigurationViewController.swift; sourceTree = "<group>"; };
 		98B74FBF24489C1400B94CAC /* 256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 256.png; sourceTree = "<group>"; };
-		AE411F662459A77200FABAD6 /* DelimiterSelectionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelimiterSelectionTableViewController.swift; sourceTree = "<group>"; };
-		AE411F682459AB5B00FABAD6 /* InsetLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
-		AE411F6A2459AB7800FABAD6 /* Double+Rounding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Rounding.swift"; sourceTree = "<group>"; };
 		AE411F6C2459ABAC00FABAD6 /* Color+Interpolate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Interpolate.swift"; sourceTree = "<group>"; };
-		AE411F6E2459ABDB00FABAD6 /* HeatMapLabelContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeatMapLabelContainerView.swift; sourceTree = "<group>"; };
-		AE411F702459ABF800FABAD6 /* HeatMapMatrixView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeatMapMatrixView.swift; sourceTree = "<group>"; };
-		AE411F722459AC1000FABAD6 /* HeatMapContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeatMapContainerView.swift; sourceTree = "<group>"; };
-		AE411F742459AC2D00FABAD6 /* HeatmapCalculationIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeatmapCalculationIndicatorView.swift; sourceTree = "<group>"; };
-		AE411F772459AD0B00FABAD6 /* PlaygroundGraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundGraphViewController.swift; sourceTree = "<group>"; };
-		AE411F792459AD7200FABAD6 /* AddGraphCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGraphCollectionViewCell.swift; sourceTree = "<group>"; };
-		AE411F7B2459AD8300FABAD6 /* GraphThumbnailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphThumbnailCollectionViewCell.swift; sourceTree = "<group>"; };
-		AEB511AB24589433000081FF /* ImportLocalDatasetSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportLocalDatasetSettingsViewController.swift; sourceTree = "<group>"; };
-		AEB511AD2458947E000081FF /* AddDataSetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDataSetController.swift; sourceTree = "<group>"; };
-		AEB511AF245894F5000081FF /* ImportRemoteDatasetSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportRemoteDatasetSettingsViewController.swift; sourceTree = "<group>"; };
-		AEB511B324598384000081FF /* NameInputTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameInputTableViewCell.swift; sourceTree = "<group>"; };
-		AEB511B52459839F000081FF /* StaticTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticTextTableViewCell.swift; sourceTree = "<group>"; };
-		AEB511B7245985D9000081FF /* BoolValueInputTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolValueInputTableViewCell.swift; sourceTree = "<group>"; };
-		AEB511B924598605000081FF /* DoubleValueInputTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleValueInputTableViewCell.swift; sourceTree = "<group>"; };
-		AEB511BB2459863B000081FF /* String+Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Double.swift"; sourceTree = "<group>"; };
-		AEB511BD2459864D000081FF /* ColorSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSelectionTableViewCell.swift; sourceTree = "<group>"; };
+		AE5EFDF626D0548C00C25AE3 /* RotatedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotatedText.swift; sourceTree = "<group>"; };
+		AE5EFDFC26D0552300C25AE3 /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
+		AE5EFE0426D0559A00C25AE3 /* HistogramCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistogramCalculator.swift; sourceTree = "<group>"; };
+		AE5EFE0926D0568400C25AE3 /* ProbabilityCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProbabilityCalculator.swift; sourceTree = "<group>"; };
+		AE5EFE0E26D056D500C25AE3 /* DescriptionCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionCalculator.swift; sourceTree = "<group>"; };
+		AE5EFE1926D0593800C25AE3 /* UniqueValueCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniqueValueCalculator.swift; sourceTree = "<group>"; };
+		AE5EFE1E26D071B000C25AE3 /* AddGraphViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGraphViewModel.swift; sourceTree = "<group>"; };
+		AE5EFE2326D07FF100C25AE3 /* PlaygroundGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundGraphView.swift; sourceTree = "<group>"; };
+		AE5EFE2B26D09C2D00C25AE3 /* QGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QGrid.swift; sourceTree = "<group>"; };
+		AE5EFE4C26D1B6EB00C25AE3 /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
+		AE5EFE5426D1BBE600C25AE3 /* UserGraphViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGraphViewModel.swift; sourceTree = "<group>"; };
 		AED835A826C9A97C00F847E2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		AED835B626CB2AF500F847E2 /* BaseGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseGraphView.swift; sourceTree = "<group>"; };
 		AED835BB26CBE1E900F847E2 /* ShapiroWilk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapiroWilk.swift; sourceTree = "<group>"; };
 		AED835CD26CC379500F847E2 /* Dataset+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dataset+Ext.swift"; sourceTree = "<group>"; };
-		AEDA616D26C9661E00AB3CF6 /* ColorTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTransformer.swift; sourceTree = "<group>"; };
+		AED835D526CC3A7C00F847E2 /* Graphs 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Graphs 3.xcdatamodel"; sourceTree = "<group>"; };
+		AEE1B7AD26CDBE4000E4687A /* DatasetSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatasetSelectionView.swift; sourceTree = "<group>"; };
+		AEE1B7B626CDBEA800E4687A /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		AEE1B7BF26CDC39500E4687A /* DatasetDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatasetDetailsView.swift; sourceTree = "<group>"; };
+		AEE1B7C826CDC7AD00E4687A /* RawAnalysisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawAnalysisView.swift; sourceTree = "<group>"; };
+		AEE1B7D126CDC9E000E4687A /* ColumnAnalysisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnAnalysisView.swift; sourceTree = "<group>"; };
+		AEE1B7D926CDCB2400E4687A /* RawAnalysisCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawAnalysisCollectionView.swift; sourceTree = "<group>"; };
+		AEE1B7E426CDDFC900E4687A /* DistributionGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistributionGraphView.swift; sourceTree = "<group>"; };
+		AEE1B7E926CDE0FA00E4687A /* ProbabilityGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProbabilityGraphView.swift; sourceTree = "<group>"; };
+		AEE1B7EF26CDE78400E4687A /* ColumnAnalysisViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnAnalysisViewModel.swift; sourceTree = "<group>"; };
+		AEE1B7F726CE829700E4687A /* ColumnDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnDescriptionView.swift; sourceTree = "<group>"; };
+		AEE1B80026CEA23700E4687A /* HeatmapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeatmapView.swift; sourceTree = "<group>"; };
+		AEE1B80526CEA2CD00E4687A /* ZoomableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomableScrollView.swift; sourceTree = "<group>"; };
+		AEE1B80B26CEA37A00E4687A /* HeatmapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeatmapViewModel.swift; sourceTree = "<group>"; };
+		AEE1B81A26CEF8BE00E4687A /* PlaygroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundView.swift; sourceTree = "<group>"; };
+		AEE1B82626CEFA0B00E4687A /* PlaygroundViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundViewModel.swift; sourceTree = "<group>"; };
+		AEE1B83726CF111000E4687A /* ImportDatasetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportDatasetView.swift; sourceTree = "<group>"; };
+		AEE1B88426CF263E00E4687A /* RifkiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RifkiApp.swift; sourceTree = "<group>"; };
+		AEE1B88A26CF2ED800E4687A /* ImportDatasetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportDatasetViewModel.swift; sourceTree = "<group>"; };
+		AEE1B89326CF36E700E4687A /* RootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,30 +164,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		140C6BE224395CD7004F9DA3 /* HeatMapViewController */ = {
-			isa = PBXGroup;
-			children = (
-				140C6BE324395CE5004F9DA3 /* HeatMapViewController.swift */,
-				AE411F6E2459ABDB00FABAD6 /* HeatMapLabelContainerView.swift */,
-				AE411F702459ABF800FABAD6 /* HeatMapMatrixView.swift */,
-				AE411F722459AC1000FABAD6 /* HeatMapContainerView.swift */,
-				AE411F742459AC2D00FABAD6 /* HeatmapCalculationIndicatorView.swift */,
-			);
-			path = HeatMapViewController;
-			sourceTree = "<group>";
-		};
-		141BB6DE2441430600471A54 /* PlaygroundViewController */ = {
-			isa = PBXGroup;
-			children = (
-				AE411F762459AD0600FABAD6 /* PlaygroundGraphViewController */,
-				148C9B732441D55400834FF2 /* CreateGraphCoordinator */,
-				141BB6DF2441431100471A54 /* PlaygroundViewController.swift */,
-				AE411F792459AD7200FABAD6 /* AddGraphCollectionViewCell.swift */,
-				AE411F7B2459AD8300FABAD6 /* GraphThumbnailCollectionViewCell.swift */,
-			);
-			path = PlaygroundViewController;
-			sourceTree = "<group>";
-		};
 		142AC6372433BAC300E7D9BF = {
 			isa = PBXGroup;
 			children = (
@@ -263,13 +194,11 @@
 				1476B6D92439F16F00ACE674 /* Extensions */,
 				14C9964A2433D0AC006BFF40 /* Coredata */,
 				14C995FF2433C463006BFF40 /* GUI */,
-				142AC6782433BC7A00E7D9BF /* Operations */,
-				142AC6432433BAC300E7D9BF /* AppDelegate.swift */,
-				142AC6452433BAC300E7D9BF /* SceneDelegate.swift */,
 				142AC64C2433BAC600E7D9BF /* Assets.xcassets */,
 				142AC64E2433BAC600E7D9BF /* LaunchScreen.storyboard */,
 				142AC6512433BAC600E7D9BF /* Info.plist */,
 				145853CC243D31E300737D5C /* DataAnalyzer.entitlements */,
+				AEE1B88426CF263E00E4687A /* RifkiApp.swift */,
 			);
 			path = DataAnalyzer;
 			sourceTree = "<group>";
@@ -293,69 +222,21 @@
 			path = DataAnalyzerUITests;
 			sourceTree = "<group>";
 		};
-		142AC6782433BC7A00E7D9BF /* Operations */ = {
-			isa = PBXGroup;
-			children = (
-				142AC6742433BB8D00E7D9BF /* CSVImporter.swift */,
-				14479178243B699A0090E5A3 /* Queues */,
-				14479179243B69C80090E5A3 /* HistogramCalculator.swift */,
-				14479181243C7E9B0090E5A3 /* ProbabilityDataCalculator.swift */,
-				141BB65D2440E2B900471A54 /* HeatMapCalculator.swift */,
-			);
-			path = Operations;
-			sourceTree = "<group>";
-		};
-		14479178243B699A0090E5A3 /* Queues */ = {
-			isa = PBXGroup;
-			children = (
-				142AC6762433BC5D00E7D9BF /* ImportOperationQueue.swift */,
-			);
-			path = Queues;
-			sourceTree = "<group>";
-		};
-		1476B6CF24398B7E00ACE674 /* RowAnalysisViewController */ = {
-			isa = PBXGroup;
-			children = (
-				1476B6D024398B9600ACE674 /* RowAnalysisViewController.swift */,
-				1476B6D4243991BB00ACE674 /* RowAnalysisDescriptionView.swift */,
-				AED835B626CB2AF500F847E2 /* BaseGraphView.swift */,
-			);
-			path = RowAnalysisViewController;
-			sourceTree = "<group>";
-		};
 		1476B6D92439F16F00ACE674 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				1476B6DA2439F18500ACE674 /* Array+Extension.swift */,
-				1476B6DC243A2EB200ACE674 /* KernelDensity.swift */,
-				AEB511BB2459863B000081FF /* String+Double.swift */,
-				AE411F6A2459AB7800FABAD6 /* Double+Rounding.swift */,
+				AE5EFDFB26D0551B00C25AE3 /* Math */,
+				AE5EFDF526D0547E00C25AE3 /* SwiftUI */,
 				AE411F6C2459ABAC00FABAD6 /* Color+Interpolate.swift */,
-				AED835BB26CBE1E900F847E2 /* ShapiroWilk.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		148C9B732441D55400834FF2 /* CreateGraphCoordinator */ = {
-			isa = PBXGroup;
-			children = (
-				148C9B742441D57600834FF2 /* CreateGraphCoordinator.swift */,
-				148C9B7C24421BA600834FF2 /* CreateGraphTypeCoordinator.swift */,
-				148C9B782442164500834FF2 /* CreateDatasetCoordinator.swift */,
-				148C9B7A2442195F00834FF2 /* PlaygroundGraphValueSelectionTableView.swift */,
-			);
-			path = CreateGraphCoordinator;
 			sourceTree = "<group>";
 		};
 		148C9B7E2442506800834FF2 /* CommonUI */ = {
 			isa = PBXGroup;
 			children = (
-				148C9B762441E23200834FF2 /* PlaygroundGraphDetailsViewController.swift */,
-				148C9B7F2442507B00834FF2 /* SelectDatasetView.swift */,
-				148C9B8124425A7400834FF2 /* ErrorAlertView.swift */,
 				148C9B8324425FAB00834FF2 /* GridCollectionViewLayout.swift */,
 				148C9B8D24426DE600834FF2 /* ColorPickerView.swift */,
-				AE411F682459AB5B00FABAD6 /* InsetLabel.swift */,
 			);
 			path = CommonUI;
 			sourceTree = "<group>";
@@ -366,16 +247,6 @@
 				148C9B88244268F100834FF2 /* Themes.swift */,
 			);
 			path = Themes;
-			sourceTree = "<group>";
-		};
-		148C9B8A24426CA600834FF2 /* SettingsViewController */ = {
-			isa = PBXGroup;
-			children = (
-				148C9B8B24426CB000834FF2 /* SettingsViewController.swift */,
-				14EE7E7A2444750200AD5D2C /* AnalysisTabSettingsViewController.swift */,
-				14EE7E7C2444754300AD5D2C /* HeatmapSettingsViewController.swift */,
-			);
-			path = SettingsViewController;
 			sourceTree = "<group>";
 		};
 		14C995FC2433BE86006BFF40 /* TestData */ = {
@@ -390,121 +261,174 @@
 		14C995FF2433C463006BFF40 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
-				AEB511B224598378000081FF /* Cells */,
-				AEB511B124589541000081FF /* SelectionViewControllers */,
-				AEB511A92458940C000081FF /* Import */,
-				148C9B8A24426CA600834FF2 /* SettingsViewController */,
-				14F2C50E243DEAC300211AD3 /* DASplitViewController */,
-				14C996002433C46B006BFF40 /* DatasetsViewController */,
-				14C996032433C4A3006BFF40 /* GraphDetailsViewController */,
+				AE5EFE4B26D1B6DE00C25AE3 /* Shared */,
+				AEE1B7B526CDBEA000E4687A /* RootView */,
+				AEE1B7AC26CDBE2E00E4687A /* DatasetSelectionView */,
 			);
 			path = GUI;
-			sourceTree = "<group>";
-		};
-		14C996002433C46B006BFF40 /* DatasetsViewController */ = {
-			isa = PBXGroup;
-			children = (
-				14C996012433C497006BFF40 /* DatasetsViewController.swift */,
-				14F2C511243DF9E300211AD3 /* DatasetConfigurationViewController */,
-			);
-			path = DatasetsViewController;
-			sourceTree = "<group>";
-		};
-		14C996032433C4A3006BFF40 /* GraphDetailsViewController */ = {
-			isa = PBXGroup;
-			children = (
-				14C9965B24340F0F006BFF40 /* RawDataViewController */,
-				1476B6CF24398B7E00ACE674 /* RowAnalysisViewController */,
-				140C6BE224395CD7004F9DA3 /* HeatMapViewController */,
-				141BB6DE2441430600471A54 /* PlaygroundViewController */,
-				14C996042433C4AE006BFF40 /* GraphDetailsViewController.swift */,
-			);
-			path = GraphDetailsViewController;
 			sourceTree = "<group>";
 		};
 		14C9964A2433D0AC006BFF40 /* Coredata */ = {
 			isa = PBXGroup;
 			children = (
-				14C9964B2433D0BA006BFF40 /* CoreDataController.swift */,
 				14C9964D2433D10A006BFF40 /* Graphs.xcdatamodeld */,
-				14C996592433DE66006BFF40 /* SavedGraph+File.swift */,
-				AEDA616D26C9661E00AB3CF6 /* ColorTransformer.swift */,
 				AED835CD26CC379500F847E2 /* Dataset+Ext.swift */,
 			);
 			path = Coredata;
 			sourceTree = "<group>";
 		};
-		14C9965B24340F0F006BFF40 /* RawDataViewController */ = {
+		AE5EFDF526D0547E00C25AE3 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				14C9965C24340F1F006BFF40 /* RawDataViewController.swift */,
-				148C9B852442608900834FF2 /* RawDataCollectionViewCell.swift */,
+				AE5EFDF626D0548C00C25AE3 /* RotatedText.swift */,
 			);
-			path = RawDataViewController;
+			path = SwiftUI;
 			sourceTree = "<group>";
 		};
-		14F2C50E243DEAC300211AD3 /* DASplitViewController */ = {
+		AE5EFDFB26D0551B00C25AE3 /* Math */ = {
 			isa = PBXGroup;
 			children = (
-				14F2C50F243DEAD500211AD3 /* DASplitViewController.swift */,
+				AED835BB26CBE1E900F847E2 /* ShapiroWilk.swift */,
+				1476B6DC243A2EB200ACE674 /* KernelDensity.swift */,
+				AE5EFDFC26D0552300C25AE3 /* Math.swift */,
 			);
-			path = DASplitViewController;
+			path = Math;
 			sourceTree = "<group>";
 		};
-		14F2C511243DF9E300211AD3 /* DatasetConfigurationViewController */ = {
+		AE5EFE4B26D1B6DE00C25AE3 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				14F2C512243DF9F500211AD3 /* DatasetConfigurationViewController.swift */,
-				AE411F662459A77200FABAD6 /* DelimiterSelectionTableViewController.swift */,
+				AE5EFE4C26D1B6EB00C25AE3 /* ProgressView.swift */,
 			);
-			path = DatasetConfigurationViewController;
+			path = Shared;
 			sourceTree = "<group>";
 		};
-		AE411F762459AD0600FABAD6 /* PlaygroundGraphViewController */ = {
+		AEE1B7AC26CDBE2E00E4687A /* DatasetSelectionView */ = {
 			isa = PBXGroup;
 			children = (
-				AE411F772459AD0B00FABAD6 /* PlaygroundGraphViewController.swift */,
+				AEE1B7BE26CDC36F00E4687A /* DatasetDetailsView */,
+				AEE1B7AD26CDBE4000E4687A /* DatasetSelectionView.swift */,
 			);
-			path = PlaygroundGraphViewController;
+			path = DatasetSelectionView;
 			sourceTree = "<group>";
 		};
-		AEB511A92458940C000081FF /* Import */ = {
+		AEE1B7B526CDBEA000E4687A /* RootView */ = {
 			isa = PBXGroup;
 			children = (
-				AEB511AA24589426000081FF /* ImportDatasetSettingsViewController */,
-				AEB511AD2458947E000081FF /* AddDataSetController.swift */,
+				AEE1B89226CF36DF00E4687A /* ViewModel */,
+				AEE1B7B626CDBEA800E4687A /* RootView.swift */,
+			);
+			path = RootView;
+			sourceTree = "<group>";
+		};
+		AEE1B7BE26CDC36F00E4687A /* DatasetDetailsView */ = {
+			isa = PBXGroup;
+			children = (
+				AEE1B82E26CF0E3F00E4687A /* Import */,
+				AEE1B81426CEF34800E4687A /* PlaygroundView */,
+				AEE1B7FF26CEA22A00E4687A /* HeatmapView */,
+				AEE1B7D026CDC9D800E4687A /* ColumnAnalysisView */,
+				AEE1B7C726CDC78000E4687A /* RawAnalysisView */,
+				AEE1B7BF26CDC39500E4687A /* DatasetDetailsView.swift */,
+			);
+			path = DatasetDetailsView;
+			sourceTree = "<group>";
+		};
+		AEE1B7C726CDC78000E4687A /* RawAnalysisView */ = {
+			isa = PBXGroup;
+			children = (
+				AEE1B7C826CDC7AD00E4687A /* RawAnalysisView.swift */,
+				AEE1B7D926CDCB2400E4687A /* RawAnalysisCollectionView.swift */,
+			);
+			path = RawAnalysisView;
+			sourceTree = "<group>";
+		};
+		AEE1B7D026CDC9D800E4687A /* ColumnAnalysisView */ = {
+			isa = PBXGroup;
+			children = (
+				AEE1B7EE26CDE77700E4687A /* ViewModel */,
+				AEE1B7D126CDC9E000E4687A /* ColumnAnalysisView.swift */,
+				AEE1B7E426CDDFC900E4687A /* DistributionGraphView.swift */,
+				AEE1B7E926CDE0FA00E4687A /* ProbabilityGraphView.swift */,
+				AEE1B7F726CE829700E4687A /* ColumnDescriptionView.swift */,
+			);
+			path = ColumnAnalysisView;
+			sourceTree = "<group>";
+		};
+		AEE1B7EE26CDE77700E4687A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				AEE1B7EF26CDE78400E4687A /* ColumnAnalysisViewModel.swift */,
+				AE5EFE0426D0559A00C25AE3 /* HistogramCalculator.swift */,
+				AE5EFE0926D0568400C25AE3 /* ProbabilityCalculator.swift */,
+				AE5EFE0E26D056D500C25AE3 /* DescriptionCalculator.swift */,
+				AE5EFE1926D0593800C25AE3 /* UniqueValueCalculator.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		AEE1B7FF26CEA22A00E4687A /* HeatmapView */ = {
+			isa = PBXGroup;
+			children = (
+				AEE1B80A26CEA36100E4687A /* ViewModel */,
+				AEE1B80026CEA23700E4687A /* HeatmapView.swift */,
+				AEE1B80526CEA2CD00E4687A /* ZoomableScrollView.swift */,
+			);
+			path = HeatmapView;
+			sourceTree = "<group>";
+		};
+		AEE1B80A26CEA36100E4687A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				AEE1B80B26CEA37A00E4687A /* HeatmapViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		AEE1B81426CEF34800E4687A /* PlaygroundView */ = {
+			isa = PBXGroup;
+			children = (
+				AEE1B82526CEF9FE00E4687A /* ViewModel */,
+				AEE1B81A26CEF8BE00E4687A /* PlaygroundView.swift */,
+				AE5EFE2326D07FF100C25AE3 /* PlaygroundGraphView.swift */,
+				AE5EFE2B26D09C2D00C25AE3 /* QGrid.swift */,
+			);
+			path = PlaygroundView;
+			sourceTree = "<group>";
+		};
+		AEE1B82526CEF9FE00E4687A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				AEE1B82626CEFA0B00E4687A /* PlaygroundViewModel.swift */,
+				AE5EFE1E26D071B000C25AE3 /* AddGraphViewModel.swift */,
+				AE5EFE5426D1BBE600C25AE3 /* UserGraphViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		AEE1B82E26CF0E3F00E4687A /* Import */ = {
+			isa = PBXGroup;
+			children = (
+				AEE1B88926CF2ECB00E4687A /* ViewModel */,
+				AEE1B83726CF111000E4687A /* ImportDatasetView.swift */,
 			);
 			path = Import;
 			sourceTree = "<group>";
 		};
-		AEB511AA24589426000081FF /* ImportDatasetSettingsViewController */ = {
+		AEE1B88926CF2ECB00E4687A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				AEB511AB24589433000081FF /* ImportLocalDatasetSettingsViewController.swift */,
-				AEB511AF245894F5000081FF /* ImportRemoteDatasetSettingsViewController.swift */,
+				AEE1B88A26CF2ED800E4687A /* ImportDatasetViewModel.swift */,
 			);
-			path = ImportDatasetSettingsViewController;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		AEB511B124589541000081FF /* SelectionViewControllers */ = {
+		AEE1B89226CF36DF00E4687A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				14722C2024465A65006EF476 /* FontSelectionTableViewController.swift */,
-				148C9B8F24426E2F00834FF2 /* ColorPickerViewController.swift */,
+				AEE1B89326CF36E700E4687A /* RootViewModel.swift */,
 			);
-			path = SelectionViewControllers;
-			sourceTree = "<group>";
-		};
-		AEB511B224598378000081FF /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				AEB511B324598384000081FF /* NameInputTableViewCell.swift */,
-				AEB511B52459839F000081FF /* StaticTextTableViewCell.swift */,
-				AEB511B7245985D9000081FF /* BoolValueInputTableViewCell.swift */,
-				AEB511B924598605000081FF /* DoubleValueInputTableViewCell.swift */,
-				AEB511BD2459864D000081FF /* ColorSelectionTableViewCell.swift */,
-			);
-			path = Cells;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -654,67 +578,44 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				148C9B862442608900834FF2 /* RawDataCollectionViewCell.swift in Sources */,
-				1447917A243B69C80090E5A3 /* HistogramCalculator.swift in Sources */,
-				148C9B7D24421BA600834FF2 /* CreateGraphTypeCoordinator.swift in Sources */,
-				14C9965A2433DE66006BFF40 /* SavedGraph+File.swift in Sources */,
-				AE411F6F2459ABDB00FABAD6 /* HeatMapLabelContainerView.swift in Sources */,
+				AEE1B88B26CF2ED800E4687A /* ImportDatasetViewModel.swift in Sources */,
+				AE5EFE1A26D0593800C25AE3 /* UniqueValueCalculator.swift in Sources */,
+				AEE1B80626CEA2CD00E4687A /* ZoomableScrollView.swift in Sources */,
+				AEE1B7F826CE829700E4687A /* ColumnDescriptionView.swift in Sources */,
+				AEE1B7C926CDC7AD00E4687A /* RawAnalysisView.swift in Sources */,
 				AE411F6D2459ABAC00FABAD6 /* Color+Interpolate.swift in Sources */,
-				AEB511B62459839F000081FF /* StaticTextTableViewCell.swift in Sources */,
-				148C9B9024426E2F00834FF2 /* ColorPickerViewController.swift in Sources */,
-				14479182243C7E9B0090E5A3 /* ProbabilityDataCalculator.swift in Sources */,
+				AEE1B80126CEA23700E4687A /* HeatmapView.swift in Sources */,
+				AE5EFE0F26D056D500C25AE3 /* DescriptionCalculator.swift in Sources */,
+				AE5EFE0526D0559A00C25AE3 /* HistogramCalculator.swift in Sources */,
 				AED835BC26CBE1EA00F847E2 /* ShapiroWilk.swift in Sources */,
-				148C9B772441E23200834FF2 /* PlaygroundGraphDetailsViewController.swift in Sources */,
-				148C9B752441D57600834FF2 /* CreateGraphCoordinator.swift in Sources */,
-				142AC6442433BAC300E7D9BF /* AppDelegate.swift in Sources */,
-				14F2C510243DEAD500211AD3 /* DASplitViewController.swift in Sources */,
-				AE411F672459A77200FABAD6 /* DelimiterSelectionTableViewController.swift in Sources */,
-				148C9B8C24426CB000834FF2 /* SettingsViewController.swift in Sources */,
-				AEB511AC24589433000081FF /* ImportLocalDatasetSettingsViewController.swift in Sources */,
-				14C9964C2433D0BA006BFF40 /* CoreDataController.swift in Sources */,
-				148C9B7B2442195F00834FF2 /* PlaygroundGraphValueSelectionTableView.swift in Sources */,
-				142AC6752433BB8D00E7D9BF /* CSVImporter.swift in Sources */,
-				14F2C513243DF9F500211AD3 /* DatasetConfigurationViewController.swift in Sources */,
-				AEB511B424598384000081FF /* NameInputTableViewCell.swift in Sources */,
-				148C9B792442164500834FF2 /* CreateDatasetCoordinator.swift in Sources */,
+				AEE1B7EA26CDE0FA00E4687A /* ProbabilityGraphView.swift in Sources */,
+				AE5EFE2C26D09C2D00C25AE3 /* QGrid.swift in Sources */,
+				AEE1B7DA26CDCB2400E4687A /* RawAnalysisCollectionView.swift in Sources */,
+				AEE1B7E526CDDFC900E4687A /* DistributionGraphView.swift in Sources */,
+				AE5EFE2426D07FF100C25AE3 /* PlaygroundGraphView.swift in Sources */,
 				14C9964F2433D10A006BFF40 /* Graphs.xcdatamodeld in Sources */,
-				148C9B802442507B00834FF2 /* SelectDatasetView.swift in Sources */,
-				14EE7E7D2444754300AD5D2C /* HeatmapSettingsViewController.swift in Sources */,
-				14EE7E7B2444750200AD5D2C /* AnalysisTabSettingsViewController.swift in Sources */,
-				AEB511B8245985D9000081FF /* BoolValueInputTableViewCell.swift in Sources */,
-				141BB65E2440E2B900471A54 /* HeatMapCalculator.swift in Sources */,
-				14C996052433C4AE006BFF40 /* GraphDetailsViewController.swift in Sources */,
-				AE411F712459ABF800FABAD6 /* HeatMapMatrixView.swift in Sources */,
-				14C9965D24340F1F006BFF40 /* RawDataViewController.swift in Sources */,
-				AE411F7C2459AD8300FABAD6 /* GraphThumbnailCollectionViewCell.swift in Sources */,
-				142AC6462433BAC300E7D9BF /* SceneDelegate.swift in Sources */,
-				1476B6DB2439F18500ACE674 /* Array+Extension.swift in Sources */,
+				AEE1B7AE26CDBE4000E4687A /* DatasetSelectionView.swift in Sources */,
+				AE5EFE5526D1BBE600C25AE3 /* UserGraphViewModel.swift in Sources */,
+				AEE1B82726CEFA0B00E4687A /* PlaygroundViewModel.swift in Sources */,
+				AEE1B7F026CDE78400E4687A /* ColumnAnalysisViewModel.swift in Sources */,
+				AE5EFDFD26D0552300C25AE3 /* Math.swift in Sources */,
+				AEE1B80C26CEA37A00E4687A /* HeatmapViewModel.swift in Sources */,
+				AEE1B88526CF263E00E4687A /* RifkiApp.swift in Sources */,
+				AEE1B83826CF111000E4687A /* ImportDatasetView.swift in Sources */,
 				148C9B89244268F100834FF2 /* Themes.swift in Sources */,
 				AED835CE26CC379500F847E2 /* Dataset+Ext.swift in Sources */,
-				142AC6772433BC5D00E7D9BF /* ImportOperationQueue.swift in Sources */,
-				AE411F7A2459AD7200FABAD6 /* AddGraphCollectionViewCell.swift in Sources */,
+				AE5EFE1F26D071B000C25AE3 /* AddGraphViewModel.swift in Sources */,
+				AEE1B7B726CDBEA800E4687A /* RootView.swift in Sources */,
 				1476B6DD243A2EB200ACE674 /* KernelDensity.swift in Sources */,
-				AE411F692459AB5B00FABAD6 /* InsetLabel.swift in Sources */,
-				AEDA616E26C9661E00AB3CF6 /* ColorTransformer.swift in Sources */,
-				148C9B8224425A7400834FF2 /* ErrorAlertView.swift in Sources */,
-				AED835B726CB2AF500F847E2 /* BaseGraphView.swift in Sources */,
-				1476B6D124398B9600ACE674 /* RowAnalysisViewController.swift in Sources */,
-				AEB511BA24598605000081FF /* DoubleValueInputTableViewCell.swift in Sources */,
+				AEE1B89426CF36E700E4687A /* RootViewModel.swift in Sources */,
+				AE5EFE0A26D0568400C25AE3 /* ProbabilityCalculator.swift in Sources */,
+				AEE1B81B26CEF8BE00E4687A /* PlaygroundView.swift in Sources */,
+				AE5EFDF726D0548C00C25AE3 /* RotatedText.swift in Sources */,
+				AEE1B7D226CDC9E000E4687A /* ColumnAnalysisView.swift in Sources */,
 				148C9B8424425FAB00834FF2 /* GridCollectionViewLayout.swift in Sources */,
-				141BB6E02441431100471A54 /* PlaygroundViewController.swift in Sources */,
-				140C6BE424395CE5004F9DA3 /* HeatMapViewController.swift in Sources */,
-				AE411F782459AD0B00FABAD6 /* PlaygroundGraphViewController.swift in Sources */,
-				1476B6D5243991BB00ACE674 /* RowAnalysisDescriptionView.swift in Sources */,
-				AE411F732459AC1000FABAD6 /* HeatMapContainerView.swift in Sources */,
-				AE411F6B2459AB7800FABAD6 /* Double+Rounding.swift in Sources */,
-				14722C2124465A65006EF476 /* FontSelectionTableViewController.swift in Sources */,
-				AEB511BE2459864D000081FF /* ColorSelectionTableViewCell.swift in Sources */,
-				AEB511BC2459863B000081FF /* String+Double.swift in Sources */,
-				AEB511AE2458947E000081FF /* AddDataSetController.swift in Sources */,
-				AE411F752459AC2D00FABAD6 /* HeatmapCalculationIndicatorView.swift in Sources */,
-				AEB511B0245894F5000081FF /* ImportRemoteDatasetSettingsViewController.swift in Sources */,
+				AEE1B7C026CDC39500E4687A /* DatasetDetailsView.swift in Sources */,
 				148C9B8E24426DE600834FF2 /* ColorPickerView.swift in Sources */,
-				14C996022433C497006BFF40 /* DatasetsViewController.swift in Sources */,
+				AE5EFE4D26D1B6EB00C25AE3 /* ProgressView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -812,7 +713,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -867,7 +768,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -890,6 +791,7 @@
 				DEVELOPMENT_TEAM = PLB3C98PD3;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				INFOPLIST_FILE = DataAnalyzer/Info.plist;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -918,6 +820,7 @@
 				DEVELOPMENT_TEAM = PLB3C98PD3;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				INFOPLIST_FILE = DataAnalyzer/Info.plist;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1120,10 +1023,11 @@
 		14C9964D2433D10A006BFF40 /* Graphs.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				AED835D526CC3A7C00F847E2 /* Graphs 3.xcdatamodel */,
 				14BC0D4F243E10BB007A6C73 /* Graphs 2.xcdatamodel */,
 				14C9964E2433D10A006BFF40 /* Graphs.xcdatamodel */,
 			);
-			currentVersion = 14BC0D4F243E10BB007A6C73 /* Graphs 2.xcdatamodel */;
+			currentVersion = AED835D526CC3A7C00F847E2 /* Graphs 3.xcdatamodel */;
 			path = Graphs.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

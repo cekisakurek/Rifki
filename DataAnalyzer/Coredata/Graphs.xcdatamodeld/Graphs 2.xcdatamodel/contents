@@ -3,9 +3,9 @@
     <entity name="Dataset" representedClassName="Dataset" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="delimiter" optional="YES" attributeType="String"/>
+        <attribute name="downloadURL" optional="YES" attributeType="String"/>
         <attribute name="hasHeader" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="remoteURL" optional="YES" attributeType="String"/>
         <attribute name="uuid" optional="YES" attributeType="String"/>
         <relationship name="graphs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Graph" inverseName="workset" inverseEntity="Graph"/>
     </entity>
@@ -59,7 +59,7 @@
         <attribute name="pgYAxisTextColor" optional="YES" attributeType="Transformable" valueTransformerName="ColorValueTransformer"/>
     </entity>
     <elements>
-        <element name="Dataset" positionX="-500.10546875" positionY="-101.15234375" width="128" height="148"/>
+        <element name="Dataset" positionX="-500.10546875" positionY="-101.15234375" width="128" height="134"/>
         <element name="Graph" positionX="-501.00390625" positionY="145.68359375" width="128" height="299"/>
         <element name="GraphData" positionX="-133.99609375" positionY="164.3359375" width="128" height="149"/>
         <element name="Settings" positionX="-315" positionY="72" width="128" height="284"/>

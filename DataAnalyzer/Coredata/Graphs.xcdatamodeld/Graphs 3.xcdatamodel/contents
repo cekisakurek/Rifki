@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Dataset" representedClassName="Dataset" syncable="YES" codeGenerationType="class">
+        <attribute name="data" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[[String]]"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="delimiter" optional="YES" attributeType="String"/>
+        <attribute name="hasHeader" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="headers" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
+        <attribute name="localURL" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="originalFileURL" optional="YES" attributeType="String"/>
+        <attribute name="uuid" optional="YES" attributeType="String"/>
+        <relationship name="graphs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Graph" inverseName="workset" inverseEntity="Graph"/>
+    </entity>
+    <entity name="Graph" representedClassName="Graph" syncable="YES" codeGenerationType="class">
+        <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="titleFontName" optional="YES" attributeType="String"/>
+        <attribute name="titleFontSize" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="uuid" optional="YES" attributeType="String"/>
+        <attribute name="xAxisName" optional="YES" attributeType="String"/>
+        <attribute name="xAxisTextFontName" optional="YES" attributeType="String"/>
+        <attribute name="xAxisTextFontSize" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="yAxisName" optional="YES" attributeType="String"/>
+        <attribute name="yAxisTextFontName" optional="YES" attributeType="String"/>
+        <attribute name="yAxisTextFontSize" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="data" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GraphData" inverseName="graph" inverseEntity="GraphData"/>
+        <relationship name="workset" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dataset" inverseName="graphs" inverseEntity="Dataset"/>
+    </entity>
+    <entity name="GraphData" representedClassName="GraphData" syncable="YES" codeGenerationType="class">
+        <attribute name="circleSize" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="lineWidth" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="xAxis" optional="YES" attributeType="String"/>
+        <attribute name="yAxis" optional="YES" attributeType="String"/>
+        <relationship name="graph" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Graph" inverseName="data" inverseEntity="Graph"/>
+    </entity>
+    <elements>
+        <element name="Dataset" positionX="-500.10546875" positionY="-101.15234375" width="128" height="179"/>
+        <element name="Graph" positionX="-501.00390625" positionY="145.68359375" width="128" height="239"/>
+        <element name="GraphData" positionX="-133.99609375" positionY="164.3359375" width="128" height="104"/>
+    </elements>
+</model>

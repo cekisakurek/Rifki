@@ -6,7 +6,7 @@ Roadmap
 - Data binning
 - Shapiro wilk test 
 - one hot encoding
-
+- Calculate histogram different double/int
 
 
 
