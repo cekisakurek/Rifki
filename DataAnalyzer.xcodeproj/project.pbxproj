@@ -32,9 +32,9 @@
 		AE5EFE1A26D0593800C25AE3 /* UniqueValueCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFE1926D0593800C25AE3 /* UniqueValueCalculator.swift */; };
 		AE5EFE1F26D071B000C25AE3 /* AddGraphViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFE1E26D071B000C25AE3 /* AddGraphViewModel.swift */; };
 		AE5EFE2426D07FF100C25AE3 /* PlaygroundGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFE2326D07FF100C25AE3 /* PlaygroundGraphView.swift */; };
-		AE5EFE2C26D09C2D00C25AE3 /* QGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFE2B26D09C2D00C25AE3 /* QGrid.swift */; };
 		AE5EFE4D26D1B6EB00C25AE3 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFE4C26D1B6EB00C25AE3 /* ProgressView.swift */; };
 		AE5EFE5526D1BBE600C25AE3 /* UserGraphViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFE5426D1BBE600C25AE3 /* UserGraphViewModel.swift */; };
+		AE5EFE9D26D1C9C900C25AE3 /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = AE5EFE9C26D1C9C900C25AE3 /* QGrid */; };
 		AEB511A8245881EF000081FF /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = AEB511A7245881EF000081FF /* Charts */; };
 		AED835B226C9D5F000F847E2 /* NotificationBannerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AED835B126C9D5F000F847E2 /* NotificationBannerSwift */; };
 		AED835BC26CBE1EA00F847E2 /* ShapiroWilk.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED835BB26CBE1E900F847E2 /* ShapiroWilk.swift */; };
@@ -107,7 +107,6 @@
 		AE5EFE1926D0593800C25AE3 /* UniqueValueCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniqueValueCalculator.swift; sourceTree = "<group>"; };
 		AE5EFE1E26D071B000C25AE3 /* AddGraphViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGraphViewModel.swift; sourceTree = "<group>"; };
 		AE5EFE2326D07FF100C25AE3 /* PlaygroundGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundGraphView.swift; sourceTree = "<group>"; };
-		AE5EFE2B26D09C2D00C25AE3 /* QGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QGrid.swift; sourceTree = "<group>"; };
 		AE5EFE4C26D1B6EB00C25AE3 /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		AE5EFE5426D1BBE600C25AE3 /* UserGraphViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGraphViewModel.swift; sourceTree = "<group>"; };
 		AED835A826C9A97C00F847E2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -140,6 +139,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE5EFE9D26D1C9C900C25AE3 /* QGrid in Frameworks */,
 				14F2C50A243DCC0700211AD3 /* CSV in Frameworks */,
 				AED835B226C9D5F000F847E2 /* NotificationBannerSwift in Frameworks */,
 				AEB511A8245881EF000081FF /* Charts in Frameworks */,
@@ -391,7 +391,6 @@
 				AEE1B82526CEF9FE00E4687A /* ViewModel */,
 				AEE1B81A26CEF8BE00E4687A /* PlaygroundView.swift */,
 				AE5EFE2326D07FF100C25AE3 /* PlaygroundGraphView.swift */,
-				AE5EFE2B26D09C2D00C25AE3 /* QGrid.swift */,
 			);
 			path = PlaygroundView;
 			sourceTree = "<group>";
@@ -452,6 +451,7 @@
 				14F2C509243DCC0700211AD3 /* CSV */,
 				AEB511A7245881EF000081FF /* Charts */,
 				AED835B126C9D5F000F847E2 /* NotificationBannerSwift */,
+				AE5EFE9C26D1C9C900C25AE3 /* QGrid */,
 			);
 			productName = DataAnalyzer;
 			productReference = 142AC6402433BAC300E7D9BF /* Rifki.app */;
@@ -530,6 +530,7 @@
 				14F2C508243DCC0700211AD3 /* XCRemoteSwiftPackageReference "CSV.swift" */,
 				AEB511A6245881EF000081FF /* XCRemoteSwiftPackageReference "Charts" */,
 				AED835B026C9D5F000F847E2 /* XCRemoteSwiftPackageReference "NotificationBanner" */,
+				AE5EFE9B26D1C9C900C25AE3 /* XCRemoteSwiftPackageReference "QGrid" */,
 			);
 			productRefGroup = 142AC6412433BAC300E7D9BF /* Products */;
 			projectDirPath = "";
@@ -589,7 +590,6 @@
 				AE5EFE0526D0559A00C25AE3 /* HistogramCalculator.swift in Sources */,
 				AED835BC26CBE1EA00F847E2 /* ShapiroWilk.swift in Sources */,
 				AEE1B7EA26CDE0FA00E4687A /* ProbabilityGraphView.swift in Sources */,
-				AE5EFE2C26D09C2D00C25AE3 /* QGrid.swift in Sources */,
 				AEE1B7DA26CDCB2400E4687A /* RawAnalysisCollectionView.swift in Sources */,
 				AEE1B7E526CDDFC900E4687A /* DistributionGraphView.swift in Sources */,
 				AE5EFE2426D07FF100C25AE3 /* PlaygroundGraphView.swift in Sources */,
@@ -978,6 +978,14 @@
 				minimumVersion = 2.4.3;
 			};
 		};
+		AE5EFE9B26D1C9C900C25AE3 /* XCRemoteSwiftPackageReference "QGrid" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Q-Mobile/QGrid";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.4;
+			};
+		};
 		AEB511A6245881EF000081FF /* XCRemoteSwiftPackageReference "Charts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/danielgindi/Charts.git";
@@ -1006,6 +1014,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 14F2C508243DCC0700211AD3 /* XCRemoteSwiftPackageReference "CSV.swift" */;
 			productName = CSV;
+		};
+		AE5EFE9C26D1C9C900C25AE3 /* QGrid */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AE5EFE9B26D1C9C900C25AE3 /* XCRemoteSwiftPackageReference "QGrid" */;
+			productName = QGrid;
 		};
 		AEB511A7245881EF000081FF /* Charts */ = {
 			isa = XCSwiftPackageProductDependency;
