@@ -19,7 +19,7 @@ struct ColumnAnalysisView: View {
     var body: some View {
         HStack() {
             List {
-                Section {
+                Section(header: Text("Columns")) {
                     ForEach(viewModel.headers, id: \.self) { header in
                         HStack {
                             Text(header).frame(maxHeight: .infinity)

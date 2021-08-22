@@ -13,14 +13,16 @@ class ImportDatasetViewModel: ObservableObject {
     
     @Published var importDone: Bool = false
     
-    func save(url: URL, name: String, delimiter: String, hasHeader: Bool, completion: @escaping () -> ()) {
+    func save(url: URL, name: String, delimiter: String, hasHeader: Bool, completion: (()->())?) {
         _ = url.startAccessingSecurityScopedResource()
         DispatchQueue.global(qos: .userInitiated).async {
             [weak self] in
             guard let self = self else { return }
             self._save(url: url, delimiter: delimiter, name: name, hasHeader: hasHeader)
             DispatchQueue.main.async {
-                completion()
+                if let completion = completion {
+                    completion()
+                }
             }
         }
     }

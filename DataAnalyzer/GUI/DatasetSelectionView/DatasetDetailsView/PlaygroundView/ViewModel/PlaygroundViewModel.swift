@@ -58,6 +58,19 @@ class PlaygroundViewModel: NSObject, ObservableObject, NSFetchedResultsControlle
         }
     }
     
+    //MARK: NSFetchedResultsControllerDelegate
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        var items = [PlaygroundGraphItem]()
+        items.append(PlaygroundGraphItem(index: -1))
+        if let objects = controller.fetchedObjects {
+            for (index, graph) in objects.enumerated() {
+                let item = PlaygroundGraphItem(index: index, graph: graph as? Graph)
+                items.append(item)
+            }
+        }
+        self.items = items
+    }
+    
     struct PlaygroundGraphItem: Identifiable {
         var id = UUID()
         var index: Int

@@ -28,10 +28,17 @@ struct PlaygroundGraphView: View {
             }
             .padding()
             .navigationTitle(viewModel.name)
+            .navigationBarItems(trailing: exportButton)
         }
         else {
             ProgressView()
                 .onAppear() { viewModel.fetch(graph: graph!) }
+        }
+    }
+    
+    var exportButton: some View {
+        Button(action: { viewModel.saveAsImage(size: CGSize(width: 1024, height: 1024)) }) {
+            Image(systemName: "square.and.arrow.up")
         }
     }
     
@@ -55,8 +62,7 @@ struct PlaygroundGraphView: View {
     }
     
     class UserGraphView: UIView, ChartViewDelegate {
-    //    public var theme = DistributionGraphTheme()
-        
+    
         var graphView: CombinedChartView!
         
         override init(frame: CGRect) {
@@ -64,7 +70,7 @@ struct PlaygroundGraphView: View {
             
             self.backgroundColor = UIColor.white
         
-            self.graphView = CombinedChartView(frame: .zero)
+            self.graphView = CombinedChartView(frame: frame)
             self.graphView.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview(self.graphView)
 

@@ -42,9 +42,8 @@ struct ImportDatasetView: View {
     
     var importButton: some View {
         Button(action: {
-            viewModel.save(url: self.url!, name: self.name, delimiter: selectedDelimiter, hasHeader: self.hasHeader) {
+            viewModel.save(url: url!, name: name, delimiter: selectedDelimiter, hasHeader: hasHeader, completion: nil)
             importing = false
-            }
         }) {
             Image(systemName: "folder.badge.plus")
         }

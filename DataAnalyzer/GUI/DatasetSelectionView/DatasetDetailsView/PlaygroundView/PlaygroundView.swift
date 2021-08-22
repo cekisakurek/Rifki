@@ -13,18 +13,21 @@ struct PlaygroundView: View {
     
     var objectID: NSManagedObjectID?
     
-    @StateObject var viewModel = PlaygroundViewModel()
+    @StateObject private var viewModel = PlaygroundViewModel()
     @State private var presentingAddGraphView = false
     
     var body: some View {
         
         HStack {
             if let items = viewModel.items {
-                QGrid(items, columns: 3, hPadding: 20) { item in
+                QGrid(items, columns: 3) { item in
                     GridCell(objectID: objectID, item: item, presenting: $presentingAddGraphView)
-                        .border(Color.gray, width: 2)
                         .frame(width: 300, height: 200)
-                        .contentShape(Rectangle())
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Color.gray, lineWidth: 2)
+                        )
+                        .padding()
                 }
                 .sheet(isPresented: $presentingAddGraphView){
                     SelectGraphTypeView(objectID: objectID, presenting: $presentingAddGraphView)
@@ -38,37 +41,41 @@ struct PlaygroundView: View {
             viewModel.getGraphs(from: objectID)
         }
     }
-}
-
-struct GridCell: View {
     
-    var objectID: NSManagedObjectID?
-    var item: PlaygroundViewModel.PlaygroundGraphItem
-    
-    @Binding var presenting: Bool
-    
-    var body: some View {
+    struct GridCell: View {
         
-        if item.index == -1 {
-            Button {
-                presenting.toggle()
-            } label: {
-                Text("➕")
-                    .font(.system(size: 160))
-                    .multilineTextAlignment(.center)
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            
-        }
-        else {
-            NavigationLink(destination: PlaygroundGraphView(graph: item.graph)) {
-                VStack {
-                    Image(systemName: "chart.bar")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                    Text(item.graph!.name!)
+        var objectID: NSManagedObjectID?
+        var item: PlaygroundViewModel.PlaygroundGraphItem
+        
+        @Binding var presenting: Bool
+        
+        var body: some View {
+            if item.index == -1 {
+                Button {
+                    presenting.toggle()
+                } label: {
+                    Text("➕")
+                        .font(.system(size: 160))
+                        .multilineTextAlignment(.center)
                 }
+                .padding()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
+            }
+            else {
+                NavigationLink(destination: PlaygroundGraphView(graph: item.graph)) {
+                    VStack(alignment: .center) {
+                        Image(systemName: "chart.bar")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(Color(red: 70.0/255.0, green: 70.0/255.0, blue: 70.0/255.0))
+                        Text(item.graph!.name!)
+                            .foregroundColor(Color(red: 70.0/255.0, green: 70.0/255.0, blue: 70.0/255.0))
+                            .padding()
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
             }
         }
     }

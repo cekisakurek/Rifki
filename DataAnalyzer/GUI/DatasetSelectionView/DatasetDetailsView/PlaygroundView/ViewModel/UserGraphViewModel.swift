@@ -9,7 +9,7 @@
 import SwiftUI
 import Charts
 
-final class UserGraphViewModel: ObservableObject {
+final class UserGraphViewModel:NSObject, ObservableObject, UIDocumentPickerDelegate {
     
     @Published var data: CombinedChartData?
     
@@ -19,6 +19,8 @@ final class UserGraphViewModel: ObservableObject {
     
     @Published var xAxis = ""
     @Published var yAxis = ""
+    
+    @Environment(\.appTheme) var appTheme: AppTheme
     
     func notifyLoaded() {
         // wait 0.75 second for the push animation
@@ -62,7 +64,7 @@ final class UserGraphViewModel: ObservableObject {
                     }
                     entries.sort(by: { $0.x < $1.x })
                     
-                    let lineColor = UIColor.black
+                    let lineColor = appTheme.playground.userGraph.lineColor
                     
                     var lineWidth = 5.0
                     if graphDataAxes.lineWidth > 0.0 {
@@ -90,7 +92,7 @@ final class UserGraphViewModel: ObservableObject {
                     }
                     entries.sort(by: { $0.x < $1.x })
 
-                    let color = UIColor.black
+                    let color = appTheme.playground.userGraph.barColor
 
                     let chartDataSet = BarChartDataSet(entries: entries)
                     chartDataSet.colors = [color]
@@ -109,7 +111,7 @@ final class UserGraphViewModel: ObservableObject {
                     }
                     entries.sort(by: { $0.x < $1.x })
 
-                    let color = UIColor.black
+                    let color = appTheme.playground.userGraph.circleColor
                     let circleSize = graphDataAxes.circleSize
 
                     let chartDataSet = ScatterChartDataSet(entries: entries)
@@ -125,5 +127,58 @@ final class UserGraphViewModel: ObservableObject {
                 }
             }
         }
+    }
+        
+    func _generateImage(size: CGSize) -> UIImage? {
+        let rect = CGRect(origin: .zero, size: size)
+        let view = PlaygroundGraphView.UserGraphView(frame: rect)
+        
+        view.setData(data)
+        
+        let renderer = UIGraphicsImageRenderer(bounds: rect)
+        let image = renderer.image { rendererContext in
+            view.layer.render(in: rendererContext.cgContext)
+        }
+        return image
+    }
+    
+    
+    func _generateImageData(size: CGSize) -> Data? {
+        if let image = _generateImage(size: size) {
+            return image.jpegData(compressionQuality: 1.0)
+        }
+        return nil
+    }
+
+    func saveAsImage(size: CGSize) {
+
+        let paths = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
+
+        if let data = _generateImageData(size: size) {
+            let uuid = UUID().uuidString
+            let name = uuid + ".jpg"
+            let filename = paths.appendingPathComponent(name)
+            try? data.write(to: filename)
+            let controller = UIDocumentPickerViewController(forExporting: [filename])
+            controller.delegate = self
+            controller.modalPresentationStyle = .formSheet
+            let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow })
+            window?.rootViewController!.present(controller, animated: false, completion: nil)
+        }
+    }
+    
+    //MARK: UIDocumentPickerDelegate
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        if let url = urls.first {
+            print("File saved to \(url)")
+        }
+    }
+    
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        print("File save cancelled")
+    }
+    
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
+        print("File saved to \(url)")
     }
 }

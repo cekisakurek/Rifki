@@ -114,9 +114,9 @@ class AppTheme {
             let yAxisTextColor: UIColor = UIColor.black
             let xAxisTextColor: UIColor = UIColor.black
             
-            let lineColor: UIColor = UIColor.cyan
-            let circleColor: UIColor = UIColor.cyan
-            let barColor: UIColor = UIColor.cyan
+            let lineColor: UIColor = UIColor(red: 110.0/255.0, green: 157.0/255.0, blue: 216.0/255.0, alpha: 1.0)
+            let circleColor: UIColor = UIColor(red: 110.0/255.0, green: 157.0/255.0, blue: 216.0/255.0, alpha: 1.0)
+            let barColor: UIColor = UIColor(red: 110.0/255.0, green: 157.0/255.0, blue: 216.0/255.0, alpha: 1.0)
             
             let lineWidth =  5.0
             let circleSize = 10.0
