@@ -22,6 +22,7 @@ class ColumnAnalysis {
     private(set) var type: ColumnType = .Unknown
     
     private var cached: [Double]?
+    private var cachedInt: [Int]?
     
     private(set) var name: String
     
@@ -95,7 +96,6 @@ class ColumnAnalysis {
     }
     
     func dataAsDoubleArray() -> [Double] {
-        
         if let cached = self.cached {
             return cached
         }
@@ -110,6 +110,24 @@ class ColumnAnalysis {
             }
         }
         self.cached = d
+        return d
+    }
+    
+    func dataAsIntArray() -> [Int] {
+        if let cachedInt = self.cachedInt {
+            return cachedInt
+        }
+        
+        var d = [Int]()
+        for (_, row) in self.data.enumerated() {
+            if let c = Int(row) {
+                d.append(c)
+            }
+            else {
+                d.append(0)
+            }
+        }
+        self.cachedInt = d
         return d
     }
     

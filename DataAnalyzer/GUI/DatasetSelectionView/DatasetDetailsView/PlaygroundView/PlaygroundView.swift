@@ -80,7 +80,7 @@ struct SelectGraphAxesView: View {
     var selectedType: PlaygroundGraphType!
     
     @Binding var presenting: Bool
-    @ObservedObject var viewModel = AddGraphViewModel()
+    @StateObject var viewModel = AddGraphViewModel()
     @State var xAxis = ""
     @State var yAxis = ""
     @State var name = ""

@@ -6,6 +6,8 @@
 //  Copyright © 2021 cekisakurek. All rights reserved.
 //
 
+// My best attempt to convert http://www.matrixscience.com/msparser/help/classmatrix__science_1_1ms__shapiro__wilk.html
+
 import Foundation
 
 enum SwilkError: Error, Equatable {
@@ -25,6 +27,81 @@ enum SwilkError: Error, Equatable {
 }
 
 func swilk(x:[Double]) -> (Double, Double, SwilkError) {
+    
+    func l70() -> (Double, Double, SwilkError) {
+        let gamma: Double
+        let ld: Double
+        let bf: Double
+        let z95f: Double
+        let z90f: Double
+        let zfm: Double
+        let zsd: Double
+        let z99f: Double
+        let zbar: Double
+        var m: Double
+        var r__1: Double
+        var s: Double
+        var y: Double
+        var xx: Double
+        
+        
+        w = 1.0 - w1
+        
+        if n == 3 {
+            pw = pi6 * (asin(sqrt(w)) - stqr);
+            return (0.0, 0.0, SwilkError.noError)
+        }
+        y = log(w1)
+        xx = log(an)
+        m = zero
+        s = one
+        
+        if n <= 11 {
+            gamma = poly(cc: g, nord: 2, x: an);
+            if (y >= gamma) {
+                pw = small_value;/* FIXME: rather use an even small_valueer value, or NA ? */
+                return (0.0, 0.0, SwilkError.noError)
+            }
+            y = -log(gamma - y);
+            m = poly(cc: c3, nord: 4, x: an);
+            s = exp(poly(cc: c4, nord: 4, x: an));
+        }
+        else {
+            m = poly(cc: c5, nord: 4, x: xx);
+            s = exp(poly(cc: c6, nord: 3, x: xx));
+        }
+        
+        /*DBG printf("c(w1=%g, w=%g, y=%g, m=%g, s=%g)\n",w1,*w,y,m,s); */
+        if (ncens > 0) {/* <==>  n > n1 */
+        /*  Censoring by proportion NCENS/N.
+            Calculate mean and sd of normal equivalent deviate of W. */
+
+            ld = -log(delta);
+            bf = one + xx * bf1;
+            r__1 = pow(xx90, Double(xx));
+            z90f = z90 + bf * pow(poly(cc: c7, nord: 2, x: r__1), Double(ld))
+            r__1 = pow(xx95, Double(xx));
+            z95f = z95 + bf * pow(poly(cc: c8, nord: 2, x: r__1), Double(ld));
+            z99f = z99 + bf * pow(poly(cc: c9, nord: 2, x: xx), Double(ld));
+
+            /* Regress Z90F,...,Z99F on normal deviates Z90,...,Z99 to get
+             * pseudo-mean and pseudo-sd of z as the slope and intercept
+             */
+
+            zfm = (z90f + z95f + z99f) / three;
+            zsd = (z90 * (z90f - zfm) +
+                        z95 * (z95f - zfm) + z99 * (z99f - zfm)) / zss;
+            zbar = zfm - zsd * zm;
+            m += zbar * s;
+            s *= zsd;
+        }
+        
+        pw = alnorm(x: (y-m)/s, upper: true);
+        /*  = alnorm_(dble((Y - M)/S), 1); */
+
+        // Results are returned in w, pw and ifault
+        return (w,pw, SwilkError.noError)
+    }
     
     let zero = 0.0
     let one = 1.0
@@ -58,7 +135,7 @@ func swilk(x:[Double]) -> (Double, Double, SwilkError) {
     
     
     /* System generated locals */
-    var r__1: Double
+    
     let n = x.count
     let n2 = n / 2
     var a = [Double](repeating: 0.0, count: n)
@@ -68,37 +145,31 @@ func swilk(x:[Double]) -> (Double, Double, SwilkError) {
     let ncens: Int
     let i1: Int
     let nn2: Int
-    let zbar: Double
     let ssassx: Double
     var summ2: Double
     let ssumm2: Double
-    let gamma: Double
     let delta: Double
     let range: Double
     let a1: Double
     let a2: Double
     let an: Double
-    let bf: Double
-    let ld: Double
-    var m: Double
-    var s: Double
+    
+    
+    
+    var xx: Double
     var sa: Double
     var xi: Double
     var sx: Double
-    var xx: Double
-    var y: Double
+    
+    
     var w1: Double
     
     let fac: Double
     var asa: Double
     let an25: Double
     var ssa: Double
-    let z90f: Double
+    
     var sax: Double
-    let zfm: Double
-    let z95f: Double
-    let zsd: Double
-    let z99f: Double
     let rsn: Double
     var ssx: Double
     var xsx: Double
@@ -167,7 +238,7 @@ func swilk(x:[Double]) -> (Double, Double, SwilkError) {
     if w < zero {
         w1 = 1.0 + w
         //ifault 0
-        //goto L70;
+        return l70()
     }
     
     
@@ -227,64 +298,9 @@ func swilk(x:[Double]) -> (Double, Double, SwilkError) {
     w1 = (ssassx - sax) * (ssassx + sax) / (ssa * ssx);
  
     
-    // L70
-    
-    w = 1.0 - w1
-    
-    if n == 3 {
-        pw = pi6 * (asin(sqrt(w)) - stqr);
-        return (0.0, 0.0, SwilkError.noError)
-    }
-    y = log(w1)
-    xx = log(an)
-    m = zero
-    s = one
-    
-    if n <= 11 {
-        gamma = poly(cc: g, nord: 2, x: an);
-        if (y >= gamma) {
-            pw = small_value;/* FIXME: rather use an even small_valueer value, or NA ? */
-            return (0.0, 0.0, SwilkError.noError)
-        }
-        y = -log(gamma - y);
-        m = poly(cc: c3, nord: 4, x: an);
-        s = exp(poly(cc: c4, nord: 4, x: an));
-    }
-    else {
-        m = poly(cc: c5, nord: 4, x: xx);
-        s = exp(poly(cc: c6, nord: 3, x: xx));
-    }
-    
-    /*DBG printf("c(w1=%g, w=%g, y=%g, m=%g, s=%g)\n",w1,*w,y,m,s); */
-    if (ncens > 0) {/* <==>  n > n1 */
-    /*  Censoring by proportion NCENS/N.
-        Calculate mean and sd of normal equivalent deviate of W. */
 
-        ld = -log(delta);
-        bf = one + xx * bf1;
-        r__1 = pow(xx90, Double(xx));
-        z90f = z90 + bf * pow(poly(cc: c7, nord: 2, x: r__1), Double(ld))
-        r__1 = pow(xx95, Double(xx));
-        z95f = z95 + bf * pow(poly(cc: c8, nord: 2, x: r__1), Double(ld));
-        z99f = z99 + bf * pow(poly(cc: c9, nord: 2, x: xx), Double(ld));
-
-        /* Regress Z90F,...,Z99F on normal deviates Z90,...,Z99 to get
-         * pseudo-mean and pseudo-sd of z as the slope and intercept
-         */
-
-        zfm = (z90f + z95f + z99f) / three;
-        zsd = (z90 * (z90f - zfm) +
-                    z95 * (z95f - zfm) + z99 * (z99f - zfm)) / zss;
-        zbar = zfm - zsd * zm;
-        m += zbar * s;
-        s *= zsd;
-    }
+    return l70()
     
-    pw = alnorm(x: (y-m)/s, upper: true);
-    /*  = alnorm_(dble((Y - M)/S), 1); */
-
-    // Results are returned in w, pw and ifault
-    return (w,pw, SwilkError.noError)
 }
 
 

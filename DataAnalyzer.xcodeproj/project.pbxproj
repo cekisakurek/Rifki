@@ -190,7 +190,6 @@
 			isa = PBXGroup;
 			children = (
 				148C9B87244268E500834FF2 /* Themes */,
-				148C9B7E2442506800834FF2 /* CommonUI */,
 				1476B6D92439F16F00ACE674 /* Extensions */,
 				14C9964A2433D0AC006BFF40 /* Coredata */,
 				14C995FF2433C463006BFF40 /* GUI */,
@@ -226,19 +225,9 @@
 			isa = PBXGroup;
 			children = (
 				AE5EFDFB26D0551B00C25AE3 /* Math */,
-				AE5EFDF526D0547E00C25AE3 /* SwiftUI */,
 				AE411F6C2459ABAC00FABAD6 /* Color+Interpolate.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		148C9B7E2442506800834FF2 /* CommonUI */ = {
-			isa = PBXGroup;
-			children = (
-				148C9B8324425FAB00834FF2 /* GridCollectionViewLayout.swift */,
-				148C9B8D24426DE600834FF2 /* ColorPickerView.swift */,
-			);
-			path = CommonUI;
 			sourceTree = "<group>";
 		};
 		148C9B87244268E500834FF2 /* Themes */ = {
@@ -277,14 +266,6 @@
 			path = Coredata;
 			sourceTree = "<group>";
 		};
-		AE5EFDF526D0547E00C25AE3 /* SwiftUI */ = {
-			isa = PBXGroup;
-			children = (
-				AE5EFDF626D0548C00C25AE3 /* RotatedText.swift */,
-			);
-			path = SwiftUI;
-			sourceTree = "<group>";
-		};
 		AE5EFDFB26D0551B00C25AE3 /* Math */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,6 +279,9 @@
 		AE5EFE4B26D1B6DE00C25AE3 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				AE5EFDF626D0548C00C25AE3 /* RotatedText.swift */,
+				148C9B8324425FAB00834FF2 /* GridCollectionViewLayout.swift */,
+				148C9B8D24426DE600834FF2 /* ColorPickerView.swift */,
 				AE5EFE4C26D1B6EB00C25AE3 /* ProgressView.swift */,
 			);
 			path = Shared;

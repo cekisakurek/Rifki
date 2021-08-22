@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class ColorPickerView : UIView {
     
     var onColorDidChange: ((_ color: UIColor) -> ())?
